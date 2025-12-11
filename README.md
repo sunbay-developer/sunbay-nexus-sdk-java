@@ -1,92 +1,203 @@
-# sunbay-java-sdk
+# Sunbay Java SDK
 
+Official Java SDK for Sunbay Payment Platform
 
+## Features
 
-## Getting started
-
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
-```
-cd existing_repo
-git remote add origin http://code.sunmi.com/sunbay/backend/sunbay-java-sdk.git
-git branch -M master
-git push -uf origin master
-```
-
-## Integrate with your tools
-
-- [ ] [Set up project integrations](http://code.sunmi.com/sunbay/backend/sunbay-java-sdk/-/settings/integrations)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!).  Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+- ✅ Simple and intuitive API
+- ✅ Support Java 8+
+- ✅ Automatic authentication
+- ✅ Automatic retry for GET requests
+- ✅ Comprehensive exception handling
+- ✅ Minimal dependencies
 
 ## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+### Maven
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+```xml
+<dependency>
+    <groupId>com.sunmi</groupId>
+    <artifactId>sunbay-java-sdk</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+### Gradle
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+```gradle
+implementation 'com.sunmi:sunbay-java-sdk:1.0.0'
+```
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+## Quick Start
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+### 1. Initialize Client
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+The `SunbayClient` is thread-safe and can be reused across multiple threads. You have two options:
+
+**Option 1: Use as a singleton (Recommended for production)**
+
+```java
+// Create once and reuse
+SunbayClient client = new SunbayClient.Builder()
+    .apiKey("{YOUR_API_KEY}")
+    .baseUrl("https://open.sunbay.us")
+    .build();
+
+// Use the client throughout your application
+// Remember to call client.close() when your application shuts down
+```
+
+**Option 2: Use try-with-resources (For temporary usage)**
+
+```java
+// The client implements AutoCloseable, so you can use try-with-resources
+try (SunbayClient client = new SunbayClient.Builder()
+        .apiKey("{YOUR_API_KEY}")
+        .baseUrl("https://open.sunbay.us")
+        .build()) {
+    // Use client
+    SaleResponse response = client.sale(request);
+    // Client will be automatically closed when exiting the try block
+}
+```
+
+### 2. Sale Transaction
+
+```java
+import com.sunmi.sunbay.exception.SunbayBusinessException;
+import com.sunmi.sunbay.exception.SunbayNetworkException;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
+// Assume client is already initialized (as singleton or in try-with-resources)
+// SunbayClient client = ... (from step 1)
+
+// Build amount
+Amount amount = new Amount();
+amount.setOrderAmount(100.00);
+amount.setPricingCurrency("USD");
+
+// Build sale request
+SaleRequest request = new SaleRequest();
+request.setAppId("app_123456");
+request.setMerchantId("mch_789012");
+request.setReferenceOrderId("ORDER20231119001");
+request.setTransactionRequestId("ORDER20231119001" + System.currentTimeMillis());
+request.setAmount(amount);
+request.setTerminalSn("T1234567890");
+request.setDescription("Product purchase");
+
+// Set expiration time (optional)
+ZonedDateTime expireTime = ZonedDateTime.now().plusMinutes(10);
+String timeExpire = expireTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX"));
+request.setTimeExpire(timeExpire);
+
+// Execute transaction
+try {
+    SaleResponse response = client.sale(request);
+    if (response.isSuccess()) {
+        System.out.println("Transaction ID: " + response.getTransactionId());
+    } else {
+        System.out.println("Error: " + response.getMsg());
+    }
+} catch (SunbayNetworkException e) {
+    System.err.println("Network Error: " + e.getMessage());
+} catch (SunbayBusinessException e) {
+    System.err.println("API Error: " + e.getCode() + " - " + e.getMessage());
+}
+```
+
+## API Methods
+
+### Transaction APIs
+
+- `sale(SaleRequest)` - Sale transaction
+- `auth(AuthRequest)` - Authorization (pre-auth)
+- `forcedAuth(ForcedAuthRequest)` - Forced authorization
+- `incrementalAuth(IncrementalAuthRequest)` - Incremental authorization
+- `postAuth(PostAuthRequest)` - Post authorization (pre-auth completion)
+- `refund(RefundRequest)` - Refund
+- `voidTransaction(VoidRequest)` - Void transaction
+- `abort(AbortRequest)` - Abort transaction
+- `tipAdjust(TipAdjustRequest)` - Tip adjust
+
+### Query APIs
+
+- `query(QueryRequest)` - Query transaction
+
+### Settlement APIs
+
+- `batchClose(BatchCloseRequest)` - Batch close
+
+## Exception Handling
+
+The SDK throws two types of exceptions:
+
+- **SunbayNetworkException**: Network-related errors (connection timeout, network error, etc.)
+- **SunbayBusinessException**: Business logic errors (parameter validation, API business errors, etc.)
+
+Always catch `SunbayNetworkException` before `SunbayBusinessException`:
+
+```java
+try {
+    SaleResponse response = client.sale(request);
+    // Handle success
+} catch (SunbayNetworkException e) {
+    // Network exception (e.g., connection timeout, network error)
+    System.err.println("Network Error: " + e.getMessage());
+    if (e.isRetryable()) {
+        // Can retry
+    }
+} catch (SunbayBusinessException e) {
+    // Business exception (e.g., insufficient funds, parameter error)
+    System.err.println("API Error: " + e.getCode() + " - " + e.getMessage());
+    if (e.getTraceId() != null) {
+        System.err.println("Trace ID: " + e.getTraceId());
+    }
+}
+```
+
+## Configuration
+
+```java
+SunbayClient client = new SunbayClient.Builder()
+    .apiKey("sk_test_xxx")
+    .baseUrl("https://open.sunbay.us")  // Default: https://open.sunbay.us
+    .connectTimeout(30000)               // Default: 30000ms (30 seconds)
+    .readTimeout(60000)                   // Default: 60000ms (60 seconds)
+    .maxRetries(3)                        // Default: 3 retries for GET requests
+    .maxTotal(200)                        // Default: 200 (max total connections in pool)
+    .maxPerRoute(20)                      // Default: 20 (max connections per route)
+    .build();
+```
+
+### Connection Pool Configuration
+
+The SDK uses Apache HttpClient's connection pool to manage HTTP connections efficiently. You can configure:
+
+- **maxTotal**: Maximum total connections in the connection pool across all routes (default: 200)
+  - This is the total number of connections that can be open simultaneously across all hosts/routes
+  - Example: If you have 10 different API endpoints, the total connections to all endpoints combined cannot exceed this value
+
+- **maxPerRoute**: Maximum connections per route/host (default: 20)
+  - This is the maximum number of connections that can be open to a single host/route
+  - A route is typically defined by the scheme (http/https), host, and port
+  - Example: For `https://open.sunbay.us`, you can have at most 20 concurrent connections
+
+**Example:**
+- If `maxTotal = 200` and `maxPerRoute = 20`
+- You can have up to 20 connections to `https://open.sunbay.us` (limited by maxPerRoute)
+- But if you're connecting to multiple hosts, the total across all hosts cannot exceed 200 (limited by maxTotal)
+
+These settings help optimize performance for high-concurrency scenarios.
+
+## Requirements
+
+- Java 8 or higher
+- Apache HttpClient 4.5.14
+- Jackson 2.18.2
 
 ## License
-For open source projects, say how it is licensed.
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+MIT License
