@@ -2,7 +2,28 @@
 
 本文档记录如何将 `sunbay-java-sdk` 发布到 Maven Central 中央仓库。
 
-## 前置准备
+---
+
+## ⚡ 快速发布（已配置项目）
+
+**如果你已经完成过首次配置**（GPG 密钥、Maven settings.xml、pom.xml 等），**直接运行以下命令即可**：
+
+```bash
+export GPG_TTY=$(tty)
+mvn clean deploy -DskipTests
+```
+
+**就这么简单！** 输入 GPG 密码后等待发布完成即可。
+
+> 💡 **提示**：首次配置或需要了解详细步骤，请继续阅读下面的内容。
+
+---
+
+## 📋 首次配置（新项目或新环境）
+
+如果你是第一次发布，或者在新环境中配置，请按照以下步骤操作：
+
+### 前置准备
 
 ### 1. 注册 Maven Central 账号
 
@@ -138,8 +159,8 @@ mvn clean deploy -DskipTests
 1. 登录 https://central.sonatype.com/
 2. 进入 "Publish" -> "Deployments"
 3. 查看部署状态：
-   - `PUBLISHING`: 正在发布中
-   - `PUBLISHED`: 已发布成功
+    - `PUBLISHING`: 正在发布中
+    - `PUBLISHED`: 已发布成功
 
 ### 2. 验证 Maven Central
 
@@ -208,7 +229,7 @@ gpg --keyserver hkp://keys.openpgp.org --send-keys YOUR_KEY_ID
 1. 更新 `pom.xml` 中的 `<version>`（如 `1.0.0` -> `1.0.1`）
 2. 提交代码
 3. 运行 `mvn clean deploy`
-4. 等待发布完成
+4. 等待发布完成（或直接使用文档开头的快速发布命令）
 
 ## 重要提示
 
@@ -224,14 +245,6 @@ gpg --keyserver hkp://keys.openpgp.org --send-keys YOUR_KEY_ID
 - **GPG 密钥 ID**：`使用 gpg --list-secret-keys --keyid-format LONG 查看`
 - **Maven Central 地址**：https://central.sonatype.com/
 - **发布 API**：https://central.sonatype.com/api/v1/publishing
-
-## 快速发布命令
-
-```bash
-# 完整发布流程
-export GPG_TTY=$(tty)
-mvn clean deploy -DskipTests
-```
 
 ---
 

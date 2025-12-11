@@ -7,12 +7,12 @@
 
     <groupId>com.sunmi</groupId>
     <artifactId>sunbay-java-sdk</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <packaging>jar</packaging>
 
     <name>Sunbay Java SDK</name>
     <description>Official Java SDK for Sunbay Payment Platform</description>
-    <url>https://sunbay.io</url>
+    <url>https://www.sunmi.com/</url>
 
     <licenses>
         <license>
@@ -29,7 +29,7 @@
     </developers>
 
     <scm>
-        <url>https://sunbay.io</url>
+        <url>https://www.sunmi.com/</url>
     </scm>
 
     <properties>
