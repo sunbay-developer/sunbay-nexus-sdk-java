@@ -19,7 +19,6 @@ public class PostAuthRequest {
     private String description;
     private String attach;
     private String notifyUrl;
-    private String timeExpire;
 
     public String getAppId() {
         return appId;
@@ -99,13 +98,5 @@ public class PostAuthRequest {
 
     public void setNotifyUrl(String notifyUrl) {
         this.notifyUrl = notifyUrl;
-    }
-
-    public String getTimeExpire() {
-        return timeExpire;
-    }
-
-    public void setTimeExpire(String timeExpire) {
-        this.timeExpire = timeExpire;
     }
 }

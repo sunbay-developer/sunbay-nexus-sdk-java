@@ -9,6 +9,7 @@ public class BatchCloseRequest {
 
     private String appId;
     private String merchantId;
+    private String transactionRequestId;
     private String terminalSn;
     private Boolean enablePushToTerminal;
     private String description;
@@ -28,6 +29,14 @@ public class BatchCloseRequest {
 
     public void setMerchantId(String merchantId) {
         this.merchantId = merchantId;
+    }
+
+    public String getTransactionRequestId() {
+        return transactionRequestId;
+    }
+
+    public void setTransactionRequestId(String transactionRequestId) {
+        this.transactionRequestId = transactionRequestId;
     }
 
     public String getTerminalSn() {

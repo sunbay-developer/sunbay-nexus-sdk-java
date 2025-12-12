@@ -8,17 +8,44 @@ package com.sunmi.sunbay.nexus.enums;
 public enum TransactionStatus {
 
     /**
-     * Transaction successful
+     * Initial state
      */
-    SUCCESS,
+    INITIAL("I", "INITIAL"),
 
     /**
-     * Transaction processing
+     * Transaction processing. Channel called but no result obtained, or unexpected
+     * exception returned.
      */
-    PROCESSING,
+    PROCESSING("P", "PROCESSING"),
+
+    /**
+     * Transaction successful
+     */
+    SUCCESS("S", "SUCCESS"),
 
     /**
      * Transaction failed
      */
-    FAILED
+    FAIL("F", "FAIL"),
+
+    /**
+     * Transaction closed
+     */
+    CLOSED("C", "CLOSED");
+
+    private final String code;
+    private final String desc;
+
+    TransactionStatus(String code, String desc) {
+        this.code = code;
+        this.desc = desc;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
 }

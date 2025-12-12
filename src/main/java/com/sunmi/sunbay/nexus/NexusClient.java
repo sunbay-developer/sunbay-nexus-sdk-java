@@ -10,7 +10,8 @@ import com.sunmi.sunbay.nexus.model.response.*;
  * Sunbay SDK main client
  * <p>
  * This client is thread-safe and can be safely used by multiple threads.
- * The client implements AutoCloseable, so it can be used with try-with-resources.
+ * The client implements AutoCloseable, so it can be used with
+ * try-with-resources.
  * </p>
  *
  * @since 2025-12-10
@@ -34,8 +35,7 @@ public class NexusClient implements AutoCloseable {
                 builder.readTimeout,
                 builder.maxRetries,
                 builder.maxTotal,
-                builder.maxPerRoute
-        );
+                builder.maxPerRoute);
     }
 
     /**
@@ -46,7 +46,8 @@ public class NexusClient implements AutoCloseable {
      */
     public SaleResponse sale(SaleRequest request) {
         if (request == null) {
-            throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR, "SaleRequest cannot be null", null);
+            throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR, "SaleRequest cannot be null",
+                    null);
         }
         return httpClient.post(ApiConstants.PATH_SALE, request, SaleResponse.class);
     }
@@ -59,7 +60,8 @@ public class NexusClient implements AutoCloseable {
      */
     public AuthResponse auth(AuthRequest request) {
         if (request == null) {
-            throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR, "AuthRequest cannot be null", null);
+            throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR, "AuthRequest cannot be null",
+                    null);
         }
         return httpClient.post(ApiConstants.PATH_AUTH, request, AuthResponse.class);
     }
@@ -72,7 +74,8 @@ public class NexusClient implements AutoCloseable {
      */
     public ForcedAuthResponse forcedAuth(ForcedAuthRequest request) {
         if (request == null) {
-            throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR, "ForcedAuthRequest cannot be null", null);
+            throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR,
+                    "ForcedAuthRequest cannot be null", null);
         }
         return httpClient.post(ApiConstants.PATH_FORCED_AUTH, request, ForcedAuthResponse.class);
     }
@@ -85,7 +88,8 @@ public class NexusClient implements AutoCloseable {
      */
     public IncrementalAuthResponse incrementalAuth(IncrementalAuthRequest request) {
         if (request == null) {
-            throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR, "IncrementalAuthRequest cannot be null", null);
+            throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR,
+                    "IncrementalAuthRequest cannot be null", null);
         }
         return httpClient.post(ApiConstants.PATH_INCREMENTAL_AUTH, request, IncrementalAuthResponse.class);
     }
@@ -98,7 +102,8 @@ public class NexusClient implements AutoCloseable {
      */
     public PostAuthResponse postAuth(PostAuthRequest request) {
         if (request == null) {
-            throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR, "PostAuthRequest cannot be null", null);
+            throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR, "PostAuthRequest cannot be null",
+                    null);
         }
         return httpClient.post(ApiConstants.PATH_POST_AUTH, request, PostAuthResponse.class);
     }
@@ -111,7 +116,8 @@ public class NexusClient implements AutoCloseable {
      */
     public RefundResponse refund(RefundRequest request) {
         if (request == null) {
-            throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR, "RefundRequest cannot be null", null);
+            throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR, "RefundRequest cannot be null",
+                    null);
         }
         return httpClient.post(ApiConstants.PATH_REFUND, request, RefundResponse.class);
     }
@@ -124,7 +130,8 @@ public class NexusClient implements AutoCloseable {
      */
     public VoidResponse voidTransaction(VoidRequest request) {
         if (request == null) {
-            throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR, "VoidRequest cannot be null", null);
+            throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR, "VoidRequest cannot be null",
+                    null);
         }
         return httpClient.post(ApiConstants.PATH_VOID, request, VoidResponse.class);
     }
@@ -137,7 +144,8 @@ public class NexusClient implements AutoCloseable {
      */
     public AbortResponse abort(AbortRequest request) {
         if (request == null) {
-            throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR, "AbortRequest cannot be null", null);
+            throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR, "AbortRequest cannot be null",
+                    null);
         }
         return httpClient.post(ApiConstants.PATH_ABORT, request, AbortResponse.class);
     }
@@ -150,7 +158,8 @@ public class NexusClient implements AutoCloseable {
      */
     public TipAdjustResponse tipAdjust(TipAdjustRequest request) {
         if (request == null) {
-            throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR, "TipAdjustRequest cannot be null", null);
+            throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR,
+                    "TipAdjustRequest cannot be null", null);
         }
         return httpClient.post(ApiConstants.PATH_TIP_ADJUST, request, TipAdjustResponse.class);
     }
@@ -163,20 +172,25 @@ public class NexusClient implements AutoCloseable {
      */
     public QueryResponse query(QueryRequest request) {
         if (request == null) {
-            throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR, "QueryRequest cannot be null", null);
+            throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR, "QueryRequest cannot be null",
+                    null);
         }
         return httpClient.get(ApiConstants.PATH_QUERY, request, QueryResponse.class);
     }
 
     /**
      * Batch close
+     * <p>
+     * <b>Note: This API is currently under development.</b>
+     * </p>
      *
      * @param request batch close request
      * @return batch close response
      */
     public BatchCloseResponse batchClose(BatchCloseRequest request) {
         if (request == null) {
-            throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR, "BatchCloseRequest cannot be null", null);
+            throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR,
+                    "BatchCloseRequest cannot be null", null);
         }
         return httpClient.post(ApiConstants.PATH_BATCH_CLOSE, request, BatchCloseResponse.class);
     }
@@ -249,7 +263,8 @@ public class NexusClient implements AutoCloseable {
 
         public NexusClient build() {
             if (apiKey == null || apiKey.isEmpty()) {
-                throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR, "API key cannot be null or empty", null);
+                throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR,
+                        "API key cannot be null or empty", null);
             }
             return new NexusClient(this);
         }
