@@ -1,7 +1,7 @@
 package com.sunmi.sunbay.nexus.model.response;
 
-import com.sunmi.sunbay.nexus.model.common.Amount;
 import com.sunmi.sunbay.nexus.model.common.BaseResponse;
+import com.sunmi.sunbay.nexus.model.common.BatchTotalAmount;
 
 /**
  * Batch close response
@@ -10,17 +10,17 @@ import com.sunmi.sunbay.nexus.model.common.BaseResponse;
  */
 public class BatchCloseResponse extends BaseResponse {
 
-    private Integer batchNo;
+    private String batchNo;
     private String terminalSn;
     private String closeTime;
     private Integer transactionCount;
-    private Amount totalAmount;
+    private BatchTotalAmount totalAmount;
 
-    public Integer getBatchNo() {
+    public String getBatchNo() {
         return batchNo;
     }
 
-    public void setBatchNo(Integer batchNo) {
+    public void setBatchNo(String batchNo) {
         this.batchNo = batchNo;
     }
 
@@ -48,11 +48,11 @@ public class BatchCloseResponse extends BaseResponse {
         this.transactionCount = transactionCount;
     }
 
-    public Amount getTotalAmount() {
+    public BatchTotalAmount getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(Amount totalAmount) {
+    public void setTotalAmount(BatchTotalAmount totalAmount) {
         this.totalAmount = totalAmount;
     }
 }

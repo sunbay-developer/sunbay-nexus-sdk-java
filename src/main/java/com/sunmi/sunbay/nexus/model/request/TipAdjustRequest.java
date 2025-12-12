@@ -9,6 +9,7 @@ public class TipAdjustRequest {
 
     private String appId;
     private String merchantId;
+    private String terminalSn;
     private String originalTransactionId;
     private String originalTransactionRequestId;
     private Double tipAmount;
@@ -28,6 +29,14 @@ public class TipAdjustRequest {
 
     public void setMerchantId(String merchantId) {
         this.merchantId = merchantId;
+    }
+
+    public String getTerminalSn() {
+        return terminalSn;
+    }
+
+    public void setTerminalSn(String terminalSn) {
+        this.terminalSn = terminalSn;
     }
 
     public String getOriginalTransactionId() {
