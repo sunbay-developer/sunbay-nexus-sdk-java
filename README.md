@@ -65,8 +65,9 @@ try (SunbayClient client = new SunbayClient.Builder()
 ### 2. Sale Transaction
 
 ```java
-import com.sunmi.sunbay.exception.SunbayBusinessException;
-import com.sunmi.sunbay.exception.SunbayNetworkException;
+import exception.com.sunmi.sunbay.nexus.SunbayBusinessException;
+import exception.com.sunmi.sunbay.nexus.SunbayNetworkException;
+
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -75,37 +76,71 @@ import java.time.format.DateTimeFormatter;
 
 // Build amount
 Amount amount = new Amount();
-amount.setOrderAmount(100.00);
-amount.setPricingCurrency("USD");
+amount.
 
-// Build sale request
-SaleRequest request = new SaleRequest();
-request.setAppId("app_123456");
-request.setMerchantId("mch_789012");
-request.setReferenceOrderId("ORDER20231119001");
-request.setTransactionRequestId("ORDER20231119001" + System.currentTimeMillis());
-request.setAmount(amount);
-request.setTerminalSn("T1234567890");
-request.setDescription("Product purchase");
+        setOrderAmount(100.00);
+amount.
 
-// Set expiration time (optional)
-ZonedDateTime expireTime = ZonedDateTime.now().plusMinutes(10);
-String timeExpire = expireTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX"));
-request.setTimeExpire(timeExpire);
+        setPricingCurrency("USD");
+
+        // Build sale request
+        SaleRequest request = new SaleRequest();
+request.
+
+        setAppId("app_123456");
+request.
+
+        setMerchantId("mch_789012");
+request.
+
+        setReferenceOrderId("ORDER20231119001");
+request.
+
+        setTransactionRequestId("ORDER20231119001"+System.currentTimeMillis());
+        request.
+
+        setAmount(amount);
+request.
+
+        setTerminalSn("T1234567890");
+request.
+
+        setDescription("Product purchase");
+
+        // Set expiration time (optional)
+        ZonedDateTime expireTime = ZonedDateTime.now().plusMinutes(10);
+        String timeExpire = expireTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX"));
+request.
+
+        setTimeExpire(timeExpire);
 
 // Execute transaction
-try {
-    SaleResponse response = client.sale(request);
-    if (response.isSuccess()) {
-        System.out.println("Transaction ID: " + response.getTransactionId());
-    } else {
-        System.out.println("Error: " + response.getMsg());
-    }
-} catch (SunbayNetworkException e) {
-    System.err.println("Network Error: " + e.getMessage());
-} catch (SunbayBusinessException e) {
-    System.err.println("API Error: " + e.getCode() + " - " + e.getMessage());
-}
+try{
+        SaleResponse response = client.sale(request);
+    if(response.
+
+        isSuccess()){
+        System.out.
+
+        println("Transaction ID: "+response.getTransactionId());
+        }else{
+        System.out.
+
+        println("Error: "+response.getMsg());
+        }
+        }catch(
+        SunbayNetworkException e){
+        System.err.
+
+        println("Network Error: "+e.getMessage());
+        }catch(
+        SunbayBusinessException e){
+        System.err.
+
+        println("API Error: "+e.getCode() +" - "+e.
+
+        getMessage());
+        }
 ```
 
 ## API Methods
