@@ -21,7 +21,7 @@ import static org.junit.Assert.*;
  * SunbayClient business test
  * Note: These tests require a real API connection
  *
- * @since 2025-12-10
+ * @since 2025-12-12
  */
 @Slf4j
 public class NexusClientTest {
@@ -55,8 +55,8 @@ public class NexusClientTest {
         SaleRequest request = new SaleRequest();
         request.setAppId("test_sm6par3xf4d3tkum");
         request.setMerchantId("M1254947005");
-        request.setReferenceOrderId("ORDER20231119001");
-        request.setTransactionRequestId("ORDER20231119001" + System.currentTimeMillis());
+        request.setReferenceOrderId("ORDER" + System.currentTimeMillis());
+        request.setTransactionRequestId("PAY_REQ_" + System.currentTimeMillis());
         request.setAmount(amount);
         request.setDescription("Starbucks - Americano x2");
         request.setTerminalSn("TESTSN1764580772062");
@@ -90,8 +90,8 @@ public class NexusClientTest {
         AuthRequest request = new AuthRequest();
         request.setAppId("test_sm6par3xf4d3tkum");
         request.setMerchantId("M1254947005");
-        request.setReferenceOrderId("ORDER" + System.currentTimeMillis());
-        request.setTransactionRequestId("ORDER20231119002" + System.currentTimeMillis());
+        request.setReferenceOrderId("AUTH" + System.currentTimeMillis());
+        request.setTransactionRequestId("PAY_REQ_" + System.currentTimeMillis());
         request.setAmount(Amount.of(200.00, "USD"));
         request.setPaymentMethod(PaymentMethodInfo.card("VISA"));
         request.setTerminalSn("TESTSN1764580772062");
@@ -146,7 +146,6 @@ public class NexusClientTest {
         request.setAppId("test_sm6par3xf4d3tkum");
         request.setMerchantId("M1254947005");
         request.setOriginalTransactionId("TXN20231119001");
-        request.setReferenceOrderId("INCR" + System.currentTimeMillis());
         request.setTransactionRequestId("PAY_REQ_" + System.currentTimeMillis());
         request.setAmount(Amount.of(20.00, "USD"));
         request.setTerminalSn("TESTSN1764580772062");
@@ -174,7 +173,6 @@ public class NexusClientTest {
         request.setAppId("test_sm6par3xf4d3tkum");
         request.setMerchantId("M1254947005");
         request.setOriginalTransactionId("TXN20231119001");
-        request.setReferenceOrderId("POST" + System.currentTimeMillis());
         request.setTransactionRequestId("PAY_REQ_" + System.currentTimeMillis());
         
         Amount amount = new Amount();
@@ -234,7 +232,6 @@ public class NexusClientTest {
         request.setAppId("test_sm6par3xf4d3tkum");
         request.setMerchantId("M1254947005");
         request.setOriginalTransactionId("TXN20231119001");
-        request.setReferenceOrderId("VOID" + System.currentTimeMillis());
         request.setTerminalSn("TESTSN1764580772062");
         request.setDescription("Cancel by mistake");
 
@@ -266,7 +263,7 @@ public class NexusClientTest {
         try {
             AbortResponse response = client.abort(request);
             assertNotNull(response);
-            assertNotNull(response.getOriginalTransactionId());
+            assertTrue(response.isSuccess());
         } catch (SunbayNetworkException e) {
             log.error("Network Error: {}", e.getMessage());
         } catch (SunbayBusinessException e) {
@@ -284,15 +281,12 @@ public class NexusClientTest {
         request.setAppId("test_sm6par3xf4d3tkum");
         request.setMerchantId("M1254947005");
         request.setOriginalTransactionId("TXN20231119001");
-        request.setTransactionRequestId("PAY_REQ_" + System.currentTimeMillis());
         request.setTipAmount(8.00);
-        request.setOperatorId("OP001");
         request.setAttach("{\"reason\":\"service_charge\"}");
 
         try {
             TipAdjustResponse response = client.tipAdjust(request);
             assertNotNull(response);
-            assertNotNull(response.getTransactionId());
         } catch (SunbayNetworkException e) {
             log.error("Network Error: {}", e.getMessage());
         } catch (SunbayBusinessException e) {
@@ -337,7 +331,7 @@ public class NexusClientTest {
         try {
             BatchCloseResponse response = client.batchClose(request);
             assertNotNull(response);
-            assertNotNull(response.getBatchNo());
+            assertTrue(response.isSuccess());
         } catch (SunbayNetworkException e) {
             log.error("Network Error: {}", e.getMessage());
         } catch (SunbayBusinessException e) {

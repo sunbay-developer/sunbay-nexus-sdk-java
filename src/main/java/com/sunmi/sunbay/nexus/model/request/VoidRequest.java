@@ -3,7 +3,7 @@ package com.sunmi.sunbay.nexus.model.request;
 /**
  * Void request
  *
- * @since 2025-12-10
+ * @since 2025-12-12
  */
 public class VoidRequest {
 
@@ -11,7 +11,6 @@ public class VoidRequest {
     private String merchantId;
     private String originalTransactionId;
     private String originalTransactionRequestId;
-    private String referenceOrderId;
     private String transactionRequestId;
     private String description;
     private String terminalSn;
@@ -48,14 +47,6 @@ public class VoidRequest {
 
     public void setOriginalTransactionRequestId(String originalTransactionRequestId) {
         this.originalTransactionRequestId = originalTransactionRequestId;
-    }
-
-    public String getReferenceOrderId() {
-        return referenceOrderId;
-    }
-
-    public void setReferenceOrderId(String referenceOrderId) {
-        this.referenceOrderId = referenceOrderId;
     }
 
     public String getTransactionRequestId() {

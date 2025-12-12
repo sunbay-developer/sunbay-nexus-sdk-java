@@ -3,7 +3,7 @@ package com.sunmi.sunbay.nexus.model.request;
 /**
  * Tip adjust request
  *
- * @since 2025-12-10
+ * @since 2025-12-12
  */
 public class TipAdjustRequest {
 
@@ -11,9 +11,7 @@ public class TipAdjustRequest {
     private String merchantId;
     private String originalTransactionId;
     private String originalTransactionRequestId;
-    private String transactionRequestId;
     private Double tipAmount;
-    private String operatorId;
     private String attach;
 
     public String getAppId() {
@@ -48,28 +46,12 @@ public class TipAdjustRequest {
         this.originalTransactionRequestId = originalTransactionRequestId;
     }
 
-    public String getTransactionRequestId() {
-        return transactionRequestId;
-    }
-
-    public void setTransactionRequestId(String transactionRequestId) {
-        this.transactionRequestId = transactionRequestId;
-    }
-
     public Double getTipAmount() {
         return tipAmount;
     }
 
     public void setTipAmount(Double tipAmount) {
         this.tipAmount = tipAmount;
-    }
-
-    public String getOperatorId() {
-        return operatorId;
-    }
-
-    public void setOperatorId(String operatorId) {
-        this.operatorId = operatorId;
     }
 
     public String getAttach() {

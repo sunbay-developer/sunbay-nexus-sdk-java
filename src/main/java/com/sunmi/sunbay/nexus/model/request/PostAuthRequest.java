@@ -5,7 +5,7 @@ import com.sunmi.sunbay.nexus.model.common.Amount;
 /**
  * Post authorization request
  *
- * @since 2025-12-10
+ * @since 2025-12-12
  */
 public class PostAuthRequest {
 
@@ -13,14 +13,13 @@ public class PostAuthRequest {
     private String merchantId;
     private String originalTransactionId;
     private String originalTransactionRequestId;
-    private String referenceOrderId;
     private String transactionRequestId;
     private Amount amount;
     private String terminalSn;
     private String description;
-    private String operatorId;
     private String attach;
     private String notifyUrl;
+    private String timeExpire;
 
     public String getAppId() {
         return appId;
@@ -52,14 +51,6 @@ public class PostAuthRequest {
 
     public void setOriginalTransactionRequestId(String originalTransactionRequestId) {
         this.originalTransactionRequestId = originalTransactionRequestId;
-    }
-
-    public String getReferenceOrderId() {
-        return referenceOrderId;
-    }
-
-    public void setReferenceOrderId(String referenceOrderId) {
-        this.referenceOrderId = referenceOrderId;
     }
 
     public String getTransactionRequestId() {
@@ -94,14 +85,6 @@ public class PostAuthRequest {
         this.description = description;
     }
 
-    public String getOperatorId() {
-        return operatorId;
-    }
-
-    public void setOperatorId(String operatorId) {
-        this.operatorId = operatorId;
-    }
-
     public String getAttach() {
         return attach;
     }
@@ -116,5 +99,13 @@ public class PostAuthRequest {
 
     public void setNotifyUrl(String notifyUrl) {
         this.notifyUrl = notifyUrl;
+    }
+
+    public String getTimeExpire() {
+        return timeExpire;
+    }
+
+    public void setTimeExpire(String timeExpire) {
+        this.timeExpire = timeExpire;
     }
 }

@@ -1,11 +1,12 @@
 package com.sunmi.sunbay.nexus.model.request;
 
 import com.sunmi.sunbay.nexus.model.common.Amount;
+import com.sunmi.sunbay.nexus.model.common.PaymentMethodInfo;
 
 /**
  * Refund request
  *
- * @since 2025-12-10
+ * @since 2025-12-12
  */
 public class RefundRequest {
 
@@ -16,10 +17,12 @@ public class RefundRequest {
     private String referenceOrderId;
     private String transactionRequestId;
     private Amount amount;
+    private PaymentMethodInfo paymentMethod;
     private String terminalSn;
     private String description;
     private String attach;
     private String notifyUrl;
+    private String timeExpire;
 
     public String getAppId() {
         return appId;
@@ -77,6 +80,14 @@ public class RefundRequest {
         this.amount = amount;
     }
 
+    public PaymentMethodInfo getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(PaymentMethodInfo paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
     public String getTerminalSn() {
         return terminalSn;
     }
@@ -107,5 +118,13 @@ public class RefundRequest {
 
     public void setNotifyUrl(String notifyUrl) {
         this.notifyUrl = notifyUrl;
+    }
+
+    public String getTimeExpire() {
+        return timeExpire;
+    }
+
+    public void setTimeExpire(String timeExpire) {
+        this.timeExpire = timeExpire;
     }
 }

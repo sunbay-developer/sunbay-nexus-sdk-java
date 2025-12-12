@@ -6,7 +6,7 @@ import com.sunmi.sunbay.nexus.model.common.PaymentMethodInfo;
 /**
  * Forced authorization request
  *
- * @since 2025-12-10
+ * @since 2025-12-12
  */
 public class ForcedAuthRequest {
 
@@ -16,12 +16,11 @@ public class ForcedAuthRequest {
     private String transactionRequestId;
     private Amount amount;
     private PaymentMethodInfo paymentMethod;
-    private String authCode;
     private String terminalSn;
     private String description;
-    private String operatorId;
     private String attach;
     private String notifyUrl;
+    private String timeExpire;
 
     public String getAppId() {
         return appId;
@@ -71,14 +70,6 @@ public class ForcedAuthRequest {
         this.paymentMethod = paymentMethod;
     }
 
-    public String getAuthCode() {
-        return authCode;
-    }
-
-    public void setAuthCode(String authCode) {
-        this.authCode = authCode;
-    }
-
     public String getTerminalSn() {
         return terminalSn;
     }
@@ -95,14 +86,6 @@ public class ForcedAuthRequest {
         this.description = description;
     }
 
-    public String getOperatorId() {
-        return operatorId;
-    }
-
-    public void setOperatorId(String operatorId) {
-        this.operatorId = operatorId;
-    }
-
     public String getAttach() {
         return attach;
     }
@@ -117,5 +100,13 @@ public class ForcedAuthRequest {
 
     public void setNotifyUrl(String notifyUrl) {
         this.notifyUrl = notifyUrl;
+    }
+
+    public String getTimeExpire() {
+        return timeExpire;
+    }
+
+    public void setTimeExpire(String timeExpire) {
+        this.timeExpire = timeExpire;
     }
 }

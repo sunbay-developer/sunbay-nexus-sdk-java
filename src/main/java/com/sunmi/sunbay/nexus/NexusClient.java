@@ -1,6 +1,6 @@
 package com.sunmi.sunbay.nexus;
 
-import com.sunmi.sunbay.nexus.client.HttpClient;
+import com.sunmi.sunbay.nexus.http.HttpClient;
 import com.sunmi.sunbay.nexus.constant.ApiConstants;
 import com.sunmi.sunbay.nexus.exception.SunbayBusinessException;
 import com.sunmi.sunbay.nexus.model.request.*;

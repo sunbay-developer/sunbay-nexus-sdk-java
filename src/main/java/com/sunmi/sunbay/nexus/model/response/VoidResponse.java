@@ -5,13 +5,12 @@ import com.sunmi.sunbay.nexus.model.common.BaseResponse;
 /**
  * Void response
  *
- * @since 2025-12-10
+ * @since 2025-12-12
  */
 public class VoidResponse extends BaseResponse {
 
     private String transactionId;
     private String transactionRequestId;
-    private String referenceOrderId;
     private String originalTransactionId;
     private String originalTransactionRequestId;
 
@@ -29,14 +28,6 @@ public class VoidResponse extends BaseResponse {
 
     public void setTransactionRequestId(String transactionRequestId) {
         this.transactionRequestId = transactionRequestId;
-    }
-
-    public String getReferenceOrderId() {
-        return referenceOrderId;
-    }
-
-    public void setReferenceOrderId(String referenceOrderId) {
-        this.referenceOrderId = referenceOrderId;
     }
 
     public String getOriginalTransactionId() {

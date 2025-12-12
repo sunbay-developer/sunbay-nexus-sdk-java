@@ -1,4 +1,4 @@
-package com.sunmi.sunbay.nexus.client;
+package com.sunmi.sunbay.nexus.http;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.sunmi.sunbay.nexus.constant.ApiConstants;

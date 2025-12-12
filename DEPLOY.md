@@ -1,6 +1,6 @@
 # Maven Central 发布指南
 
-本文档记录如何将 `sunbay-java-sdk` 发布到 Maven Central 中央仓库。
+本文档记录如何将 `sunbay-nexus-sdk-java` 发布到 Maven Central 中央仓库。
 
 ---
 
@@ -102,7 +102,7 @@ gpg-connect-agent reloadagent /bye
 确保 `pom.xml` 包含以下配置：
 
 - ✅ `groupId`: `com.sunmi`
-- ✅ `artifactId`: `sunbay-java-sdk`
+- ✅ `artifactId`: `sunbay-nexus-sdk-java`
 - ✅ `version`: 版本号（如 `1.0.0`，不能是 SNAPSHOT）
 - ✅ `<name>`: 项目名称
 - ✅ `<description>`: 项目描述
@@ -167,7 +167,7 @@ mvn clean deploy -DskipTests
 发布完成后，等待 10 分钟到 2 小时，然后访问：
 
 ```
-https://repo1.maven.org/maven2/com/sunmi/sunbay-java-sdk/1.0.0/
+https://repo1.maven.org/maven2/com/sunmi/sunbay-nexus-sdk-java/1.0.0/
 ```
 
 ### 3. 测试依赖
@@ -177,7 +177,7 @@ https://repo1.maven.org/maven2/com/sunmi/sunbay-java-sdk/1.0.0/
 ```xml
 <dependency>
     <groupId>com.sunmi</groupId>
-    <artifactId>sunbay-java-sdk</artifactId>
+    <artifactId>sunbay-nexus-sdk-java</artifactId>
     <version>1.0.0</version>
 </dependency>
 ```
@@ -241,7 +241,7 @@ gpg --keyserver hkp://keys.openpgp.org --send-keys YOUR_KEY_ID
 
 ## 参考信息
 
-- **项目坐标**：`com.sunmi:sunbay-java-sdk:1.0.0`
+- **项目坐标**：`com.sunmi:sunbay-nexus-sdk-java:1.0.0`
 - **GPG 密钥 ID**：`使用 gpg --list-secret-keys --keyid-format LONG 查看`
 - **Maven Central 地址**：https://central.sonatype.com/
 - **发布 API**：https://central.sonatype.com/api/v1/publishing

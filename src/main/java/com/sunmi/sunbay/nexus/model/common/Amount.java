@@ -3,7 +3,7 @@ package com.sunmi.sunbay.nexus.model.common;
 /**
  * Amount information
  *
- * @since 2025-12-10
+ * @since 2025-12-12
  */
 public class Amount {
 
@@ -46,6 +46,11 @@ public class Amount {
      * Transaction amount (calculated field in response)
      */
     private Double transAmount;
+
+    /**
+     * Price currency (used in query response, ISO 4217)
+     */
+    private String priceCurrency;
 
     /**
      * Create Amount with order amount and currency
@@ -123,5 +128,13 @@ public class Amount {
 
     public void setTransAmount(Double transAmount) {
         this.transAmount = transAmount;
+    }
+
+    public String getPriceCurrency() {
+        return priceCurrency;
+    }
+
+    public void setPriceCurrency(String priceCurrency) {
+        this.priceCurrency = priceCurrency;
     }
 }

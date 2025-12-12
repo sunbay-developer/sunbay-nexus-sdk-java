@@ -6,7 +6,7 @@ import com.sunmi.sunbay.nexus.model.common.PaymentMethodInfo;
 /**
  * Authorization request
  *
- * @since 2025-12-10
+ * @since 2025-12-12
  */
 public class AuthRequest {
 
@@ -18,7 +18,6 @@ public class AuthRequest {
     private PaymentMethodInfo paymentMethod;
     private String terminalSn;
     private String description;
-    private String operatorId;
     private String attach;
     private String notifyUrl;
     private String timeExpire;
@@ -85,14 +84,6 @@ public class AuthRequest {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getOperatorId() {
-        return operatorId;
-    }
-
-    public void setOperatorId(String operatorId) {
-        this.operatorId = operatorId;
     }
 
     public String getAttach() {

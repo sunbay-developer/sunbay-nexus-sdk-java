@@ -5,7 +5,7 @@ import com.sunmi.sunbay.nexus.model.common.Amount;
 /**
  * Incremental authorization request
  *
- * @since 2025-12-10
+ * @since 2025-12-12
  */
 public class IncrementalAuthRequest {
 
@@ -13,12 +13,10 @@ public class IncrementalAuthRequest {
     private String merchantId;
     private String originalTransactionId;
     private String originalTransactionRequestId;
-    private String referenceOrderId;
     private String transactionRequestId;
     private Amount amount;
     private String terminalSn;
     private String description;
-    private String operatorId;
     private String attach;
     private String notifyUrl;
 
@@ -54,14 +52,6 @@ public class IncrementalAuthRequest {
         this.originalTransactionRequestId = originalTransactionRequestId;
     }
 
-    public String getReferenceOrderId() {
-        return referenceOrderId;
-    }
-
-    public void setReferenceOrderId(String referenceOrderId) {
-        this.referenceOrderId = referenceOrderId;
-    }
-
     public String getTransactionRequestId() {
         return transactionRequestId;
     }
@@ -92,14 +82,6 @@ public class IncrementalAuthRequest {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getOperatorId() {
-        return operatorId;
-    }
-
-    public void setOperatorId(String operatorId) {
-        this.operatorId = operatorId;
     }
 
     public String getAttach() {

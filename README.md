@@ -18,7 +18,7 @@ Official Java SDK for Sunbay Payment Platform
 ```xml
 <dependency>
     <groupId>com.sunmi</groupId>
-    <artifactId>sunbay-java-sdk</artifactId>
+    <artifactId>sunbay-nexus-sdk-java</artifactId>
     <version>1.0.0</version>
 </dependency>
 ```
@@ -26,20 +26,20 @@ Official Java SDK for Sunbay Payment Platform
 ### Gradle
 
 ```gradle
-implementation 'com.sunmi:sunbay-java-sdk:1.0.0'
+implementation 'com.sunmi:sunbay-nexus-sdk-java:1.0.0'
 ```
 
 ## Quick Start
 
 ### 1. Initialize Client
 
-The `SunbayClient` is thread-safe and can be reused across multiple threads. You have two options:
+The `NexusClient` is thread-safe and can be reused across multiple threads. You have two options:
 
 **Option 1: Use as a singleton (Recommended for production)**
 
 ```java
 // Create once and reuse
-SunbayClient client = new SunbayClient.Builder()
+NexusClient client = new NexusClient.Builder()
     .apiKey("{YOUR_API_KEY}")
     .baseUrl("https://open.sunbay.us")
     .build();
@@ -52,7 +52,7 @@ SunbayClient client = new SunbayClient.Builder()
 
 ```java
 // The client implements AutoCloseable, so you can use try-with-resources
-try (SunbayClient client = new SunbayClient.Builder()
+try (NexusClient client = new NexusClient.Builder()
         .apiKey("{YOUR_API_KEY}")
         .baseUrl("https://open.sunbay.us")
         .build()) {
@@ -65,82 +65,52 @@ try (SunbayClient client = new SunbayClient.Builder()
 ### 2. Sale Transaction
 
 ```java
-import exception.com.sunmi.sunbay.nexus.SunbayBusinessException;
-import exception.com.sunmi.sunbay.nexus.SunbayNetworkException;
+import com.sunmi.sunbay.nexus.NexusClient;
+import com.sunmi.sunbay.nexus.exception.SunbayBusinessException;
+import com.sunmi.sunbay.nexus.exception.SunbayNetworkException;
+import com.sunmi.sunbay.nexus.model.common.Amount;
+import com.sunmi.sunbay.nexus.model.request.SaleRequest;
+import com.sunmi.sunbay.nexus.model.response.SaleResponse;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 // Assume client is already initialized (as singleton or in try-with-resources)
-// SunbayClient client = ... (from step 1)
+// NexusClient client = ... (from step 1)
 
 // Build amount
 Amount amount = new Amount();
-amount.
+amount.setOrderAmount(100.00);
+amount.setPricingCurrency("USD");
 
-        setOrderAmount(100.00);
-amount.
+// Build sale request
+SaleRequest request = new SaleRequest();
+request.setAppId("app_123456");
+request.setMerchantId("mch_789012");
+request.setReferenceOrderId("ORDER20231119001");
+request.setTransactionRequestId("ORDER20231119001" + System.currentTimeMillis());
+request.setAmount(amount);
+request.setTerminalSn("T1234567890");
+request.setDescription("Product purchase");
 
-        setPricingCurrency("USD");
-
-        // Build sale request
-        SaleRequest request = new SaleRequest();
-request.
-
-        setAppId("app_123456");
-request.
-
-        setMerchantId("mch_789012");
-request.
-
-        setReferenceOrderId("ORDER20231119001");
-request.
-
-        setTransactionRequestId("ORDER20231119001"+System.currentTimeMillis());
-        request.
-
-        setAmount(amount);
-request.
-
-        setTerminalSn("T1234567890");
-request.
-
-        setDescription("Product purchase");
-
-        // Set expiration time (optional)
-        ZonedDateTime expireTime = ZonedDateTime.now().plusMinutes(10);
-        String timeExpire = expireTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX"));
-request.
-
-        setTimeExpire(timeExpire);
+// Set expiration time (optional)
+ZonedDateTime expireTime = ZonedDateTime.now().plusMinutes(10);
+String timeExpire = expireTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX"));
+request.setTimeExpire(timeExpire);
 
 // Execute transaction
-try{
-        SaleResponse response = client.sale(request);
-    if(response.
-
-        isSuccess()){
-        System.out.
-
-        println("Transaction ID: "+response.getTransactionId());
-        }else{
-        System.out.
-
-        println("Error: "+response.getMsg());
-        }
-        }catch(
-        SunbayNetworkException e){
-        System.err.
-
-        println("Network Error: "+e.getMessage());
-        }catch(
-        SunbayBusinessException e){
-        System.err.
-
-        println("API Error: "+e.getCode() +" - "+e.
-
-        getMessage());
-        }
+try {
+    SaleResponse response = client.sale(request);
+    if (response.isSuccess()) {
+        System.out.println("Transaction ID: " + response.getTransactionId());
+    } else {
+        System.out.println("Error: " + response.getMsg());
+    }
+} catch (SunbayNetworkException e) {
+    System.err.println("Network Error: " + e.getMessage());
+} catch (SunbayBusinessException e) {
+    System.err.println("API Error: " + e.getCode() + " - " + e.getMessage());
+}
 ```
 
 ## API Methods
@@ -196,7 +166,7 @@ try {
 ## Configuration
 
 ```java
-SunbayClient client = new SunbayClient.Builder()
+NexusClient client = new NexusClient.Builder()
     .apiKey("sk_test_xxx")
     .baseUrl("https://open.sunbay.us")  // Default: https://open.sunbay.us
     .connectTimeout(30000)               // Default: 30000ms (30 seconds)
