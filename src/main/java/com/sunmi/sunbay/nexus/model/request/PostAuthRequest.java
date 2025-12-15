@@ -1,102 +1,66 @@
 package com.sunmi.sunbay.nexus.model.request;
 
-import com.sunmi.sunbay.nexus.model.common.Amount;
+import lombok.Builder;
+import lombok.Data;
+
+import com.sunmi.sunbay.nexus.model.common.PostAuthAmount;
 
 /**
  * Post authorization request
  *
  * @since 2025-12-12
  */
+@Data
+@Builder
 public class PostAuthRequest {
 
+    /**
+     * Application ID
+     */
     private String appId;
+
+    /**
+     * Merchant ID
+     */
     private String merchantId;
+
+    /**
+     * Original authorization transaction ID to complete. Either originalTransactionId or originalTransactionRequestId is required. If both are provided, originalTransactionId takes priority
+     */
     private String originalTransactionId;
+
+    /**
+     * Original authorization transaction request ID to complete. Either originalTransactionId or originalTransactionRequestId is required. If both are provided, originalTransactionId takes priority
+     */
     private String originalTransactionRequestId;
+
+    /**
+     * Transaction request ID for this post authorization transaction. Unique ID to identify this post authorization request, used as API idempotency control field
+     */
     private String transactionRequestId;
-    private Amount amount;
-    private String terminalSn;
+
+    /**
+     * Amount information
+     */
+    private PostAuthAmount amount;
+
+    /**
+     * Product description. Should be a real description representing the product information, may be displayed on some payment App billing pages
+     */
     private String description;
+
+    /**
+     * Terminal serial number. SUNBAY provided financial POS device serial number for reading bank cards and processing PIN security operations
+     */
+    private String terminalSn;
+
+    /**
+     * Additional data, returned as-is, recommended to use JSON format
+     */
     private String attach;
+
+    /**
+     * Asynchronous notification URL
+     */
     private String notifyUrl;
-
-    public String getAppId() {
-        return appId;
-    }
-
-    public void setAppId(String appId) {
-        this.appId = appId;
-    }
-
-    public String getMerchantId() {
-        return merchantId;
-    }
-
-    public void setMerchantId(String merchantId) {
-        this.merchantId = merchantId;
-    }
-
-    public String getOriginalTransactionId() {
-        return originalTransactionId;
-    }
-
-    public void setOriginalTransactionId(String originalTransactionId) {
-        this.originalTransactionId = originalTransactionId;
-    }
-
-    public String getOriginalTransactionRequestId() {
-        return originalTransactionRequestId;
-    }
-
-    public void setOriginalTransactionRequestId(String originalTransactionRequestId) {
-        this.originalTransactionRequestId = originalTransactionRequestId;
-    }
-
-    public String getTransactionRequestId() {
-        return transactionRequestId;
-    }
-
-    public void setTransactionRequestId(String transactionRequestId) {
-        this.transactionRequestId = transactionRequestId;
-    }
-
-    public Amount getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Amount amount) {
-        this.amount = amount;
-    }
-
-    public String getTerminalSn() {
-        return terminalSn;
-    }
-
-    public void setTerminalSn(String terminalSn) {
-        this.terminalSn = terminalSn;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getAttach() {
-        return attach;
-    }
-
-    public void setAttach(String attach) {
-        this.attach = attach;
-    }
-
-    public String getNotifyUrl() {
-        return notifyUrl;
-    }
-
-    public void setNotifyUrl(String notifyUrl) {
-        this.notifyUrl = notifyUrl;
-    }
 }

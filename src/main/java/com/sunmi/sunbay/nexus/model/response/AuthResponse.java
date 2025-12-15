@@ -1,5 +1,8 @@
 package com.sunmi.sunbay.nexus.model.response;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import com.sunmi.sunbay.nexus.model.common.BaseResponse;
 
 /**
@@ -7,33 +10,22 @@ import com.sunmi.sunbay.nexus.model.common.BaseResponse;
  *
  * @since 2025-12-10
  */
+@Data
+@EqualsAndHashCode(callSuper = false)
 public class AuthResponse extends BaseResponse {
 
+    /**
+     * SUNBAY Nexus transaction ID for this authorization transaction, used for subsequent queries, notifications, and post authorization/incremental authorization operations
+     */
     private String transactionId;
-    private String transactionRequestId;
+
+    /**
+     * Reference order ID, returned as-is from request
+     */
     private String referenceOrderId;
 
-    public String getTransactionId() {
-        return transactionId;
-    }
-
-    public void setTransactionId(String transactionId) {
-        this.transactionId = transactionId;
-    }
-
-    public String getTransactionRequestId() {
-        return transactionRequestId;
-    }
-
-    public void setTransactionRequestId(String transactionRequestId) {
-        this.transactionRequestId = transactionRequestId;
-    }
-
-    public String getReferenceOrderId() {
-        return referenceOrderId;
-    }
-
-    public void setReferenceOrderId(String referenceOrderId) {
-        this.referenceOrderId = referenceOrderId;
-    }
+    /**
+     * Transaction request ID, returned as-is from request
+     */
+    private String transactionRequestId;
 }

@@ -1,6 +1,9 @@
 package com.sunmi.sunbay.nexus.model.request;
 
-import com.sunmi.sunbay.nexus.model.common.Amount;
+import lombok.Builder;
+import lombok.Data;
+
+import com.sunmi.sunbay.nexus.model.common.RefundAmount;
 import com.sunmi.sunbay.nexus.model.common.PaymentMethodInfo;
 
 /**
@@ -8,123 +11,72 @@ import com.sunmi.sunbay.nexus.model.common.PaymentMethodInfo;
  *
  * @since 2025-12-12
  */
+@Data
+@Builder
 public class RefundRequest {
 
+    /**
+     * Application ID
+     */
     private String appId;
+
+    /**
+     * Merchant ID
+     */
     private String merchantId;
+
+    /**
+     * Original transaction ID to refund. Either originalTransactionId or originalTransactionRequestId is required for refund with reference. Both must be empty for refund without reference. If both are provided, originalTransactionId takes priority
+     */
     private String originalTransactionId;
+
+    /**
+     * Original transaction request ID to refund. Either originalTransactionId or originalTransactionRequestId is required for refund with reference. Both must be empty for refund without reference. If both are provided, originalTransactionId takes priority
+     */
     private String originalTransactionRequestId;
+
+    /**
+     * Reference order ID. Required for refund without reference, used to associate business records in merchant system. Not required for refund with reference, system will automatically associate with original transaction's reference order ID
+     */
     private String referenceOrderId;
+
+    /**
+     * Transaction request ID for this refund transaction. Unique ID to identify this refund request, used as API idempotency control field
+     */
     private String transactionRequestId;
-    private Amount amount;
+
+    /**
+     * Amount information
+     */
+    private RefundAmount amount;
+
+    /**
+     * Payment method information. Only available for refund without reference. Optional, recommended to omit for maximum flexibility
+     */
     private PaymentMethodInfo paymentMethod;
-    private String terminalSn;
+
+    /**
+     * Refund reason description. Should be a real description representing the refund reason
+     */
     private String description;
+
+    /**
+     * Terminal serial number. SUNBAY provided financial POS device serial number for reading bank cards and processing PIN security operations
+     */
+    private String terminalSn;
+
+    /**
+     * Additional data, returned as-is, recommended to use JSON format
+     */
     private String attach;
+
+    /**
+     * Asynchronous notification URL
+     */
     private String notifyUrl;
+
+    /**
+     * Transaction expiration time, format: yyyy-MM-DDTHH:mm:ss+TIMEZONE (ISO 8601). Transaction will be closed if payment is not completed after this time. Minimum 3 minutes, maximum 1 day, default 1 day if not provided. Only used for refund without reference (requires customer operation on terminal), not needed for refund with reference
+     */
     private String timeExpire;
-
-    public String getAppId() {
-        return appId;
-    }
-
-    public void setAppId(String appId) {
-        this.appId = appId;
-    }
-
-    public String getMerchantId() {
-        return merchantId;
-    }
-
-    public void setMerchantId(String merchantId) {
-        this.merchantId = merchantId;
-    }
-
-    public String getOriginalTransactionId() {
-        return originalTransactionId;
-    }
-
-    public void setOriginalTransactionId(String originalTransactionId) {
-        this.originalTransactionId = originalTransactionId;
-    }
-
-    public String getOriginalTransactionRequestId() {
-        return originalTransactionRequestId;
-    }
-
-    public void setOriginalTransactionRequestId(String originalTransactionRequestId) {
-        this.originalTransactionRequestId = originalTransactionRequestId;
-    }
-
-    public String getReferenceOrderId() {
-        return referenceOrderId;
-    }
-
-    public void setReferenceOrderId(String referenceOrderId) {
-        this.referenceOrderId = referenceOrderId;
-    }
-
-    public String getTransactionRequestId() {
-        return transactionRequestId;
-    }
-
-    public void setTransactionRequestId(String transactionRequestId) {
-        this.transactionRequestId = transactionRequestId;
-    }
-
-    public Amount getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Amount amount) {
-        this.amount = amount;
-    }
-
-    public PaymentMethodInfo getPaymentMethod() {
-        return paymentMethod;
-    }
-
-    public void setPaymentMethod(PaymentMethodInfo paymentMethod) {
-        this.paymentMethod = paymentMethod;
-    }
-
-    public String getTerminalSn() {
-        return terminalSn;
-    }
-
-    public void setTerminalSn(String terminalSn) {
-        this.terminalSn = terminalSn;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getAttach() {
-        return attach;
-    }
-
-    public void setAttach(String attach) {
-        this.attach = attach;
-    }
-
-    public String getNotifyUrl() {
-        return notifyUrl;
-    }
-
-    public void setNotifyUrl(String notifyUrl) {
-        this.notifyUrl = notifyUrl;
-    }
-
-    public String getTimeExpire() {
-        return timeExpire;
-    }
-
-    public void setTimeExpire(String timeExpire) {
-        this.timeExpire = timeExpire;
-    }
 }

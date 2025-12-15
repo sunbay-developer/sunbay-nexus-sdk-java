@@ -1,5 +1,8 @@
 package com.sunmi.sunbay.nexus.model.response;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import com.sunmi.sunbay.nexus.model.common.Amount;
 import com.sunmi.sunbay.nexus.model.common.BaseResponse;
 
@@ -8,222 +11,127 @@ import com.sunmi.sunbay.nexus.model.common.BaseResponse;
  *
  * @since 2025-12-10
  */
+@Data
+@EqualsAndHashCode(callSuper = false)
 public class QueryResponse extends BaseResponse {
 
+    /**
+     * SUNBAY Nexus transaction ID
+     */
     private String transactionId;
+
+    /**
+     * Transaction request ID
+     */
     private String transactionRequestId;
+
+    /**
+     * Reference order ID (only returned for transactions with reference order ID such as sale, authorization, forced authorization)
+     */
     private String referenceOrderId;
+
+    /**
+     * Transaction status: INITIAL(initial)/PROCESSING(processing)/SUCCESS(success)/FAIL(failed)/CLOSED(closed)
+     */
     private String transactionStatus;
+
+    /**
+     * Transaction type: AUTH(authorization)/SALE(sale)/FORCED_AUTH(forced authorization)/INCREMENTAL(incremental authorization)/POST_AUTH(post authorization)/VOID(void)/REFUND(refund)
+     */
     private String transactionType;
+
+    /**
+     * Transaction amount details
+     */
     private Amount amount;
+
+    /**
+     * Transaction creation time, format: yyyy-MM-DDTHH:mm:ss+TIMEZONE (ISO 8601)
+     */
     private String createTime;
+
+    /**
+     * Transaction completion time, format: yyyy-MM-DDTHH:mm:ss+TIMEZONE (ISO 8601)
+     */
     private String completeTime;
+
+    /**
+     * Masked card number (first 6 digits + **** + last 4 digits)
+     */
     private String maskedPan;
+
+    /**
+     * Card network type: CREDIT(credit card)/DEBIT(debit card)/EBT/EGC/UNKNOWN
+     */
     private String cardNetworkType;
+
+    /**
+     * Payment method ID
+     */
     private String paymentMethodId;
+
+    /**
+     * Sub payment method ID
+     */
     private String subPaymentMethodId;
-    private Integer batchNo;
+
+    /**
+     * Batch number
+     */
+    private String batchNo;
+
+    /**
+     * Voucher number
+     */
     private String voucherNo;
+
+    /**
+     * System trace number
+     */
     private String stan;
+
+    /**
+     * Reference number
+     */
     private String rrn;
+
+    /**
+     * Authorization code
+     */
     private String authCode;
+
+    /**
+     * Entry mode: MANUAL(manual input)/SWIPE(swipe)/FALLBACK_SWIPE(swipe fallback)/CONTACT(contact)/CONTACTLESS(contactless)
+     */
     private String entryMode;
+
+    /**
+     * Authentication method: NOT_AUTHENTICATED(not authenticated)/PIN/OFFLINE_PIN/BY_PASS/SIGNATURE
+     */
     private String authenticationMethod;
+
+    /**
+     * Transaction result code
+     */
     private String transactionResultCode;
+
+    /**
+     * Transaction result message
+     */
     private String transactionResultMsg;
+
+    /**
+     * Terminal serial number
+     */
     private String terminalSn;
+
+    /**
+     * Product description
+     */
     private String description;
+
+    /**
+     * Additional data, returned as-is
+     */
     private String attach;
-
-    public String getTransactionId() {
-        return transactionId;
-    }
-
-    public void setTransactionId(String transactionId) {
-        this.transactionId = transactionId;
-    }
-
-    public String getTransactionRequestId() {
-        return transactionRequestId;
-    }
-
-    public void setTransactionRequestId(String transactionRequestId) {
-        this.transactionRequestId = transactionRequestId;
-    }
-
-    public String getReferenceOrderId() {
-        return referenceOrderId;
-    }
-
-    public void setReferenceOrderId(String referenceOrderId) {
-        this.referenceOrderId = referenceOrderId;
-    }
-
-    public String getTransactionStatus() {
-        return transactionStatus;
-    }
-
-    public void setTransactionStatus(String transactionStatus) {
-        this.transactionStatus = transactionStatus;
-    }
-
-    public String getTransactionType() {
-        return transactionType;
-    }
-
-    public void setTransactionType(String transactionType) {
-        this.transactionType = transactionType;
-    }
-
-    public Amount getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Amount amount) {
-        this.amount = amount;
-    }
-
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getCompleteTime() {
-        return completeTime;
-    }
-
-    public void setCompleteTime(String completeTime) {
-        this.completeTime = completeTime;
-    }
-
-    public String getMaskedPan() {
-        return maskedPan;
-    }
-
-    public void setMaskedPan(String maskedPan) {
-        this.maskedPan = maskedPan;
-    }
-
-    public String getCardNetworkType() {
-        return cardNetworkType;
-    }
-
-    public void setCardNetworkType(String cardNetworkType) {
-        this.cardNetworkType = cardNetworkType;
-    }
-
-    public String getPaymentMethodId() {
-        return paymentMethodId;
-    }
-
-    public void setPaymentMethodId(String paymentMethodId) {
-        this.paymentMethodId = paymentMethodId;
-    }
-
-    public String getSubPaymentMethodId() {
-        return subPaymentMethodId;
-    }
-
-    public void setSubPaymentMethodId(String subPaymentMethodId) {
-        this.subPaymentMethodId = subPaymentMethodId;
-    }
-
-    public Integer getBatchNo() {
-        return batchNo;
-    }
-
-    public void setBatchNo(Integer batchNo) {
-        this.batchNo = batchNo;
-    }
-
-    public String getVoucherNo() {
-        return voucherNo;
-    }
-
-    public void setVoucherNo(String voucherNo) {
-        this.voucherNo = voucherNo;
-    }
-
-    public String getStan() {
-        return stan;
-    }
-
-    public void setStan(String stan) {
-        this.stan = stan;
-    }
-
-    public String getRrn() {
-        return rrn;
-    }
-
-    public void setRrn(String rrn) {
-        this.rrn = rrn;
-    }
-
-    public String getAuthCode() {
-        return authCode;
-    }
-
-    public void setAuthCode(String authCode) {
-        this.authCode = authCode;
-    }
-
-    public String getEntryMode() {
-        return entryMode;
-    }
-
-    public void setEntryMode(String entryMode) {
-        this.entryMode = entryMode;
-    }
-
-    public String getAuthenticationMethod() {
-        return authenticationMethod;
-    }
-
-    public void setAuthenticationMethod(String authenticationMethod) {
-        this.authenticationMethod = authenticationMethod;
-    }
-
-    public String getTransactionResultCode() {
-        return transactionResultCode;
-    }
-
-    public void setTransactionResultCode(String transactionResultCode) {
-        this.transactionResultCode = transactionResultCode;
-    }
-
-    public String getTransactionResultMsg() {
-        return transactionResultMsg;
-    }
-
-    public void setTransactionResultMsg(String transactionResultMsg) {
-        this.transactionResultMsg = transactionResultMsg;
-    }
-
-    public String getTerminalSn() {
-        return terminalSn;
-    }
-
-    public void setTerminalSn(String terminalSn) {
-        this.terminalSn = terminalSn;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getAttach() {
-        return attach;
-    }
-
-    public void setAttach(String attach) {
-        this.attach = attach;
-    }
 }

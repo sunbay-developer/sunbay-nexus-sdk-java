@@ -1,5 +1,8 @@
 package com.sunmi.sunbay.nexus.model.response;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import com.sunmi.sunbay.nexus.model.common.BaseResponse;
 
 /**
@@ -7,24 +10,17 @@ import com.sunmi.sunbay.nexus.model.common.BaseResponse;
  *
  * @since 2025-12-10
  */
+@Data
+@EqualsAndHashCode(callSuper = false)
 public class AbortResponse extends BaseResponse {
 
+    /**
+     * Aborted transaction's SUNBAY Nexus transaction ID
+     */
     private String originalTransactionId;
+
+    /**
+     * Aborted transaction's request ID (only returned when provided in request)
+     */
     private String originalTransactionRequestId;
-
-    public String getOriginalTransactionId() {
-        return originalTransactionId;
-    }
-
-    public void setOriginalTransactionId(String originalTransactionId) {
-        this.originalTransactionId = originalTransactionId;
-    }
-
-    public String getOriginalTransactionRequestId() {
-        return originalTransactionRequestId;
-    }
-
-    public void setOriginalTransactionRequestId(String originalTransactionRequestId) {
-        this.originalTransactionRequestId = originalTransactionRequestId;
-    }
 }

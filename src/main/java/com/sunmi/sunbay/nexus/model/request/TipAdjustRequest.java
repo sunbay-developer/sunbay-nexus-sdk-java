@@ -1,73 +1,49 @@
 package com.sunmi.sunbay.nexus.model.request;
 
+import lombok.Builder;
+import lombok.Data;
+
 /**
  * Tip adjust request
  *
  * @since 2025-12-12
  */
+@Data
+@Builder
 public class TipAdjustRequest {
 
+    /**
+     * Application ID
+     */
     private String appId;
+
+    /**
+     * Merchant ID
+     */
     private String merchantId;
+
+    /**
+     * Terminal serial number
+     */
     private String terminalSn;
+
+    /**
+     * Original transaction ID to adjust tip. Either originalTransactionId or originalTransactionRequestId is required. If both are provided, originalTransactionId takes priority
+     */
     private String originalTransactionId;
+
+    /**
+     * Original transaction request ID to adjust tip. Either originalTransactionId or originalTransactionRequestId is required. If both are provided, originalTransactionId takes priority
+     */
     private String originalTransactionRequestId;
+
+    /**
+     * New tip amount after adjustment, in basic currency unit
+     */
     private Double tipAmount;
+
+    /**
+     * Additional data, returned as-is, recommended to use JSON format
+     */
     private String attach;
-
-    public String getAppId() {
-        return appId;
-    }
-
-    public void setAppId(String appId) {
-        this.appId = appId;
-    }
-
-    public String getMerchantId() {
-        return merchantId;
-    }
-
-    public void setMerchantId(String merchantId) {
-        this.merchantId = merchantId;
-    }
-
-    public String getTerminalSn() {
-        return terminalSn;
-    }
-
-    public void setTerminalSn(String terminalSn) {
-        this.terminalSn = terminalSn;
-    }
-
-    public String getOriginalTransactionId() {
-        return originalTransactionId;
-    }
-
-    public void setOriginalTransactionId(String originalTransactionId) {
-        this.originalTransactionId = originalTransactionId;
-    }
-
-    public String getOriginalTransactionRequestId() {
-        return originalTransactionRequestId;
-    }
-
-    public void setOriginalTransactionRequestId(String originalTransactionRequestId) {
-        this.originalTransactionRequestId = originalTransactionRequestId;
-    }
-
-    public Double getTipAmount() {
-        return tipAmount;
-    }
-
-    public void setTipAmount(Double tipAmount) {
-        this.tipAmount = tipAmount;
-    }
-
-    public String getAttach() {
-        return attach;
-    }
-
-    public void setAttach(String attach) {
-        this.attach = attach;
-    }
 }

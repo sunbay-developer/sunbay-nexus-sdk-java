@@ -1,5 +1,8 @@
 package com.sunmi.sunbay.nexus.model.response;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import com.sunmi.sunbay.nexus.model.common.BaseResponse;
 
 /**
@@ -7,33 +10,22 @@ import com.sunmi.sunbay.nexus.model.common.BaseResponse;
  *
  * @since 2025-12-12
  */
+@Data
+@EqualsAndHashCode(callSuper = false)
 public class TipAdjustResponse extends BaseResponse {
 
+    /**
+     * Original transaction's SUNBAY Nexus transaction ID (only returned when provided in request)
+     */
     private String originalTransactionId;
+
+    /**
+     * Original transaction's request ID (only returned when provided in request)
+     */
     private String originalTransactionRequestId;
+
+    /**
+     * Adjusted tip amount, in basic currency unit, returned as-is from request
+     */
     private Double tipAmount;
-
-    public String getOriginalTransactionId() {
-        return originalTransactionId;
-    }
-
-    public void setOriginalTransactionId(String originalTransactionId) {
-        this.originalTransactionId = originalTransactionId;
-    }
-
-    public String getOriginalTransactionRequestId() {
-        return originalTransactionRequestId;
-    }
-
-    public void setOriginalTransactionRequestId(String originalTransactionRequestId) {
-        this.originalTransactionRequestId = originalTransactionRequestId;
-    }
-
-    public Double getTipAmount() {
-        return tipAmount;
-    }
-
-    public void setTipAmount(Double tipAmount) {
-        this.tipAmount = tipAmount;
-    }
 }

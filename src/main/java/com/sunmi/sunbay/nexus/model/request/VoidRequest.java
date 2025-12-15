@@ -1,91 +1,59 @@
 package com.sunmi.sunbay.nexus.model.request;
 
+import lombok.Builder;
+import lombok.Data;
+
 /**
  * Void request
  *
  * @since 2025-12-12
  */
+@Data
+@Builder
 public class VoidRequest {
 
+    /**
+     * Application ID
+     */
     private String appId;
+
+    /**
+     * Merchant ID
+     */
     private String merchantId;
+
+    /**
+     * Original transaction ID to void. Either originalTransactionId or originalTransactionRequestId is required. If both are provided, originalTransactionId takes priority
+     */
     private String originalTransactionId;
+
+    /**
+     * Original transaction request ID to void. Either originalTransactionId or originalTransactionRequestId is required. If both are provided, originalTransactionId takes priority
+     */
     private String originalTransactionRequestId;
+
+    /**
+     * Transaction request ID for this void transaction. Unique ID to identify this void request, used as API idempotency control field
+     */
     private String transactionRequestId;
+
+    /**
+     * Void reason description
+     */
     private String description;
+
+    /**
+     * Terminal serial number. SUNBAY provided financial POS device serial number for reading bank cards and processing PIN security operations
+     */
     private String terminalSn;
+
+    /**
+     * Additional data, returned as-is, recommended to use JSON format
+     */
     private String attach;
+
+    /**
+     * Asynchronous notification URL
+     */
     private String notifyUrl;
-
-    public String getAppId() {
-        return appId;
-    }
-
-    public void setAppId(String appId) {
-        this.appId = appId;
-    }
-
-    public String getMerchantId() {
-        return merchantId;
-    }
-
-    public void setMerchantId(String merchantId) {
-        this.merchantId = merchantId;
-    }
-
-    public String getOriginalTransactionId() {
-        return originalTransactionId;
-    }
-
-    public void setOriginalTransactionId(String originalTransactionId) {
-        this.originalTransactionId = originalTransactionId;
-    }
-
-    public String getOriginalTransactionRequestId() {
-        return originalTransactionRequestId;
-    }
-
-    public void setOriginalTransactionRequestId(String originalTransactionRequestId) {
-        this.originalTransactionRequestId = originalTransactionRequestId;
-    }
-
-    public String getTransactionRequestId() {
-        return transactionRequestId;
-    }
-
-    public void setTransactionRequestId(String transactionRequestId) {
-        this.transactionRequestId = transactionRequestId;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getTerminalSn() {
-        return terminalSn;
-    }
-
-    public void setTerminalSn(String terminalSn) {
-        this.terminalSn = terminalSn;
-    }
-
-    public String getAttach() {
-        return attach;
-    }
-
-    public void setAttach(String attach) {
-        this.attach = attach;
-    }
-
-    public String getNotifyUrl() {
-        return notifyUrl;
-    }
-
-    public void setNotifyUrl(String notifyUrl) {
-        this.notifyUrl = notifyUrl;
-    }
 }

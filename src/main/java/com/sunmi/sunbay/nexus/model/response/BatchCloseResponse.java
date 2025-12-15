@@ -1,5 +1,8 @@
 package com.sunmi.sunbay.nexus.model.response;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import com.sunmi.sunbay.nexus.model.common.BaseResponse;
 import com.sunmi.sunbay.nexus.model.common.BatchTotalAmount;
 
@@ -8,51 +11,32 @@ import com.sunmi.sunbay.nexus.model.common.BatchTotalAmount;
  *
  * @since 2025-12-10
  */
+@Data
+@EqualsAndHashCode(callSuper = false)
 public class BatchCloseResponse extends BaseResponse {
 
+    /**
+     * Batch number
+     */
     private String batchNo;
+
+    /**
+     * Terminal serial number
+     */
     private String terminalSn;
+
+    /**
+     * Batch close time, format: yyyy-MM-DDTHH:mm:ss+TIMEZONE (ISO 8601)
+     */
     private String closeTime;
+
+    /**
+     * Number of transactions in the batch
+     */
     private Integer transactionCount;
+
+    /**
+     * Total amount of the batch
+     */
     private BatchTotalAmount totalAmount;
-
-    public String getBatchNo() {
-        return batchNo;
-    }
-
-    public void setBatchNo(String batchNo) {
-        this.batchNo = batchNo;
-    }
-
-    public String getTerminalSn() {
-        return terminalSn;
-    }
-
-    public void setTerminalSn(String terminalSn) {
-        this.terminalSn = terminalSn;
-    }
-
-    public String getCloseTime() {
-        return closeTime;
-    }
-
-    public void setCloseTime(String closeTime) {
-        this.closeTime = closeTime;
-    }
-
-    public Integer getTransactionCount() {
-        return transactionCount;
-    }
-
-    public void setTransactionCount(Integer transactionCount) {
-        this.transactionCount = transactionCount;
-    }
-
-    public BatchTotalAmount getTotalAmount() {
-        return totalAmount;
-    }
-
-    public void setTotalAmount(BatchTotalAmount totalAmount) {
-        this.totalAmount = totalAmount;
-    }
 }

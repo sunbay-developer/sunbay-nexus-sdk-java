@@ -1,73 +1,44 @@
 package com.sunmi.sunbay.nexus.model.request;
 
+import lombok.Builder;
+import lombok.Data;
+
 /**
  * Batch close request
  *
  * @since 2025-12-10
  */
+@Data
+@Builder
 public class BatchCloseRequest {
 
+    /**
+     * Application ID
+     */
     private String appId;
+
+    /**
+     * Merchant ID
+     */
     private String merchantId;
+
+    /**
+     * Batch close request unique identifier. Unique ID to identify this batch close request, used as API idempotency control field, can be used later to query batch close results
+     */
     private String transactionRequestId;
+
+    /**
+     * Terminal serial number. SUNBAY provided financial POS device serial number for reading bank cards and processing PIN security operations
+     */
     private String terminalSn;
-    private Boolean enablePushToTerminal;
+
+    /**
+     * Batch close description
+     */
     private String description;
+
+    /**
+     * Additional data, returned as-is, recommended to use JSON format
+     */
     private String attach;
-
-    public String getAppId() {
-        return appId;
-    }
-
-    public void setAppId(String appId) {
-        this.appId = appId;
-    }
-
-    public String getMerchantId() {
-        return merchantId;
-    }
-
-    public void setMerchantId(String merchantId) {
-        this.merchantId = merchantId;
-    }
-
-    public String getTransactionRequestId() {
-        return transactionRequestId;
-    }
-
-    public void setTransactionRequestId(String transactionRequestId) {
-        this.transactionRequestId = transactionRequestId;
-    }
-
-    public String getTerminalSn() {
-        return terminalSn;
-    }
-
-    public void setTerminalSn(String terminalSn) {
-        this.terminalSn = terminalSn;
-    }
-
-    public Boolean getEnablePushToTerminal() {
-        return enablePushToTerminal;
-    }
-
-    public void setEnablePushToTerminal(Boolean enablePushToTerminal) {
-        this.enablePushToTerminal = enablePushToTerminal;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getAttach() {
-        return attach;
-    }
-
-    public void setAttach(String attach) {
-        this.attach = attach;
-    }
 }

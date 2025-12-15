@@ -1,5 +1,8 @@
 package com.sunmi.sunbay.nexus.model.response;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import com.sunmi.sunbay.nexus.model.common.BaseResponse;
 
 /**
@@ -7,51 +10,32 @@ import com.sunmi.sunbay.nexus.model.common.BaseResponse;
  *
  * @since 2025-12-10
  */
+@Data
+@EqualsAndHashCode(callSuper = false)
 public class RefundResponse extends BaseResponse {
 
+    /**
+     * SUNBAY Nexus transaction ID for this refund transaction, used for subsequent queries and notifications
+     */
     private String transactionId;
-    private String transactionRequestId;
+
+    /**
+     * Reference order ID (same as original transaction for refund with reference, new refund reference order ID for refund without reference)
+     */
     private String referenceOrderId;
+
+    /**
+     * Transaction request ID for this refund, returned as-is from request
+     */
+    private String transactionRequestId;
+
+    /**
+     * Original transaction ID (only returned for refund with reference)
+     */
     private String originalTransactionId;
+
+    /**
+     * Original transaction request ID (only returned for refund with reference)
+     */
     private String originalTransactionRequestId;
-
-    public String getTransactionId() {
-        return transactionId;
-    }
-
-    public void setTransactionId(String transactionId) {
-        this.transactionId = transactionId;
-    }
-
-    public String getTransactionRequestId() {
-        return transactionRequestId;
-    }
-
-    public void setTransactionRequestId(String transactionRequestId) {
-        this.transactionRequestId = transactionRequestId;
-    }
-
-    public String getReferenceOrderId() {
-        return referenceOrderId;
-    }
-
-    public void setReferenceOrderId(String referenceOrderId) {
-        this.referenceOrderId = referenceOrderId;
-    }
-
-    public String getOriginalTransactionId() {
-        return originalTransactionId;
-    }
-
-    public void setOriginalTransactionId(String originalTransactionId) {
-        this.originalTransactionId = originalTransactionId;
-    }
-
-    public String getOriginalTransactionRequestId() {
-        return originalTransactionRequestId;
-    }
-
-    public void setOriginalTransactionRequestId(String originalTransactionRequestId) {
-        this.originalTransactionRequestId = originalTransactionRequestId;
-    }
 }

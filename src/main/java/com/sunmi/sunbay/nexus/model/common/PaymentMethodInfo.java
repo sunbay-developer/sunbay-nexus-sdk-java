@@ -1,50 +1,28 @@
 package com.sunmi.sunbay.nexus.model.common;
 
-import com.sunmi.sunbay.nexus.enums.PaymentCategory;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Payment method information
  *
  * @since 2025-12-10
  */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class PaymentMethodInfo {
 
     /**
-     * Payment category
+     * Payment category: CARD (bank card)/CARD-CREDIT (credit card network)/CARD-DEBIT (debit card network)/QR-MPM (QR code merchant present mode)/QR-CPM (QR code customer present mode)
      */
     private String category;
 
     /**
-     * Payment method ID
+     * Specific payment method: WECHAT (WeChat)/ALIPAY (Alipay) etc. For card payments, usually only category needs to be specified
      */
     private String id;
-
-    /**
-     * Create card payment method
-     *
-     * @param cardType card type (e.g., VISA, MASTERCARD)
-     * @return PaymentMethodInfo instance
-     */
-    public static PaymentMethodInfo card(String cardType) {
-        PaymentMethodInfo info = new PaymentMethodInfo();
-        info.setCategory(PaymentCategory.CARD.getValue());
-        info.setId(cardType);
-        return info;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 }

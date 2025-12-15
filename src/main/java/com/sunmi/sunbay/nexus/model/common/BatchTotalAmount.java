@@ -1,10 +1,19 @@
 package com.sunmi.sunbay.nexus.model.common;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * Batch total amount information
  *
  * @since 2025-12-12
  */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class BatchTotalAmount {
 
     /**
@@ -16,21 +25,5 @@ public class BatchTotalAmount {
      * Total amount
      */
     private Double amount;
-
-    public String getPriceCurrency() {
-        return priceCurrency;
-    }
-
-    public void setPriceCurrency(String priceCurrency) {
-        this.priceCurrency = priceCurrency;
-    }
-
-    public Double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
 }
 

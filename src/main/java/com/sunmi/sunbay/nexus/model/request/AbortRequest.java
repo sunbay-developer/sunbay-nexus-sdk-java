@@ -1,73 +1,49 @@
 package com.sunmi.sunbay.nexus.model.request;
 
+import lombok.Builder;
+import lombok.Data;
+
 /**
  * Abort request
  *
  * @since 2025-12-10
  */
+@Data
+@Builder
 public class AbortRequest {
 
+    /**
+     * Application ID
+     */
     private String appId;
+
+    /**
+     * Merchant ID
+     */
     private String merchantId;
+
+    /**
+     * Original transaction ID to abort. Either originalTransactionId or originalTransactionRequestId is required. If both are provided, originalTransactionId takes priority
+     */
     private String originalTransactionId;
+
+    /**
+     * Original transaction request ID to abort. Either originalTransactionId or originalTransactionRequestId is required. If both are provided, originalTransactionId takes priority
+     */
     private String originalTransactionRequestId;
+
+    /**
+     * Terminal serial number. SUNBAY provided financial POS device serial number for reading bank cards and processing PIN security operations
+     */
     private String terminalSn;
+
+    /**
+     * Abort reason description
+     */
     private String description;
+
+    /**
+     * Additional data, returned as-is, recommended to use JSON format
+     */
     private String attach;
-
-    public String getAppId() {
-        return appId;
-    }
-
-    public void setAppId(String appId) {
-        this.appId = appId;
-    }
-
-    public String getMerchantId() {
-        return merchantId;
-    }
-
-    public void setMerchantId(String merchantId) {
-        this.merchantId = merchantId;
-    }
-
-    public String getOriginalTransactionId() {
-        return originalTransactionId;
-    }
-
-    public void setOriginalTransactionId(String originalTransactionId) {
-        this.originalTransactionId = originalTransactionId;
-    }
-
-    public String getOriginalTransactionRequestId() {
-        return originalTransactionRequestId;
-    }
-
-    public void setOriginalTransactionRequestId(String originalTransactionRequestId) {
-        this.originalTransactionRequestId = originalTransactionRequestId;
-    }
-
-    public String getTerminalSn() {
-        return terminalSn;
-    }
-
-    public void setTerminalSn(String terminalSn) {
-        this.terminalSn = terminalSn;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getAttach() {
-        return attach;
-    }
-
-    public void setAttach(String attach) {
-        this.attach = attach;
-    }
 }

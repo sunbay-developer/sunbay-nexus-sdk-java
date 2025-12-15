@@ -2,7 +2,7 @@ package com.sunmi.sunbay.nexus;
 
 import com.sunmi.sunbay.nexus.exception.SunbayBusinessException;
 import com.sunmi.sunbay.nexus.exception.SunbayNetworkException;
-import com.sunmi.sunbay.nexus.model.common.Amount;
+import com.sunmi.sunbay.nexus.model.common.*;
 import com.sunmi.sunbay.nexus.model.common.PaymentMethodInfo;
 import com.sunmi.sunbay.nexus.model.request.*;
 import com.sunmi.sunbay.nexus.model.response.*;
@@ -46,27 +46,29 @@ public class NexusClientTest {
     @Test
     @Ignore("Requires real API connection")
     public void testSale() {
-        // Build amount with all fields
-        Amount amount = new Amount();
-        amount.setOrderAmount(100.00);
-        amount.setPricingCurrency("USD");
-
-        // Build sale request
-        SaleRequest request = new SaleRequest();
-        request.setAppId("test_sm6par3xf4d3tkum");
-        request.setMerchantId("M1254947005");
-        request.setReferenceOrderId("ORDER" + System.currentTimeMillis());
-        request.setTransactionRequestId("PAY_REQ_" + System.currentTimeMillis());
-        request.setAmount(amount);
-        request.setDescription("Starbucks - Americano x2");
-        request.setTerminalSn("TESTSN1764580772062");
-        request.setAttach("{\"storeId\":\"STORE001\",\"tableNo\":\"T05\"}");
-        request.setNotifyUrl("https://merchant.com/notify");
-        
         // Set timeExpire (format: yyyy-MM-DDTHH:mm:ss+TIMEZONE, ISO 8601)
         ZonedDateTime expireTime = ZonedDateTime.now().plusMinutes(10);
         String timeExpire = expireTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX"));
-        request.setTimeExpire(timeExpire);
+
+        // Build amount with all fields
+        SaleAmount amount = SaleAmount.builder()
+                .orderAmount(100.00)
+                .pricingCurrency("USD")
+                .build();
+
+        // Build sale request
+        SaleRequest request = SaleRequest.builder()
+                .appId("test_sm6par3xf4d3tkum")
+                .merchantId("M1254947005")
+                .referenceOrderId("ORDER" + System.currentTimeMillis())
+                .transactionRequestId("PAY_REQ_" + System.currentTimeMillis())
+                .amount(amount)
+                .description("Starbucks - Americano x2")
+                .terminalSn("TESTSN1764580772062")
+                .attach("{\"storeId\":\"STORE001\",\"tableNo\":\"T05\"}")
+                .notifyUrl("https://merchant.com/notify")
+                .timeExpire(timeExpire)
+                .build();
 
         try {
             SaleResponse response = client.sale(request);
@@ -87,15 +89,21 @@ public class NexusClientTest {
     @Test
     @Ignore("Requires real API connection")
     public void testAuth() {
-        AuthRequest request = new AuthRequest();
-        request.setAppId("test_sm6par3xf4d3tkum");
-        request.setMerchantId("M1254947005");
-        request.setReferenceOrderId("AUTH" + System.currentTimeMillis());
-        request.setTransactionRequestId("PAY_REQ_" + System.currentTimeMillis());
-        request.setAmount(Amount.of(200.00, "USD"));
-        request.setPaymentMethod(PaymentMethodInfo.card("VISA"));
-        request.setTerminalSn("TESTSN1764580772062");
-        request.setDescription("Hotel reservation");
+        AuthRequest request = AuthRequest.builder()
+                .appId("test_sm6par3xf4d3tkum")
+                .merchantId("M1254947005")
+                .referenceOrderId("AUTH" + System.currentTimeMillis())
+                .transactionRequestId("PAY_REQ_" + System.currentTimeMillis())
+                .amount(AuthAmount.builder()
+                        .orderAmount(200.00)
+                        .pricingCurrency("USD")
+                        .build())
+                .paymentMethod(PaymentMethodInfo.builder()
+                        .category("CARD")
+                        .build())
+                .terminalSn("TESTSN1764580772062")
+                .description("Hotel reservation")
+                .build();
 
         try {
             AuthResponse response = client.auth(request);
@@ -114,16 +122,20 @@ public class NexusClientTest {
     @Test
     @Ignore("Requires real API connection")
     public void testForcedAuth() {
-        ForcedAuthRequest request = new ForcedAuthRequest();
-        request.setAppId("test_sm6par3xf4d3tkum");
-        request.setMerchantId("M1254947005");
-        request.setReferenceOrderId("FORCED" + System.currentTimeMillis());
-        request.setTransactionRequestId("PAY_REQ_" + System.currentTimeMillis());
-        request.setAmount(Amount.of(100.00, "USD"));
-        request.setTerminalSn("TESTSN1764580772062");
-        request.setDescription("Forced authorization");
-        request.setAttach("{\"reason\":\"chip_damaged\"}");
-        request.setNotifyUrl("https://merchant.com/notify");
+        ForcedAuthRequest request = ForcedAuthRequest.builder()
+                .appId("test_sm6par3xf4d3tkum")
+                .merchantId("M1254947005")
+                .referenceOrderId("FORCED" + System.currentTimeMillis())
+                .transactionRequestId("PAY_REQ_" + System.currentTimeMillis())
+                .amount(AuthAmount.builder()
+                        .orderAmount(100.00)
+                        .pricingCurrency("USD")
+                        .build())
+                .terminalSn("TESTSN1764580772062")
+                .description("Forced authorization")
+                .attach("{\"reason\":\"chip_damaged\"}")
+                .notifyUrl("https://merchant.com/notify")
+                .build();
 
         try {
             ForcedAuthResponse response = client.forcedAuth(request);
@@ -142,15 +154,19 @@ public class NexusClientTest {
     @Test
     @Ignore("Requires real API connection")
     public void testIncrementalAuth() {
-        IncrementalAuthRequest request = new IncrementalAuthRequest();
-        request.setAppId("test_sm6par3xf4d3tkum");
-        request.setMerchantId("M1254947005");
-        request.setOriginalTransactionId("TXN20231119001");
-        request.setTransactionRequestId("PAY_REQ_" + System.currentTimeMillis());
-        request.setAmount(Amount.of(20.00, "USD"));
-        request.setTerminalSn("TESTSN1764580772062");
-        request.setDescription("Increase authorization amount");
-        request.setAttach("{\"reason\":\"additional_charge\"}");
+        IncrementalAuthRequest request = IncrementalAuthRequest.builder()
+                .appId("test_sm6par3xf4d3tkum")
+                .merchantId("M1254947005")
+                .originalTransactionId("TXN20231119001")
+                .transactionRequestId("PAY_REQ_" + System.currentTimeMillis())
+                .amount(AuthAmount.builder()
+                        .orderAmount(20.00)
+                        .pricingCurrency("USD")
+                        .build())
+                .terminalSn("TESTSN1764580772062")
+                .description("Increase authorization amount")
+                .attach("{\"reason\":\"additional_charge\"}")
+                .build();
 
         try {
             IncrementalAuthResponse response = client.incrementalAuth(request);
@@ -169,22 +185,23 @@ public class NexusClientTest {
     @Test
     @Ignore("Requires real API connection")
     public void testPostAuth() {
-        PostAuthRequest request = new PostAuthRequest();
-        request.setAppId("test_sm6par3xf4d3tkum");
-        request.setMerchantId("M1254947005");
-        request.setOriginalTransactionId("TXN20231119001");
-        request.setTransactionRequestId("PAY_REQ_" + System.currentTimeMillis());
-        
-        Amount amount = new Amount();
-        amount.setOrderAmount(100.00);
-        amount.setTipAmount(5.00);
-        amount.setTaxAmount(8.00);
-        amount.setPricingCurrency("USD");
-        request.setAmount(amount);
-        
-        request.setTerminalSn("TESTSN1764580772062");
-        request.setDescription("Pre-auth completion");
-        request.setAttach("{\"checkoutTime\":\"2023-11-19T12:00:00+08:00\"}");
+        PostAuthAmount amount = PostAuthAmount.builder()
+                .orderAmount(100.00)
+                .tipAmount(5.00)
+                .taxAmount(8.00)
+                .pricingCurrency("USD")
+                .build();
+
+        PostAuthRequest request = PostAuthRequest.builder()
+                .appId("test_sm6par3xf4d3tkum")
+                .merchantId("M1254947005")
+                .originalTransactionId("TXN20231119001")
+                .transactionRequestId("PAY_REQ_" + System.currentTimeMillis())
+                .amount(amount)
+                .terminalSn("TESTSN1764580772062")
+                .description("Pre-auth completion")
+                .attach("{\"checkoutTime\":\"2023-11-19T12:00:00+08:00\"}")
+                .build();
 
         try {
             PostAuthResponse response = client.postAuth(request);
@@ -203,13 +220,18 @@ public class NexusClientTest {
     @Test
     @Ignore("Requires real API connection")
     public void testRefund() {
-        RefundRequest request = new RefundRequest();
-        request.setAppId("test_sm6par3xf4d3tkum");
-        request.setMerchantId("M1254947005");
-        request.setOriginalTransactionId("TXN20231119001");
-        request.setAmount(Amount.of(50.00, "USD"));
-        request.setTerminalSn("TESTSN1764580772062");
-        request.setDescription("Refund for quality issue");
+        RefundRequest request = RefundRequest.builder()
+                .appId("test_sm6par3xf4d3tkum")
+                .merchantId("M1254947005")
+                .originalTransactionId("TXN20231119001")
+                .transactionRequestId("PAY_REQ_" + System.currentTimeMillis())
+                .amount(RefundAmount.builder()
+                        .orderAmount(50.00)
+                        .pricingCurrency("USD")
+                        .build())
+                .terminalSn("TESTSN1764580772062")
+                .description("Refund for quality issue")
+                .build();
 
         try {
             RefundResponse response = client.refund(request);
@@ -228,12 +250,14 @@ public class NexusClientTest {
     @Test
     @Ignore("Requires real API connection")
     public void testVoid() {
-        VoidRequest request = new VoidRequest();
-        request.setAppId("test_sm6par3xf4d3tkum");
-        request.setMerchantId("M1254947005");
-        request.setOriginalTransactionId("TXN20231119001");
-        request.setTerminalSn("TESTSN1764580772062");
-        request.setDescription("Cancel by mistake");
+        VoidRequest request = VoidRequest.builder()
+                .appId("test_sm6par3xf4d3tkum")
+                .merchantId("M1254947005")
+                .originalTransactionId("TXN20231119001")
+                .transactionRequestId("PAY_REQ_" + System.currentTimeMillis())
+                .terminalSn("TESTSN1764580772062")
+                .description("Cancel by mistake")
+                .build();
 
         try {
             VoidResponse response = client.voidTransaction(request);
@@ -252,13 +276,14 @@ public class NexusClientTest {
     @Test
     @Ignore("Requires real API connection")
     public void testAbort() {
-        AbortRequest request = new AbortRequest();
-        request.setAppId("test_sm6par3xf4d3tkum");
-        request.setMerchantId("M1254947005");
-        request.setOriginalTransactionId("TXN20231119001");
-        request.setTerminalSn("TESTSN1764580772062");
-        request.setDescription("Customer cancelled payment");
-        request.setAttach("{\"reason\":\"customer_cancel\"}");
+        AbortRequest request = AbortRequest.builder()
+                .appId("test_sm6par3xf4d3tkum")
+                .merchantId("M1254947005")
+                .originalTransactionId("TXN20231119001")
+                .terminalSn("TESTSN1764580772062")
+                .description("Customer cancelled payment")
+                .attach("{\"reason\":\"customer_cancel\"}")
+                .build();
 
         try {
             AbortResponse response = client.abort(request);
@@ -277,12 +302,14 @@ public class NexusClientTest {
     @Test
     @Ignore("Requires real API connection")
     public void testTipAdjust() {
-        TipAdjustRequest request = new TipAdjustRequest();
-        request.setAppId("test_sm6par3xf4d3tkum");
-        request.setMerchantId("M1254947005");
-        request.setOriginalTransactionId("TXN20231119001");
-        request.setTipAmount(8.00);
-        request.setAttach("{\"reason\":\"service_charge\"}");
+        TipAdjustRequest request = TipAdjustRequest.builder()
+                .appId("test_sm6par3xf4d3tkum")
+                .merchantId("M1254947005")
+                .terminalSn("TESTSN1764580772062")
+                .originalTransactionId("TXN20231119001")
+                .tipAmount(8.00)
+                .attach("{\"reason\":\"service_charge\"}")
+                .build();
 
         try {
             TipAdjustResponse response = client.tipAdjust(request);
@@ -300,10 +327,11 @@ public class NexusClientTest {
     @Test
     @Ignore("Requires real API connection")
     public void testQuery() {
-        QueryRequest request = new QueryRequest();
-        request.setAppId("test_sm6par3xf4d3tkum");
-        request.setMerchantId("M1254947005");
-        request.setTransactionId("TXN20231119001");
+        QueryRequest request = QueryRequest.builder()
+                .appId("test_sm6par3xf4d3tkum")
+                .merchantId("M1254947005")
+                .transactionId("TXN20231119001")
+                .build();
 
         try {
             QueryResponse response = client.query(request);
@@ -322,11 +350,13 @@ public class NexusClientTest {
     @Test
     @Ignore("Requires real API connection")
     public void testBatchClose() {
-        BatchCloseRequest request = new BatchCloseRequest();
-        request.setAppId("test_sm6par3xf4d3tkum");
-        request.setMerchantId("M1254947005");
-        request.setEnablePushToTerminal(false);
-        request.setDescription("End of day settlement");
+        BatchCloseRequest request = BatchCloseRequest.builder()
+                .appId("test_sm6par3xf4d3tkum")
+                .merchantId("M1254947005")
+                .transactionRequestId("BATCH_CLOSE_" + System.currentTimeMillis())
+                .terminalSn("TESTSN1764580772062")
+                .description("End of day settlement")
+                .build();
 
         try {
             BatchCloseResponse response = client.batchClose(request);

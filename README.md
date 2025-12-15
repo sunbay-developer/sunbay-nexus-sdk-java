@@ -5,6 +5,7 @@ Official Java SDK for Sunbay Payment Platform
 ## Features
 
 - ✅ Simple and intuitive API
+- ✅ Builder pattern for easy request construction
 - ✅ Support Java 8+
 - ✅ Automatic authentication
 - ✅ Automatic retry for GET requests
@@ -68,7 +69,7 @@ try (NexusClient client = new NexusClient.Builder()
 import com.sunmi.sunbay.nexus.NexusClient;
 import com.sunmi.sunbay.nexus.exception.SunbayBusinessException;
 import com.sunmi.sunbay.nexus.exception.SunbayNetworkException;
-import com.sunmi.sunbay.nexus.model.common.Amount;
+import com.sunmi.sunbay.nexus.model.common.SaleAmount;
 import com.sunmi.sunbay.nexus.model.request.SaleRequest;
 import com.sunmi.sunbay.nexus.model.response.SaleResponse;
 
@@ -78,25 +79,27 @@ import java.time.format.DateTimeFormatter;
 // Assume client is already initialized (as singleton or in try-with-resources)
 // NexusClient client = ... (from step 1)
 
-// Build amount
-Amount amount = new Amount();
-amount.setOrderAmount(100.00);
-amount.setPricingCurrency("USD");
-
-// Build sale request
-SaleRequest request = new SaleRequest();
-request.setAppId("app_123456");
-request.setMerchantId("mch_789012");
-request.setReferenceOrderId("ORDER20231119001");
-request.setTransactionRequestId("ORDER20231119001" + System.currentTimeMillis());
-request.setAmount(amount);
-request.setTerminalSn("T1234567890");
-request.setDescription("Product purchase");
-
 // Set expiration time (optional)
 ZonedDateTime expireTime = ZonedDateTime.now().plusMinutes(10);
 String timeExpire = expireTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX"));
-request.setTimeExpire(timeExpire);
+
+// Build amount using Builder pattern
+SaleAmount amount = SaleAmount.builder()
+    .orderAmount(100.00)
+    .pricingCurrency("USD")
+    .build();
+
+// Build sale request using Builder pattern
+SaleRequest request = SaleRequest.builder()
+    .appId("app_123456")
+    .merchantId("mch_789012")
+    .referenceOrderId("ORDER20231119001")
+    .transactionRequestId("PAY_REQ_" + System.currentTimeMillis())
+    .amount(amount)
+    .description("Product purchase")
+    .terminalSn("T1234567890")
+    .timeExpire(timeExpire)
+    .build();
 
 // Execute transaction
 try {
@@ -115,6 +118,8 @@ try {
 
 ## API Methods
 
+All request classes support Builder pattern for easy construction. Here are some examples:
+
 ### Transaction APIs
 
 - `sale(SaleRequest)` - Sale transaction
@@ -127,6 +132,37 @@ try {
 - `abort(AbortRequest)` - Abort transaction
 - `tipAdjust(TipAdjustRequest)` - Tip adjust
 
+**Example: Authorization**
+
+```java
+AuthRequest request = AuthRequest.builder()
+    .appId("app_123456")
+    .merchantId("mch_789012")
+    .referenceOrderId("AUTH" + System.currentTimeMillis())
+    .transactionRequestId("PAY_REQ_" + System.currentTimeMillis())
+    .amount(AuthAmount.builder()
+        .orderAmount(200.00)
+        .pricingCurrency("USD")
+        .build())
+    .description("Hotel reservation")
+    .terminalSn("T1234567890")
+    .build();
+
+AuthResponse response = client.auth(request);
+```
+
+**Example: Query Transaction**
+
+```java
+QueryRequest request = QueryRequest.builder()
+    .appId("app_123456")
+    .merchantId("mch_789012")
+    .transactionId("TXN20231119001")
+    .build();
+
+QueryResponse response = client.query(request);
+```
+
 ### Query APIs
 
 - `query(QueryRequest)` - Query transaction
@@ -134,6 +170,20 @@ try {
 ### Settlement APIs
 
 - `batchClose(BatchCloseRequest)` - Batch close
+
+**Example: Batch Close**
+
+```java
+BatchCloseRequest request = BatchCloseRequest.builder()
+    .appId("app_123456")
+    .merchantId("mch_789012")
+    .transactionRequestId("BATCH_CLOSE_" + System.currentTimeMillis())
+    .terminalSn("T1234567890")
+    .description("End of day settlement")
+    .build();
+
+BatchCloseResponse response = client.batchClose(request);
+```
 
 ## Exception Handling
 
@@ -145,6 +195,20 @@ The SDK throws two types of exceptions:
 Always catch `SunbayNetworkException` before `SunbayBusinessException`:
 
 ```java
+// Build request using Builder pattern
+SaleRequest request = SaleRequest.builder()
+    .appId("app_123456")
+    .merchantId("mch_789012")
+    .referenceOrderId("ORDER20231119001")
+    .transactionRequestId("PAY_REQ_" + System.currentTimeMillis())
+    .amount(SaleAmount.builder()
+        .orderAmount(100.00)
+        .pricingCurrency("USD")
+        .build())
+    .description("Product purchase")
+    .terminalSn("T1234567890")
+    .build();
+
 try {
     SaleResponse response = client.sale(request);
     // Handle success

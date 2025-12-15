@@ -1,5 +1,7 @@
 package com.sunmi.sunbay.nexus.model.common;
 
+import lombok.Data;
+
 import com.sunmi.sunbay.nexus.constant.ApiConstants;
 
 /**
@@ -7,6 +9,7 @@ import com.sunmi.sunbay.nexus.constant.ApiConstants;
  *
  * @since 2025-12-10
  */
+@Data
 public class BaseResponse {
 
     /**
@@ -31,29 +34,4 @@ public class BaseResponse {
      */
     public boolean isSuccess() {
         return ApiConstants.RESPONSE_SUCCESS_CODE.equals(code);
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public String getTraceId() {
-        return traceId;
-    }
-
-    public void setTraceId(String traceId) {
-        this.traceId = traceId;
-    }
-}
+    }}

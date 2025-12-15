@@ -1,6 +1,9 @@
 package com.sunmi.sunbay.nexus.model.request;
 
-import com.sunmi.sunbay.nexus.model.common.Amount;
+import lombok.Builder;
+import lombok.Data;
+
+import com.sunmi.sunbay.nexus.model.common.AuthAmount;
 import com.sunmi.sunbay.nexus.model.common.PaymentMethodInfo;
 
 /**
@@ -8,105 +11,62 @@ import com.sunmi.sunbay.nexus.model.common.PaymentMethodInfo;
  *
  * @since 2025-12-12
  */
+@Data
+@Builder
 public class ForcedAuthRequest {
 
+    /**
+     * Application ID
+     */
     private String appId;
+
+    /**
+     * Merchant ID
+     */
     private String merchantId;
+
+    /**
+     * Reference order ID for the forced authorization transaction. Unique ID assigned by merchant system to identify this forced authorization transaction, 6-32 characters, can only contain numbers, uppercase/lowercase letters, _-\|*
+     */
     private String referenceOrderId;
+
+    /**
+     * Transaction request ID for this forced authorization transaction. Unique ID to identify this forced authorization transaction request, used as API idempotency control field
+     */
     private String transactionRequestId;
-    private Amount amount;
+
+    /**
+     * Amount information
+     */
+    private AuthAmount amount;
+
+    /**
+     * Payment method information. Optional, recommended to omit for maximum flexibility
+     */
     private PaymentMethodInfo paymentMethod;
-    private String terminalSn;
+
+    /**
+     * Product description. Should be a real description representing the product information, may be displayed on some payment App billing pages
+     */
     private String description;
+
+    /**
+     * Terminal serial number. SUNBAY provided financial POS device serial number for reading bank cards and processing PIN security operations
+     */
+    private String terminalSn;
+
+    /**
+     * Additional data, returned as-is, recommended to use JSON format
+     */
     private String attach;
+
+    /**
+     * Asynchronous notification URL
+     */
     private String notifyUrl;
+
+    /**
+     * Transaction expiration time, format: yyyy-MM-DDTHH:mm:ss+TIMEZONE (ISO 8601). Transaction will be closed if payment is not completed after this time. Minimum 3 minutes, maximum 1 day, default 1 day if not provided
+     */
     private String timeExpire;
-
-    public String getAppId() {
-        return appId;
-    }
-
-    public void setAppId(String appId) {
-        this.appId = appId;
-    }
-
-    public String getMerchantId() {
-        return merchantId;
-    }
-
-    public void setMerchantId(String merchantId) {
-        this.merchantId = merchantId;
-    }
-
-    public String getReferenceOrderId() {
-        return referenceOrderId;
-    }
-
-    public void setReferenceOrderId(String referenceOrderId) {
-        this.referenceOrderId = referenceOrderId;
-    }
-
-    public String getTransactionRequestId() {
-        return transactionRequestId;
-    }
-
-    public void setTransactionRequestId(String transactionRequestId) {
-        this.transactionRequestId = transactionRequestId;
-    }
-
-    public Amount getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Amount amount) {
-        this.amount = amount;
-    }
-
-    public PaymentMethodInfo getPaymentMethod() {
-        return paymentMethod;
-    }
-
-    public void setPaymentMethod(PaymentMethodInfo paymentMethod) {
-        this.paymentMethod = paymentMethod;
-    }
-
-    public String getTerminalSn() {
-        return terminalSn;
-    }
-
-    public void setTerminalSn(String terminalSn) {
-        this.terminalSn = terminalSn;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getAttach() {
-        return attach;
-    }
-
-    public void setAttach(String attach) {
-        this.attach = attach;
-    }
-
-    public String getNotifyUrl() {
-        return notifyUrl;
-    }
-
-    public void setNotifyUrl(String notifyUrl) {
-        this.notifyUrl = notifyUrl;
-    }
-
-    public String getTimeExpire() {
-        return timeExpire;
-    }
-
-    public void setTimeExpire(String timeExpire) {
-        this.timeExpire = timeExpire;
-    }
 }
