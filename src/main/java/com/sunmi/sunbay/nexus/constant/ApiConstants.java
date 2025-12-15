@@ -59,6 +59,11 @@ public class ApiConstants {
     public static final String SEMI_INTEGRATION_PREFIX = "/v1/semi-integration";
 
     /**
+     * Common API path prefix
+     */
+    public static final String COMMON_PREFIX = "/v1";
+
+    /**
      * Semi-integration transaction API paths
      */
     public static final String PATH_SALE = SEMI_INTEGRATION_PREFIX + "/transaction/sale";
@@ -70,7 +75,7 @@ public class ApiConstants {
     public static final String PATH_VOID = SEMI_INTEGRATION_PREFIX + "/transaction/void";
     public static final String PATH_ABORT = SEMI_INTEGRATION_PREFIX + "/transaction/abort";
     public static final String PATH_TIP_ADJUST = SEMI_INTEGRATION_PREFIX + "/transaction/tip-adjust";
-    public static final String PATH_QUERY = SEMI_INTEGRATION_PREFIX + "/transaction/query";
+    public static final String PATH_QUERY = COMMON_PREFIX + "/transaction/query";
 
     /**
      * Semi-integration settlement API paths

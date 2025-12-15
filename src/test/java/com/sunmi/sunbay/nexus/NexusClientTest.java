@@ -330,7 +330,8 @@ public class NexusClientTest {
         QueryRequest request = QueryRequest.builder()
                 .appId("test_sm6par3xf4d3tkum")
                 .merchantId("M1254947005")
-                .transactionId("TXN20231119001")
+                //.transactionId("7225836056468005")
+                .transactionRequestId("PAY_REQ_1765785418963")
                 .build();
 
         try {
