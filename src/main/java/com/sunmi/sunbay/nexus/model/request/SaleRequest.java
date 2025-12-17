@@ -31,7 +31,9 @@ public class SaleRequest {
     private String referenceOrderId;
 
     /**
-     * Transaction request ID for this sale transaction. Unique ID to identify this sale transaction request, used as API idempotency control field
+     * Unique request identifier for this sale transaction. Used as the API idempotency key to ensure that retrying the
+     * same request does not create multiple transactions. Can only contain letters, digits, underscore (_) and hyphen (-),
+     * with a maximum length of 64 characters. Each request must use a value that has not been used before.
      */
     private String transactionRequestId;
 
