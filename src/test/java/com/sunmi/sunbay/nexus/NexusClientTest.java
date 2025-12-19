@@ -32,7 +32,7 @@ public class NexusClientTest {
     public void setUp() {
         // Initialize client with test credentials
         client = new NexusClient.Builder()
-                .apiKey("o5zoxq8y9berp71ngrr6p85vjj5xsgg7")
+                .apiKey("mfgyn0hvs9teofvuad03jkwvmtrdm2sb")
                 .baseUrl("https://open.sunbay.dev")
                 .connectTimeout(30000)
                 .readTimeout(60000)
@@ -52,7 +52,7 @@ public class NexusClientTest {
 
         // Build amount with all fields
         SaleAmount amount = SaleAmount.builder()
-                .orderAmount(100.00)
+                .orderAmount(222.00)
                 .pricingCurrency("USD")
                 .build();
 
@@ -227,6 +227,10 @@ public class NexusClientTest {
                 .transactionRequestId("PAY_REQ_" + System.currentTimeMillis())
                 .amount(RefundAmount.builder()
                         .orderAmount(50.00)
+                        .tipAmount(5.00)
+                        .taxAmount(8.00)
+                        .surchargeAmount(2.00)
+                        .cashbackAmount(10.00)
                         .pricingCurrency("USD")
                         .build())
                 .terminalSn("TESTSN1764580772062")
