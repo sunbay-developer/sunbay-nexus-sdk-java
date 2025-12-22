@@ -137,3 +137,6 @@ Icon
 
 # Deployment documentation (should not be committed)
 DEPLOY.md
+
+# Test resources (should not be committed)
+src/test/
