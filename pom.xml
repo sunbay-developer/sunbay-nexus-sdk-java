@@ -12,7 +12,7 @@
 
     <name>Sunbay Java SDK</name>
     <description>Official Java SDK for Sunbay Nexus Payment Platform. Provides a simple and intuitive API for integrating with Sunbay payment services. Features include automatic authentication, automatic retry for GET requests, comprehensive exception handling, and minimal dependencies. Supports Java 8+.</description>
-    <url>https://www.sunmi.com/</url>
+    <url>https://github.com/sunbay-developer/sunbay-nexus-sdk-java</url>
 
     <licenses>
         <license>
@@ -29,7 +29,9 @@
     </developers>
 
     <scm>
-        <url>https://www.sunmi.com/</url>
+        <connection>scm:git:git://github.com/sunbay-developer/sunbay-nexus-sdk-java.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/sunbay-developer/sunbay-nexus-sdk-java.git</developerConnection>
+        <url>https://github.com/sunbay-developer/sunbay-nexus-sdk-java</url>
     </scm>
 
     <properties>
