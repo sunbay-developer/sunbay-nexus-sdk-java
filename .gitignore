@@ -134,3 +134,6 @@ Icon
 ## hack for graddle wrapper
 !wrapper/*.jar
 !**/wrapper/*.jar
+
+# Deployment documentation (should not be committed)
+DEPLOY.md
