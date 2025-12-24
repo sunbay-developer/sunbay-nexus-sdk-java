@@ -7,7 +7,9 @@ import com.sunmi.sunbay.nexus.exception.SunbayNetworkException;
 import com.sunmi.sunbay.nexus.model.common.BaseResponse;
 import com.sunmi.sunbay.nexus.util.IdGenerator;
 import com.sunmi.sunbay.nexus.util.JsonUtil;
+import com.sunmi.sunbay.nexus.util.UserAgentUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -42,6 +44,7 @@ public class HttpClient implements AutoCloseable {
     private static final String HEADER_CONTENT_TYPE = "Content-Type";
     private static final String HEADER_REQUEST_ID = "X-Client-Request-Id";
     private static final String HEADER_TIMESTAMP = "X-Timestamp";
+    private static final String HEADER_USER_AGENT = "User-Agent";
     private static final String CONTENT_TYPE_JSON = "application/json";
     private static final long RETRY_DELAY_BASE_MS = 1000L;
 
@@ -172,6 +175,7 @@ public class HttpClient implements AutoCloseable {
         request.addHeader(HEADER_AUTHORIZATION, ApiConstants.AUTHORIZATION_BEARER_PREFIX + apiKey);
         request.addHeader(HEADER_REQUEST_ID, IdGenerator.generateRequestId());
         request.addHeader(HEADER_TIMESTAMP, String.valueOf(System.currentTimeMillis()));
+        request.addHeader(HEADER_USER_AGENT, UserAgentUtil.getUserAgent());
 
         if (ApiConstants.HTTP_METHOD_POST.equalsIgnoreCase(method)) {
             request.addHeader(HEADER_CONTENT_TYPE, CONTENT_TYPE_JSON);
@@ -233,10 +237,11 @@ public class HttpClient implements AutoCloseable {
         
         // Log request
         if (log.isInfoEnabled()) {
+            String headers = formatHeadersForLogging(request);
             if (requestBody != null && !requestBody.isEmpty()) {
-                log.info("Request {} {} - Body: {}", requestMethod, requestUrl, requestBody);
+                log.info("Request {} {} - Headers: {} - Body: {}", requestMethod, requestUrl, headers, requestBody);
             } else {
-                log.info("Request {} {}", requestMethod, requestUrl);
+                log.info("Request {} {} - Headers: {}", requestMethod, requestUrl, headers);
             }
         }
         
@@ -289,6 +294,66 @@ public class HttpClient implements AutoCloseable {
         }
     }
     
+    /**
+     * Format request headers for logging with sensitive information masked
+     *
+     * @param request HTTP request
+     * @return formatted headers string
+     */
+    private String formatHeadersForLogging(HttpRequestBase request) {
+        StringBuilder sb = new StringBuilder("{");
+        Header[] headers = request.getAllHeaders();
+        boolean first = true;
+        
+        for (Header header : headers) {
+            if (!first) {
+                sb.append(", ");
+            }
+            first = false;
+            
+            String name = header.getName();
+            String value = header.getValue();
+            
+            // Mask sensitive headers
+            if (HEADER_AUTHORIZATION.equalsIgnoreCase(name)) {
+                value = maskAuthorizationHeader(value);
+            }
+            
+            sb.append("\"").append(name).append("\":\"").append(value).append("\"");
+        }
+        
+        sb.append("}");
+        return sb.toString();
+    }
+
+    /**
+     * Mask authorization header value to hide sensitive information
+     *
+     * @param authValue original authorization header value
+     * @return masked authorization header value
+     */
+    private String maskAuthorizationHeader(String authValue) {
+        if (authValue == null || authValue.isEmpty()) {
+            return "";
+        }
+        
+        // If it starts with "Bearer ", mask the token part
+        if (authValue.startsWith(ApiConstants.AUTHORIZATION_BEARER_PREFIX)) {
+            String token = authValue.substring(ApiConstants.AUTHORIZATION_BEARER_PREFIX.length());
+            if (token.length() > 8) {
+                // Show first 4 and last 4 characters, mask the middle
+                return ApiConstants.AUTHORIZATION_BEARER_PREFIX + 
+                       token.substring(0, 4) + "****" + token.substring(token.length() - 4);
+            } else {
+                // If token is too short, just show "****"
+                return ApiConstants.AUTHORIZATION_BEARER_PREFIX + "****";
+            }
+        }
+        
+        // For other formats, mask completely
+        return "****";
+    }
+
     /**
      * Extract request body from HTTP request before execution
      * Note: This method reads the entity, so we need to recreate it after reading
