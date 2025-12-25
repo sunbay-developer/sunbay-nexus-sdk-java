@@ -261,18 +261,8 @@ public class HttpClient implements AutoCloseable {
                 }
                 
                 // Parse response with data field support
-                T result = parseResponse(responseBody, responseType);
-                if (result == null) {
-                    throw new SunbayNetworkException("Failed to parse response body", false);
-                }
-                if (!result.isSuccess()) {
-                    if (log.isErrorEnabled()) {
-                        log.error("API error {} {} - code: {}, msg: {}, traceId: {}", 
-                                requestMethod, requestUrl, result.getCode(), result.getMsg(), result.getTraceId());
-                    }
-                    throw new SunbayBusinessException(result.getCode(), result.getMsg(), result.getTraceId());
-                }
-                return result;
+                // parseResponse will throw SunbayBusinessException if business code is not success
+                return parseResponse(responseBody, responseType);
             } else {
                 String errorMessage = buildErrorMessage(statusCode, responseBody);
                 if (log.isErrorEnabled()) {
@@ -417,15 +407,32 @@ public class HttpClient implements AutoCloseable {
                 result.setCode(code);
                 result.setMsg(msg);
                 result.setTraceId(traceId);
+                
+                // Check business success code, throw exception if failed
+                if (!result.isSuccess()) {
+                    if (log.isErrorEnabled()) {
+                        log.error("API business error - code: {}, msg: {}, traceId: {}", 
+                                code, msg, traceId);
+                    }
+                    throw new SunbayBusinessException(code, msg, traceId);
+                }
             }
             
             return result;
+        } catch (SunbayBusinessException e) {
+            // Re-throw business exception
+            throw e;
         } catch (Exception e) {
-            // Fallback to direct parsing
+            // Fallback to direct parsing for JSON parsing errors
             if (log.isDebugEnabled()) {
                 log.debug("Failed to parse response with data field, fallback to direct parsing: {}", e.getMessage());
             }
-            return JsonUtil.fromJson(responseBody, responseType);
+            T result = JsonUtil.fromJson(responseBody, responseType);
+            // Check business success code after fallback parsing
+            if (result != null && !result.isSuccess()) {
+                throw new SunbayBusinessException(result.getCode(), result.getMsg(), result.getTraceId());
+            }
+            return result;
         }
     }
 

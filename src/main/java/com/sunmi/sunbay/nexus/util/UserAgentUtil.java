@@ -7,7 +7,7 @@ import java.util.Properties;
  * User-Agent utility for generating SDK User-Agent string
  * <p>
  * Format: SunbayNexusSDK-{Language}/{SDKVersion} {Language}/{LanguageVersion} {OS}/{OSVersion}
- * Example: SunbayNexusSDK-Java/1.0.2 Java/1.8.0_291 Darwin/25.1.0
+ * Example: SunbayNexusSDK-Java/1.0.3 Java/1.8.0_291 Darwin/25.1.0
  * </p>
  *
  * @since 2025-12-22

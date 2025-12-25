@@ -20,14 +20,14 @@ Official Java SDK for Sunbay Payment Platform
 <dependency>
     <groupId>com.sunmi</groupId>
     <artifactId>sunbay-nexus-sdk-java</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
 </dependency>
 ```
 
 ### Gradle
 
 ```gradle
-implementation 'com.sunmi:sunbay-nexus-sdk-java:1.0.2'
+implementation 'com.sunmi:sunbay-nexus-sdk-java:1.0.3'
 ```
 
 ## Quick Start
@@ -104,11 +104,8 @@ SaleRequest request = SaleRequest.builder()
 // Execute transaction
 try {
     SaleResponse response = client.sale(request);
-    if (response.isSuccess()) {
-        System.out.println("Transaction ID: " + response.getTransactionId());
-    } else {
-        System.out.println("Error: " + response.getMsg());
-    }
+    // If no exception is thrown, the transaction is successful
+    System.out.println("Transaction ID: " + response.getTransactionId());
 } catch (SunbayNetworkException e) {
     System.err.println("Network Error: " + e.getMessage());
 } catch (SunbayBusinessException e) {
@@ -211,7 +208,8 @@ SaleRequest request = SaleRequest.builder()
 
 try {
     SaleResponse response = client.sale(request);
-    // Handle success
+    // If no exception is thrown, the transaction is successful
+    // Use response object here
 } catch (SunbayNetworkException e) {
     // Network exception (e.g., connection timeout, network error)
     System.err.println("Network Error: " + e.getMessage());
