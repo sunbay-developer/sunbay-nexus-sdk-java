@@ -20,27 +20,27 @@ public class SaleAmount {
     /**
      * Order amount (required)
      */
-    private Double orderAmount;
+    private Integer orderAmount;
 
     /**
      * Tip amount (optional)
      */
-    private Double tipAmount;
+    private Integer tipAmount;
 
     /**
      * Tax amount (optional)
      */
-    private Double taxAmount;
+    private Integer taxAmount;
 
     /**
      * Surcharge amount (optional)
      */
-    private Double surchargeAmount;
+    private Integer surchargeAmount;
 
     /**
      * Cashback amount (optional)
      */
-    private Double cashbackAmount;
+    private Integer cashbackAmount;
 
     /**
      * Pricing currency (ISO 4217, required)

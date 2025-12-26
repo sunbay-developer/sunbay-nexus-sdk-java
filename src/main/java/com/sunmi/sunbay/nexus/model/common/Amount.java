@@ -24,32 +24,32 @@ public class Amount {
     /**
      * Transaction amount (calculated field in response)
      */
-    private Double transAmount;
+    private Integer transAmount;
 
     /**
      * Order amount
      */
-    private Double orderAmount;
+    private Integer orderAmount;
 
     /**
      * Tax amount
      */
-    private Double taxAmount;
+    private Integer taxAmount;
 
     /**
      * Surcharge amount
      */
-    private Double surchargeAmount;
+    private Integer surchargeAmount;
 
     /**
      * Tip amount
      */
-    private Double tipAmount;
+    private Integer tipAmount;
 
     /**
      * Cashback amount
      */
-    private Double cashbackAmount;
+    private Integer cashbackAmount;
 
     /**
      * Pricing currency (ISO 4217, used in request)

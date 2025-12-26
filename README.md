@@ -84,8 +84,10 @@ ZonedDateTime expireTime = ZonedDateTime.now().plusMinutes(10);
 String timeExpire = expireTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX"));
 
 // Build amount using Builder pattern
+// Note: All amount fields use Integer type and are in the smallest currency unit (cents)
+// For example: 100.00 USD = 10000 cents
 SaleAmount amount = SaleAmount.builder()
-    .orderAmount(100.00)
+    .orderAmount(10000)  // 100.00 USD in cents
     .pricingCurrency("USD")
     .build();
 
@@ -138,7 +140,7 @@ AuthRequest request = AuthRequest.builder()
     .referenceOrderId("AUTH" + System.currentTimeMillis())
     .transactionRequestId("PAY_REQ_" + System.currentTimeMillis())
     .amount(AuthAmount.builder()
-        .orderAmount(200.00)
+        .orderAmount(20000)  // 200.00 USD in cents
         .pricingCurrency("USD")
         .build())
     .description("Hotel reservation")
@@ -199,7 +201,7 @@ SaleRequest request = SaleRequest.builder()
     .referenceOrderId("ORDER20231119001")
     .transactionRequestId("PAY_REQ_" + System.currentTimeMillis())
     .amount(SaleAmount.builder()
-        .orderAmount(100.00)
+        .orderAmount(10000)  // 100.00 USD in cents
         .pricingCurrency("USD")
         .build())
     .description("Product purchase")

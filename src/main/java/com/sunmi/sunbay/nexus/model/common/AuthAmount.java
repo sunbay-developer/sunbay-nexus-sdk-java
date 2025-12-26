@@ -21,7 +21,7 @@ public class AuthAmount {
     /**
      * Order amount (required)
      */
-    private Double orderAmount;
+    private Integer orderAmount;
 
     /**
      * Pricing currency (ISO 4217, required)

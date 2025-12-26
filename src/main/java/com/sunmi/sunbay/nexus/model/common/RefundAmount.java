@@ -20,28 +20,28 @@ public class RefundAmount {
     /**
      * Order amount (required)
      */
-    private Double orderAmount;
+    private Integer orderAmount;
 
     /**
      * Tip amount (optional, must be greater than or equal to 0)
      */
-    private Double tipAmount;
+    private Integer tipAmount;
 
     /**
      * Tax amount (optional, must be greater than or equal to 0)
      */
-    private Double taxAmount;
+    private Integer taxAmount;
 
     /**
      * Surcharge amount (optional, must be greater than or equal to 0).
      * Note: Some processors may require surcharge to be refunded proportionally. Please contact technical support for detailed policies.
      */
-    private Double surchargeAmount;
+    private Integer surchargeAmount;
 
     /**
      * Cashback amount (optional, must be greater than or equal to 0)
      */
-    private Double cashbackAmount;
+    private Integer cashbackAmount;
 
     /**
      * Pricing currency (ISO 4217, required)

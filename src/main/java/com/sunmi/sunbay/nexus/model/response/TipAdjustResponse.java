@@ -27,5 +27,5 @@ public class TipAdjustResponse extends BaseResponse {
     /**
      * Adjusted tip amount, in basic currency unit, returned as-is from request
      */
-    private Double tipAmount;
+    private Integer tipAmount;
 }

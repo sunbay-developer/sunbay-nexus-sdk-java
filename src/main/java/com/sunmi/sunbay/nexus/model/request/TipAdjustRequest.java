@@ -40,7 +40,7 @@ public class TipAdjustRequest {
     /**
      * New tip amount after adjustment, in basic currency unit
      */
-    private Double tipAmount;
+    private Integer tipAmount;
 
     /**
      * Additional data, returned as-is, recommended to use JSON format

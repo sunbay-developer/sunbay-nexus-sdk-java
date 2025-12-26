@@ -24,6 +24,6 @@ public class BatchTotalAmount {
     /**
      * Total amount
      */
-    private Double amount;
+    private Integer amount;
 }
 
