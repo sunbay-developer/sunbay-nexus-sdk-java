@@ -20,14 +20,14 @@ Official Java SDK for Sunbay Payment Platform
 <dependency>
     <groupId>com.sunmi</groupId>
     <artifactId>sunbay-nexus-sdk-java</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
 </dependency>
 ```
 
 ### Gradle
 
 ```gradle
-implementation 'com.sunmi:sunbay-nexus-sdk-java:1.0.3'
+implementation 'com.sunmi:sunbay-nexus-sdk-java:1.0.4'
 ```
 
 ## Quick Start
