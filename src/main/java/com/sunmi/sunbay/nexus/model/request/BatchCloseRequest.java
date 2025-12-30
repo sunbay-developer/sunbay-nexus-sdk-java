@@ -41,9 +41,4 @@ public class BatchCloseRequest {
      * Batch close description
      */
     private String description;
-
-    /**
-     * Additional data, returned as-is, recommended to use JSON format
-     */
-    private String attach;
 }
