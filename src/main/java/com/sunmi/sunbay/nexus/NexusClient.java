@@ -179,9 +179,27 @@ public class NexusClient implements AutoCloseable {
     }
 
     /**
+     * Batch query
+     * <p>
+     * Query batch summary data, returns statistics grouped by channel code and transaction currency.
+     * </p>
+     *
+     * @param request batch query request
+     * @return batch query response
+     */
+    public BatchQueryResponse batchQuery(BatchQueryRequest request) {
+        if (request == null) {
+            throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR,
+                    "BatchQueryRequest cannot be null", null);
+        }
+        return httpClient.post(ApiConstants.PATH_BATCH_QUERY, request, BatchQueryResponse.class);
+    }
+
+    /**
      * Batch close
      * <p>
-     * <b>Note: This API is currently under development.</b>
+     * Close the current transaction batch and trigger settlement process. After batch close,
+     * all transactions in the batch will enter the settlement process.
      * </p>
      *
      * @param request batch close request

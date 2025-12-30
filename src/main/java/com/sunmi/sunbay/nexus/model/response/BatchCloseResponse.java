@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import com.sunmi.sunbay.nexus.model.common.BaseResponse;
-import com.sunmi.sunbay.nexus.model.common.BatchTotalAmount;
 
 /**
  * Batch close response
@@ -26,9 +25,9 @@ public class BatchCloseResponse extends BaseResponse {
     private String terminalSn;
 
     /**
-     * Batch close time, format: yyyy-MM-DDTHH:mm:ss+TIMEZONE (ISO 8601)
+     * Batch time, format: yyyy-MM-DDTHH:mm:ss+TIMEZONE (ISO 8601)
      */
-    private String closeTime;
+    private String batchTime;
 
     /**
      * Number of transactions in the batch
@@ -36,7 +35,27 @@ public class BatchCloseResponse extends BaseResponse {
     private Integer transactionCount;
 
     /**
-     * Total amount of the batch
+     * Transaction currency (ISO 4217)
      */
-    private BatchTotalAmount totalAmount;
+    private String transactionCurrency;
+
+    /**
+     * Net amount, using smallest currency unit (minor units)
+     */
+    private Integer netAmount;
+
+    /**
+     * Tip amount, using smallest currency unit (minor units)
+     */
+    private Integer tipAmount;
+
+    /**
+     * Surcharge amount, using smallest currency unit (minor units)
+     */
+    private Integer surchargeAmount;
+
+    /**
+     * Tax amount, using smallest currency unit (minor units)
+     */
+    private Integer taxAmount;
 }

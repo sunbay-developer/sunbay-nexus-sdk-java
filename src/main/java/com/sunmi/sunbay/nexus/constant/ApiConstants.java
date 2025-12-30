@@ -78,7 +78,8 @@ public class ApiConstants {
     public static final String PATH_QUERY = COMMON_PREFIX + "/transaction/query";
 
     /**
-     * Semi-integration settlement API paths
+     * Settlement API paths
      */
-    public static final String PATH_BATCH_CLOSE = SEMI_INTEGRATION_PREFIX + "/settlement/batch-close";
+    public static final String PATH_BATCH_QUERY = COMMON_PREFIX + "/settlement/batch-query";
+    public static final String PATH_BATCH_CLOSE = COMMON_PREFIX + "/settlement/batch-close";
 }

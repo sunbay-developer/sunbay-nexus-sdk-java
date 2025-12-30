@@ -33,6 +33,11 @@ public class BatchCloseRequest {
     private String terminalSn;
 
     /**
+     * Payment channel code
+     */
+    private String channelCode;
+
+    /**
      * Batch close description
      */
     private String description;
