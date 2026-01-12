@@ -20,14 +20,14 @@ Official Java SDK for Sunbay Payment Platform
 <dependency>
     <groupId>com.sunmi</groupId>
     <artifactId>sunbay-nexus-sdk-java</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.6</version>
 </dependency>
 ```
 
 ### Gradle
 
 ```gradle
-implementation 'com.sunmi:sunbay-nexus-sdk-java:1.0.4'
+implementation 'com.sunmi:sunbay-nexus-sdk-java:1.0.6'
 ```
 
 ## Quick Start
@@ -165,6 +165,7 @@ QueryResponse response = client.query(request);
 ### Query APIs
 
 - `query(QueryRequest)` - Query transaction
+- `batchQuery(BatchQueryRequest)` - Batch query
 
 ### Settlement APIs
 

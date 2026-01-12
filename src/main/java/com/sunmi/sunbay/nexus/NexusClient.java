@@ -181,7 +181,8 @@ public class NexusClient implements AutoCloseable {
     /**
      * Batch query
      * <p>
-     * Query batch summary data, returns statistics grouped by channel code and transaction currency.
+     * Query batch summary data, returns statistics grouped by channel code and
+     * price currency.
      * </p>
      *
      * @param request batch query request
@@ -198,7 +199,8 @@ public class NexusClient implements AutoCloseable {
     /**
      * Batch close
      * <p>
-     * Close the current transaction batch and trigger settlement process. After batch close,
+     * Close the current transaction batch and trigger settlement process. After
+     * batch close,
      * all transactions in the batch will enter the settlement process.
      * </p>
      *

@@ -18,8 +18,7 @@ import java.util.List;
 public class BatchQueryResponse extends BaseResponse {
 
     /**
-     * Batch list, statistics grouped by channel code and transaction currency
+     * Batch list, statistics grouped by channel code and price currency
      */
     private List<BatchQueryItem> batchList;
 }
-

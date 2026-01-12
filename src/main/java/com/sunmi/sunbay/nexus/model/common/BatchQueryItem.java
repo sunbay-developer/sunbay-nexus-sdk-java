@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 /**
  * Batch query item information
  * <p>
- * Statistics grouped by channel code and transaction currency
+ * Statistics grouped by channel code and price currency
  * </p>
  *
  * @since 2025-12-26
@@ -35,9 +35,9 @@ public class BatchQueryItem {
     private String channelCode;
 
     /**
-     * Transaction currency (ISO 4217)
+     * Price currency (ISO 4217)
      */
-    private String transactionCurrency;
+    private String priceCurrency;
 
     /**
      * Total count of transactions in the batch
@@ -64,4 +64,3 @@ public class BatchQueryItem {
      */
     private Integer taxAmount;
 }
-

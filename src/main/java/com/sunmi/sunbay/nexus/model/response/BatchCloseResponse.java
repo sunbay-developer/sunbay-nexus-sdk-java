@@ -35,9 +35,9 @@ public class BatchCloseResponse extends BaseResponse {
     private Integer transactionCount;
 
     /**
-     * Transaction currency (ISO 4217)
+     * Price currency (ISO 4217)
      */
-    private String transactionCurrency;
+    private String priceCurrency;
 
     /**
      * Net amount, using smallest currency unit (minor units)
