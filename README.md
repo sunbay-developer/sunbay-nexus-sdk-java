@@ -88,7 +88,7 @@ String timeExpire = expireTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'
 // For example: 100.00 USD = 10000 cents
 SaleAmount amount = SaleAmount.builder()
     .orderAmount(10000)  // 100.00 USD in cents
-    .pricingCurrency("USD")
+    .priceCurrency("USD")
     .build();
 
 // Build sale request using Builder pattern
@@ -141,7 +141,7 @@ AuthRequest request = AuthRequest.builder()
     .transactionRequestId("PAY_REQ_" + System.currentTimeMillis())
     .amount(AuthAmount.builder()
         .orderAmount(20000)  // 200.00 USD in cents
-        .pricingCurrency("USD")
+        .priceCurrency("USD")
         .build())
     .description("Hotel reservation")
     .terminalSn("T1234567890")
@@ -202,7 +202,7 @@ SaleRequest request = SaleRequest.builder()
     .transactionRequestId("PAY_REQ_" + System.currentTimeMillis())
     .amount(SaleAmount.builder()
         .orderAmount(10000)  // 100.00 USD in cents
-        .pricingCurrency("USD")
+        .priceCurrency("USD")
         .build())
     .description("Product purchase")
     .terminalSn("T1234567890")

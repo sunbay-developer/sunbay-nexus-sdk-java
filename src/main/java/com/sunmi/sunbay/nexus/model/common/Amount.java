@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class Amount {
 
     /**
-     * Price currency (used in query response, ISO 4217)
+     * Price currency (ISO 4217)
      */
     private String priceCurrency;
 
@@ -50,9 +50,4 @@ public class Amount {
      * Cashback amount
      */
     private Integer cashbackAmount;
-
-    /**
-     * Pricing currency (ISO 4217, used in request)
-     */
-    private String pricingCurrency;
 }

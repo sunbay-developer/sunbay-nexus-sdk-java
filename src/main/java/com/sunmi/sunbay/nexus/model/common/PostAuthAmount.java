@@ -39,7 +39,7 @@ public class PostAuthAmount {
     private Integer surchargeAmount;
 
     /**
-     * Pricing currency (ISO 4217, required)
+     * Price currency (ISO 4217, required)
      */
-    private String pricingCurrency;
+    private String priceCurrency;
 }

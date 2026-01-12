@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * Authorization amount information
- * Supports: orderAmount, pricingCurrency only
+ * Supports: orderAmount, priceCurrency only
  * Used for: Auth, ForcedAuth, IncrementalAuth
  *
  * @since 2025-12-15
@@ -24,7 +24,7 @@ public class AuthAmount {
     private Integer orderAmount;
 
     /**
-     * Pricing currency (ISO 4217, required)
+     * Price currency (ISO 4217, required)
      */
-    private String pricingCurrency;
+    private String priceCurrency;
 }

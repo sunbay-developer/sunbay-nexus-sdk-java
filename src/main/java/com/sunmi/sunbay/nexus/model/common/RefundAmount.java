@@ -34,7 +34,8 @@ public class RefundAmount {
 
     /**
      * Surcharge amount (optional, must be greater than or equal to 0).
-     * Note: Some processors may require surcharge to be refunded proportionally. Please contact technical support for detailed policies.
+     * Note: Some processors may require surcharge to be refunded proportionally.
+     * Please contact technical support for detailed policies.
      */
     private Integer surchargeAmount;
 
@@ -44,7 +45,7 @@ public class RefundAmount {
     private Integer cashbackAmount;
 
     /**
-     * Pricing currency (ISO 4217, required)
+     * Price currency (ISO 4217, required)
      */
-    private String pricingCurrency;
+    private String priceCurrency;
 }
