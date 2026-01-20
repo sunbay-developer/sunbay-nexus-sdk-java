@@ -20,7 +20,7 @@ Official Java SDK for Sunbay Payment Platform
 <dependency>
     <groupId>com.sunmi</groupId>
     <artifactId>sunbay-nexus-sdk-java</artifactId>
-    <version>1.0.6</version>
+    <version>1.0.7</version>
 </dependency>
 ```
 

@@ -193,7 +193,7 @@ public class NexusClient implements AutoCloseable {
             throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR,
                     "BatchQueryRequest cannot be null", null);
         }
-        return httpClient.post(ApiConstants.PATH_BATCH_QUERY, request, BatchQueryResponse.class);
+        return httpClient.get(ApiConstants.PATH_BATCH_QUERY, request, BatchQueryResponse.class);
     }
 
     /**
