@@ -63,4 +63,9 @@ public class IncrementalAuthRequest {
      * Asynchronous notification URL
      */
     private String notifyUrl;
+
+    /**
+     * Receipt print option. Possible values: NONE, MERCHANT, CUSTOMER, BOTH. Default: "NONE"
+     */
+    private String printReceipt;
 }
