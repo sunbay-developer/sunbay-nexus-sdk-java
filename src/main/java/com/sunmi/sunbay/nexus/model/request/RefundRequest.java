@@ -84,4 +84,10 @@ public class RefundRequest {
      * Receipt print option. Possible values: NONE, MERCHANT, CUSTOMER, BOTH. Default: "NONE"
      */
     private String printReceipt;
+
+    /**
+     * Whether to push the transaction to the terminal. Default: true
+     */
+    @Builder.Default
+    private boolean pushToTerminal = true;
 }
