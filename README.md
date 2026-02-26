@@ -27,7 +27,7 @@ Official Java SDK for Sunbay Payment Platform
 ### Gradle
 
 ```gradle
-implementation 'com.sunmi:sunbay-nexus-sdk-java:1.0.8'
+implementation 'com.sunmi:sunbay-nexus-sdk-java:1.0.9'
 ```
 
 ## Quick Start
