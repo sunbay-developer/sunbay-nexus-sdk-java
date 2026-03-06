@@ -3,8 +3,8 @@ package com.sunmi.sunbay.nexus.model.request;
 import lombok.Builder;
 import lombok.Data;
 
-import com.sunmi.sunbay.nexus.model.common.SaleAmount;
 import com.sunmi.sunbay.nexus.model.common.PaymentMethodInfo;
+import com.sunmi.sunbay.nexus.model.common.SaleAmount;
 
 /**
  * Sale transaction request
@@ -46,6 +46,11 @@ public class SaleRequest {
      * Payment method information. Optional, recommended to omit for maximum flexibility
      */
     private PaymentMethodInfo paymentMethod;
+
+    /**
+     * Card network type. Only effective when paymentMethod.category is CARD; when not specified, system will auto-detect. See {@link com.sunmi.sunbay.nexus.enums.CardNetworkType}
+     */
+    private String cardNetworkType;
 
     /**
      * Product description. Should be a real description representing the product information, may be displayed on some payment App billing pages

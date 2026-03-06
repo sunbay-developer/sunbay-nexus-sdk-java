@@ -25,4 +25,9 @@ public class PaymentMethodInfo {
      * Specific payment method: WECHAT (WeChat)/ALIPAY (Alipay) etc. For card payments, usually only category needs to be specified
      */
     private String id;
+
+    /**
+     * Sub payment method. Cannot be specified when category is CARD. Currently only when category is EBT and id is EBT can this be specified; allowed values: SNAP, VOUCHER, BENEFIT
+     */
+    private String subId;
 }

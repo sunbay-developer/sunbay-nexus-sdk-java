@@ -56,6 +56,11 @@ public class RefundRequest {
     private PaymentMethodInfo paymentMethod;
 
     /**
+     * Card network type. Only effective when paymentMethod.category is CARD; when not specified, system will auto-detect. See {@link com.sunmi.sunbay.nexus.enums.CardNetworkType}
+     */
+    private String cardNetworkType;
+
+    /**
      * Refund reason description. Should be a real description representing the refund reason
      */
     private String description;
