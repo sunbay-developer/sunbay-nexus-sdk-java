@@ -82,4 +82,10 @@ public class ApiConstants {
      */
     public static final String PATH_BATCH_QUERY = COMMON_PREFIX + "/settlement/batch-query";
     public static final String PATH_BATCH_CLOSE = COMMON_PREFIX + "/settlement/batch-close";
+
+    /**
+     * Online checkout API paths (Hosted Payment Page and direct payment)
+     */
+    public static final String PATH_CHECKOUT_CREATE_SESSION = COMMON_PREFIX + "/checkout/create-session";
+    public static final String PATH_CHECKOUT_SALE = COMMON_PREFIX + "/checkout/sale";
 }

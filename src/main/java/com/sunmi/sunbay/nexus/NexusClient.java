@@ -216,6 +216,35 @@ public class NexusClient implements AutoCloseable {
     }
 
     /**
+     * Create Hosted Payment Page checkout session ({@code POST /v1/checkout/create-session}).
+     *
+     * @param request create session request
+     * @return response including checkout URL and expiry
+     */
+    public CreateCheckoutSessionResponse createCheckoutSession(CreateCheckoutSessionRequest request) {
+        if (request == null) {
+            throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR,
+                    "CreateCheckoutSessionRequest cannot be null", null);
+        }
+        return httpClient.post(ApiConstants.PATH_CHECKOUT_CREATE_SESSION, request,
+                CreateCheckoutSessionResponse.class);
+    }
+
+    /**
+     * Online direct payment ({@code POST /v1/checkout/sale}), e.g. Google Pay / Apple Pay.
+     *
+     * @param request direct payment request
+     * @return payment response
+     */
+    public CheckoutDirectPaymentResponse checkoutDirectPayment(CheckoutDirectPaymentRequest request) {
+        if (request == null) {
+            throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR,
+                    "CheckoutDirectPaymentRequest cannot be null", null);
+        }
+        return httpClient.post(ApiConstants.PATH_CHECKOUT_SALE, request, CheckoutDirectPaymentResponse.class);
+    }
+
+    /**
      * Close client and release resources
      */
     public void close() {
