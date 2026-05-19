@@ -20,6 +20,11 @@ public class SaleResponse extends BaseResponse {
     private String transactionId;
 
     /**
+     * Transaction status: INITIAL/PROCESSING/SUCCESS/FAIL/CLOSED
+     */
+    private String transactionStatus;
+
+    /**
      * Reference order ID, returned as-is from request
      */
     private String referenceOrderId;

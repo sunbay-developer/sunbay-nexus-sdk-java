@@ -5,6 +5,7 @@ import lombok.Data;
 
 import com.sunmi.sunbay.nexus.model.common.PaymentMethodInfo;
 import com.sunmi.sunbay.nexus.model.common.SaleAmount;
+import com.sunmi.sunbay.nexus.model.common.TipConfig;
 
 /**
  * Sale transaction request
@@ -81,4 +82,9 @@ public class SaleRequest {
      * Receipt print option. Possible values: NONE, MERCHANT, CUSTOMER, BOTH. Default: "NONE"
      */
     private String printReceipt;
+
+    /**
+     * Tip configuration
+     */
+    private TipConfig tipConfig;
 }

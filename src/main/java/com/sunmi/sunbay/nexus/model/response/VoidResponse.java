@@ -20,6 +20,11 @@ public class VoidResponse extends BaseResponse {
     private String transactionId;
 
     /**
+     * Transaction status: INITIAL/PROCESSING/SUCCESS/FAIL/CLOSED
+     */
+    private String transactionStatus;
+
+    /**
      * Transaction request ID for this void, returned as-is from request
      */
     private String transactionRequestId;

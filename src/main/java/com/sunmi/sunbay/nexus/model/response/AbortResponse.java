@@ -20,6 +20,11 @@ public class AbortResponse extends BaseResponse {
     private String originalTransactionId;
 
     /**
+     * Transaction status: INITIAL/PROCESSING/SUCCESS/FAIL/CLOSED
+     */
+    private String transactionStatus;
+
+    /**
      * Aborted transaction's request ID (only returned when provided in request)
      */
     private String originalTransactionRequestId;

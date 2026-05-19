@@ -20,6 +20,11 @@ public class RefundResponse extends BaseResponse {
     private String transactionId;
 
     /**
+     * Transaction status: INITIAL/PROCESSING/SUCCESS/FAIL/CLOSED
+     */
+    private String transactionStatus;
+
+    /**
      * Reference order ID (same as original transaction for refund with reference, new refund reference order ID for refund without reference)
      */
     private String referenceOrderId;

@@ -20,6 +20,11 @@ public class PostAuthResponse extends BaseResponse {
     private String transactionId;
 
     /**
+     * Transaction status: INITIAL/PROCESSING/SUCCESS/FAIL/CLOSED
+     */
+    private String transactionStatus;
+
+    /**
      * Transaction request ID for this post authorization, returned as-is from request
      */
     private String transactionRequestId;

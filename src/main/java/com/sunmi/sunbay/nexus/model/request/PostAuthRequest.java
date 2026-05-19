@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import com.sunmi.sunbay.nexus.model.common.PostAuthAmount;
+import com.sunmi.sunbay.nexus.model.common.TipConfig;
 
 /**
  * Post authorization request
@@ -74,4 +75,9 @@ public class PostAuthRequest {
      */
     @Builder.Default
     private boolean pushToTerminal = true;
+
+    /**
+     * Tip configuration
+     */
+    private TipConfig tipConfig;
 }
