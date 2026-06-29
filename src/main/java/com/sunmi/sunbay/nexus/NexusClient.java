@@ -245,6 +245,24 @@ public class NexusClient implements AutoCloseable {
     }
 
     /**
+     * Online refund ({@code POST /v1/checkout/refund}).
+     * <p>
+     * Either {@code originalTransactionId} or {@code originalTransactionRequestId} must be provided
+     * in the request to identify the original transaction to refund.
+     * </p>
+     *
+     * @param request online refund request
+     * @return online refund response
+     */
+    public OnlineRefundResponse onlineRefund(OnlineRefundRequest request) {
+        if (request == null) {
+            throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR,
+                    "OnlineRefundRequest cannot be null", null);
+        }
+        return httpClient.post(ApiConstants.PATH_CHECKOUT_REFUND, request, OnlineRefundResponse.class);
+    }
+
+    /**
      * Close client and release resources
      */
     public void close() {

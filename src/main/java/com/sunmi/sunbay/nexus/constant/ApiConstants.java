@@ -88,4 +88,5 @@ public class ApiConstants {
      */
     public static final String PATH_CHECKOUT_CREATE_SESSION = COMMON_PREFIX + "/checkout/create-session";
     public static final String PATH_CHECKOUT_SALE = COMMON_PREFIX + "/checkout/sale";
+    public static final String PATH_CHECKOUT_REFUND = COMMON_PREFIX + "/checkout/refund";
 }

@@ -134,4 +134,20 @@ public class QueryResponse extends BaseResponse {
      * Additional data, returned as-is
      */
     private String attach;
+
+    /**
+     * Related transaction status, indicates the lifecycle change of the current transaction
+     * due to subsequent transactions (e.g., a sale transaction that was later refunded).
+     * Possible values: VOIDED/INCREMENTAL/REFUNDED/CAPTURE/PART_REFUNDED
+     */
+    private String relatedTransactionStatus;
+
+    /**
+     * Transaction batch settlement status.
+     * Possible values:
+     * NB - No batch settlement needed
+     * UB - Waiting for batch close
+     * BC - Batch closed
+     */
+    private String transactionBatchStatus;
 }
