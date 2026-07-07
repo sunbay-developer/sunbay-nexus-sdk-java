@@ -13,9 +13,10 @@ import java.util.List;
 public class TipSuggestions {
 
     /**
-     * Display name for tip option
+     * Display names for tip options.
+     * Must match values in length and order if not empty. Max 3.
      */
-    private String name;
+    private List<String> names;
 
     /**
      * Fee mode: RATE (percentage) / AMOUNT (fixed amount)
@@ -23,7 +24,8 @@ public class TipSuggestions {
     private String feeMode;
 
     /**
-     * Suggestion values (percentage or fixed amount depending on feeMode), max 3
+     * Suggestion values (percentage or fixed amount depending on feeMode). Max 3.
+     * Must match names in length and order if names is not empty.
      */
     private List<Double> values;
 }

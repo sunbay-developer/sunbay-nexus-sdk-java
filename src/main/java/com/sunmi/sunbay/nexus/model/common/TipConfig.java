@@ -28,7 +28,8 @@ public class TipConfig {
     private Boolean tipWithTax;
 
     /**
-     * Tip suggestions, max 3
+     * Tip suggestions list, max 3 items.
+     * Each item's names and values arrays must also be max 3 elements.
      */
     private List<TipSuggestions> suggestions;
 }
