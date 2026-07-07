@@ -79,4 +79,10 @@ public class AuthRequest {
      * Receipt print option. Possible values: NONE, MERCHANT, CUSTOMER, BOTH. Default: "NONE"
      */
     private String printReceipt;
+
+    /**
+     * 签名位置。可选值：ON_SCREEN（终端屏幕签名）、ON_RECEIPT（小票签名）。
+     * 未传时使用后台默认配置。
+     */
+    private String signatureEntryLocation;
 }
