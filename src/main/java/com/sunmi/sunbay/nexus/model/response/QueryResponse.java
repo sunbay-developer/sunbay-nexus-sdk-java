@@ -145,9 +145,9 @@ public class QueryResponse extends BaseResponse {
     /**
      * Transaction batch settlement status.
      * Possible values:
-     * NB - No batch settlement needed
-     * UB - Waiting for batch close
-     * BC - Batch closed
+     * N - No batch settlement needed
+     * U - Waiting for batch close
+     * C - Batch closed
      */
     private String transactionBatchStatus;
 }

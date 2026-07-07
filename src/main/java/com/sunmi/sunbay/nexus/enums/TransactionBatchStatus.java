@@ -10,15 +10,15 @@ public enum TransactionBatchStatus {
     /**
      * No batch settlement needed
      */
-    NB,
+    N,
 
     /**
      * Waiting for batch close
      */
-    UB,
+    U,
 
     /**
      * Batch closed
      */
-    BC
+    C
 }

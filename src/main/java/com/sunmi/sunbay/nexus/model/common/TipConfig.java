@@ -2,6 +2,8 @@ package com.sunmi.sunbay.nexus.model.common;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * Tip configuration
  *
@@ -26,7 +28,7 @@ public class TipConfig {
     private Boolean tipWithTax;
 
     /**
-     * Tip suggestions
+     * Tip suggestions, max 3
      */
-    private TipSuggestions suggestions;
+    private List<TipSuggestions> suggestions;
 }
