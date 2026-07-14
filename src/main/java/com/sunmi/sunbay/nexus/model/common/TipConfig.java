@@ -12,24 +12,43 @@ import java.util.List;
 @Data
 public class TipConfig {
 
+    private Boolean onScreenTip;
+
+    private String tipMode;
+
+    private Boolean tipWithTax;
+
+    private List<TipSuggestions> suggestions;
+
     /**
      * Whether to enable on-screen tip input
      */
-    private Boolean onScreenTip;
+    public void setOnScreenTip(Boolean onScreenTip) {
+        this.onScreenTip = onScreenTip;
+    }
 
     /**
      * Tip mode: ON_SALE (tip during sale) / AFTER_SALE (tip after sale)
      */
-    private String tipMode;
+    public void setTipMode(String tipMode) {
+        this.tipMode = tipMode;
+    }
 
     /**
      * Whether tip amount includes tax
      */
-    private Boolean tipWithTax;
+    public void setTipWithTax(Boolean tipWithTax) {
+        this.tipWithTax = tipWithTax;
+    }
 
     /**
      * Tip suggestions list, max 3 items.
      * Each item's names and values arrays must also be max 3 elements.
      */
-    private List<TipSuggestions> suggestions;
+    public void setSuggestions(List<TipSuggestions> suggestions) {
+        if (suggestions != null && suggestions.size() > 3) {
+            throw new IllegalArgumentException("Tip suggestions support up to 3 items.");
+        }
+        this.suggestions = suggestions;
+    }
 }
