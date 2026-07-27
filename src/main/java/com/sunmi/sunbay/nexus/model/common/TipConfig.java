@@ -2,8 +2,6 @@ package com.sunmi.sunbay.nexus.model.common;
 
 import lombok.Data;
 
-import java.util.List;
-
 /**
  * Tip configuration
  *
@@ -18,7 +16,7 @@ public class TipConfig {
 
     private Boolean tipWithTax;
 
-    private List<TipSuggestions> suggestions;
+    private TipSuggestions suggestions;
 
     /**
      * Whether to enable on-screen tip input
@@ -42,13 +40,10 @@ public class TipConfig {
     }
 
     /**
-     * Tip suggestions list, max 3 items.
-     * Each item's names and values arrays must also be max 3 elements.
+     * Tip suggestions configuration.
+     * The names and values arrays within must be max 3 elements each.
      */
-    public void setSuggestions(List<TipSuggestions> suggestions) {
-        if (suggestions != null && suggestions.size() > 3) {
-            throw new IllegalArgumentException("Tip suggestions support up to 3 items.");
-        }
+    public void setSuggestions(TipSuggestions suggestions) {
         this.suggestions = suggestions;
     }
 }
