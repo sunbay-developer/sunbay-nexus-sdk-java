@@ -231,6 +231,22 @@ public class NexusClient implements AutoCloseable {
     }
 
     /**
+     * Expire (close) an existing checkout session, making it immediately invalid
+     * ({@code POST /v1/checkout/expire-session}).
+     *
+     * @param request expire session request
+     * @return expire session response
+     */
+    public ExpireCheckoutSessionResponse expireCheckoutSession(ExpireCheckoutSessionRequest request) {
+        if (request == null) {
+            throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR,
+                    "ExpireCheckoutSessionRequest cannot be null", null);
+        }
+        return httpClient.post(ApiConstants.PATH_CHECKOUT_EXPIRE_SESSION, request,
+                ExpireCheckoutSessionResponse.class);
+    }
+
+    /**
      * Online direct payment ({@code POST /v1/checkout/sale}), e.g. Google Pay / Apple Pay.
      *
      * @param request direct payment request

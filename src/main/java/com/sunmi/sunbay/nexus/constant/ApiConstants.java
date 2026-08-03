@@ -87,6 +87,7 @@ public class ApiConstants {
      * Online checkout API paths (Hosted Payment Page and direct payment)
      */
     public static final String PATH_CHECKOUT_CREATE_SESSION = COMMON_PREFIX + "/checkout/create-session";
+    public static final String PATH_CHECKOUT_EXPIRE_SESSION = COMMON_PREFIX + "/checkout/expire-session";
     public static final String PATH_CHECKOUT_SALE = COMMON_PREFIX + "/checkout/sale";
     public static final String PATH_CHECKOUT_REFUND = COMMON_PREFIX + "/checkout/refund";
 }
