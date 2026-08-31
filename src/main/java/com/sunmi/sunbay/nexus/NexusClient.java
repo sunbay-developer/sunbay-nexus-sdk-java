@@ -216,6 +216,61 @@ public class NexusClient implements AutoCloseable {
     }
 
     /**
+     * Retrieve merchant profile
+     * <p>
+     * Returns basic identity, address, MCC, and status of the merchant.
+     * </p>
+     *
+     * @param request merchant query request
+     * @return merchant query response
+     */
+    public MerchantQueryResponse merchantQuery(MerchantQueryRequest request) {
+        if (request == null) {
+            throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR,
+                    "MerchantQueryRequest cannot be null", null);
+        }
+        return httpClient.get(ApiConstants.PATH_MERCHANT_QUERY, request, MerchantQueryResponse.class);
+    }
+
+    /**
+     * List terminals bound to the specified merchant
+     * <p>
+     * Up to 100 items per response. Uses token-based pagination: if the response
+     * contains a nextToken, pass it back in the next request to fetch the following page.
+     * </p>
+     *
+     * @param request merchant terminals query request
+     * @return merchant terminals query response
+     */
+    public MerchantTerminalsQueryResponse merchantTerminalsQuery(MerchantTerminalsQueryRequest request) {
+        if (request == null) {
+            throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR,
+                    "MerchantTerminalsQueryRequest cannot be null", null);
+        }
+        return httpClient.get(ApiConstants.PATH_MERCHANT_TERMINALS_QUERY, request,
+                MerchantTerminalsQueryResponse.class);
+    }
+
+    /**
+     * Batch close list query
+     * <p>
+     * Query closed (settled) batch records. You can filter results by payment channel
+     * and time range. If no time range is specified, the API returns data from the last
+     * 7 days by default. The maximum query span is 30 days.
+     * </p>
+     *
+     * @param request batch close list request
+     * @return batch close list response
+     */
+    public BatchCloseListResponse batchCloseList(BatchCloseListRequest request) {
+        if (request == null) {
+            throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR,
+                    "BatchCloseListRequest cannot be null", null);
+        }
+        return httpClient.get(ApiConstants.PATH_BATCH_CLOSE_LIST, request, BatchCloseListResponse.class);
+    }
+
+    /**
      * Create Hosted Payment Page checkout session ({@code POST /v1/checkout/create-session}).
      *
      * @param request create session request

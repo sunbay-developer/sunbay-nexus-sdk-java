@@ -58,6 +58,13 @@ public class VoidRequest {
     private String notifyUrl;
 
     /**
+     * Terminal event asynchronous notification URL. When provided, real-time terminal status events
+     * (card swipe, signature, printing, etc.) will be pushed to this URL during the transaction process.
+     * Only effective when pushToTerminal is true.
+     */
+    private String terminalEventNotifyUrl;
+
+    /**
      * Receipt print option. Possible values: NONE, MERCHANT, CUSTOMER, BOTH. Default: "NONE"
      */
     private String printReceipt;

@@ -41,4 +41,12 @@ public class BatchCloseRequest {
      * Batch close description
      */
     private String description;
+
+    /**
+     * Batch report print option. Controls the report content printed by the terminal after batch close.
+     * When not provided, the SUNBAY platform configuration is used by default.
+     * Possible values: TOTAL, DETAIL, BOTH, NONE, AUTO
+     * See {@link com.sunmi.sunbay.nexus.enums.BatchPrintReceiptOption}
+     */
+    private String printReceipt;
 }

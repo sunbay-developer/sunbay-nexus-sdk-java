@@ -71,6 +71,12 @@ public class ForcedAuthRequest {
     private String notifyUrl;
 
     /**
+     * Terminal event asynchronous notification URL. When provided, real-time terminal status events
+     * (card swipe, signature, printing, etc.) will be pushed to this URL during the transaction process.
+     */
+    private String terminalEventNotifyUrl;
+
+    /**
      * Transaction expiration time, format: yyyy-MM-DDTHH:mm:ss+TIMEZONE (ISO 8601). Transaction will be closed if payment is not completed after this time. Minimum 3 minutes, maximum 1 day, default 1 day if not provided
      */
     private String timeExpire;

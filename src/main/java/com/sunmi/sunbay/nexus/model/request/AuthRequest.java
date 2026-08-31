@@ -5,6 +5,7 @@ import lombok.Data;
 
 import com.sunmi.sunbay.nexus.model.common.AuthAmount;
 import com.sunmi.sunbay.nexus.model.common.PaymentMethodInfo;
+import com.sunmi.sunbay.nexus.model.common.SignatureConfig;
 
 /**
  * Authorization request
@@ -71,6 +72,12 @@ public class AuthRequest {
     private String notifyUrl;
 
     /**
+     * Terminal event asynchronous notification URL. When provided, real-time terminal status events
+     * (card swipe, signature, printing, etc.) will be pushed to this URL during the transaction process.
+     */
+    private String terminalEventNotifyUrl;
+
+    /**
      * Transaction expiration time, format: yyyy-MM-DDTHH:mm:ss+TIMEZONE (ISO 8601). Transaction will be closed if payment is not completed after this time. Minimum 3 minutes, maximum 1 day, default 1 day if not provided
      */
     private String timeExpire;
@@ -81,8 +88,18 @@ public class AuthRequest {
     private String printReceipt;
 
     /**
-     * 签名位置。可选值：ON_SCREEN（终端屏幕签名）、ON_RECEIPT（小票签名）。
+     * 签名位置。可选值：ON_SCREEN（终端屏幕签名）、ON_RECEIPT（小票签名）、NONE（不签名）。
      * 未传时使用后台默认配置。
+     *
+     * @deprecated Use {@link #signatureConfig} instead
      */
+    @Deprecated
     private String signatureEntryLocation;
+
+    /**
+     * Signature configuration. Controls signature collection behavior after transaction completion.
+     * When not provided, the SUNBAY platform signature configuration is used by default.
+     * This field replaces the deprecated signatureEntryLocation.
+     */
+    private SignatureConfig signatureConfig;
 }
