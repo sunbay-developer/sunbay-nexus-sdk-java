@@ -19,11 +19,11 @@ import com.sunmi.sunbay.nexus.model.response.*;
 public class NexusClient implements AutoCloseable {
 
     private static final String DEFAULT_BASE_URL = "https://open.sunbay.us";
-    private static final int DEFAULT_CONNECT_TIMEOUT = 30000;
-    private static final int DEFAULT_READ_TIMEOUT = 60000;
+    private static final int DEFAULT_CONNECT_TIMEOUT = 10000;
+    private static final int DEFAULT_READ_TIMEOUT = 30000;
     private static final int DEFAULT_MAX_RETRIES = 3;
     private static final int DEFAULT_MAX_TOTAL = 200;
-    private static final int DEFAULT_MAX_PER_ROUTE = 20;
+    private static final int DEFAULT_MAX_PER_ROUTE = 200;
 
     private final HttpClient httpClient;
 
@@ -391,7 +391,7 @@ public class NexusClient implements AutoCloseable {
         /**
          * Set maximum connections per route in the connection pool
          *
-         * @param maxPerRoute maximum connections per route (default: 20)
+         * @param maxPerRoute maximum connections per route (default: 200)
          * @return builder
          */
         public Builder maxPerRoute(int maxPerRoute) {

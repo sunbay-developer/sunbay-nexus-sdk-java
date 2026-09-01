@@ -20,14 +20,14 @@ Official Java SDK for Sunbay Payment Platform
 <dependency>
     <groupId>com.sunmi</groupId>
     <artifactId>sunbay-nexus-sdk-java</artifactId>
-    <version>1.0.16</version>
+    <version>1.0.17</version>
 </dependency>
 ```
 
 ### Gradle
 
 ```gradle
-implementation 'com.sunmi:sunbay-nexus-sdk-java:1.0.16'
+implementation 'com.sunmi:sunbay-nexus-sdk-java:1.0.17'
 ```
 
 ## Quick Start
@@ -167,9 +167,15 @@ QueryResponse response = client.query(request);
 - `query(QueryRequest)` - Query transaction
 - `batchQuery(BatchQueryRequest)` - Batch query
 
+### Merchant APIs
+
+- `merchantQuery(MerchantQueryRequest)` - Retrieve merchant profile
+- `merchantTerminalsQuery(MerchantTerminalsQueryRequest)` - List merchant terminals
+
 ### Settlement APIs
 
 - `batchClose(BatchCloseRequest)` - Batch close
+- `batchCloseList(BatchCloseListRequest)` - Query closed batch records
 
 **Example: Batch Close**
 
@@ -234,11 +240,11 @@ try {
 NexusClient client = new NexusClient.Builder()
     .apiKey("sk_test_xxx")
     .baseUrl("https://open.sunbay.us")  // Default: https://open.sunbay.us
-    .connectTimeout(30000)               // Default: 30000ms (30 seconds)
-    .readTimeout(60000)                   // Default: 60000ms (60 seconds)
+    .connectTimeout(10000)               // Default: 10000ms (10 seconds)
+    .readTimeout(30000)                   // Default: 30000ms (30 seconds)
     .maxRetries(3)                        // Default: 3 retries for GET requests
     .maxTotal(200)                        // Default: 200 (max total connections in pool)
-    .maxPerRoute(20)                      // Default: 20 (max connections per route)
+    .maxPerRoute(200)                     // Default: 200 (max connections per route, same as maxTotal for single-host SDK)
     .build();
 ```
 
@@ -250,17 +256,19 @@ The SDK uses Apache HttpClient's connection pool to manage HTTP connections effi
   - This is the total number of connections that can be open simultaneously across all hosts/routes
   - Example: If you have 10 different API endpoints, the total connections to all endpoints combined cannot exceed this value
 
-- **maxPerRoute**: Maximum connections per route/host (default: 20)
+- **maxPerRoute**: Maximum connections per route/host (default: 200)
   - This is the maximum number of connections that can be open to a single host/route
+  - Since the SDK connects to a single host (`open.sunbay.us`), this defaults to the same value as maxTotal
   - A route is typically defined by the scheme (http/https), host, and port
-  - Example: For `https://open.sunbay.us`, you can have at most 20 concurrent connections
 
 **Example:**
-- If `maxTotal = 200` and `maxPerRoute = 20`
-- You can have up to 20 connections to `https://open.sunbay.us` (limited by maxPerRoute)
-- But if you're connecting to multiple hosts, the total across all hosts cannot exceed 200 (limited by maxTotal)
+- Default: `maxTotal = 200` and `maxPerRoute = 200`, allowing up to 200 concurrent connections to `open.sunbay.us`
+- If you need higher concurrency, increase both values together (e.g., `maxTotal(500).maxPerRoute(500)`)
 
-These settings help optimize performance for high-concurrency scenarios.
+The SDK also automatically manages connection health:
+- Expired connections are evicted automatically
+- Idle connections are cleaned up after 60 seconds
+- Connections have a maximum time-to-live of 5 minutes
 
 ## Requirements
 

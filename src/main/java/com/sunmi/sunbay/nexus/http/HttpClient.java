@@ -27,7 +27,9 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.SocketTimeoutException;
 import java.net.URISyntaxException;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.TimeUnit;
 
 /**
  * HTTP client for Sunbay API
@@ -47,6 +49,8 @@ public class HttpClient implements AutoCloseable {
     private static final String HEADER_USER_AGENT = "User-Agent";
     private static final String CONTENT_TYPE_JSON = "application/json";
     private static final long RETRY_DELAY_BASE_MS = 1000L;
+    private static final long CONNECTION_TIME_TO_LIVE_SECONDS = 300L;
+    private static final int DEFAULT_CONNECTION_REQUEST_TIMEOUT = 5000;
 
     private final String apiKey;
     private final String baseUrl;
@@ -67,21 +71,23 @@ public class HttpClient implements AutoCloseable {
         RequestConfig requestConfig = RequestConfig.custom()
                 .setConnectTimeout(connectTimeout)
                 .setSocketTimeout(readTimeout)
-                .setConnectionRequestTimeout(connectTimeout)
+                .setConnectionRequestTimeout(DEFAULT_CONNECTION_REQUEST_TIMEOUT)
                 .build();
 
-        // Create connection pool manager
-        this.connectionManager = new PoolingHttpClientConnectionManager();
+        // Create connection pool manager with TTL to recycle stale connections
+        this.connectionManager = new PoolingHttpClientConnectionManager(
+                CONNECTION_TIME_TO_LIVE_SECONDS, TimeUnit.SECONDS);
         if (maxTotal != null) {
             connectionManager.setMaxTotal(maxTotal);
         }
-        if (maxPerRoute != null) {
-            connectionManager.setDefaultMaxPerRoute(maxPerRoute);
-        }
+        // Default maxPerRoute to maxTotal for single-host SDK scenario
+        connectionManager.setDefaultMaxPerRoute(maxPerRoute != null ? maxPerRoute : connectionManager.getMaxTotal());
 
         this.httpClient = HttpClients.custom()
                 .setConnectionManager(connectionManager)
                 .setDefaultRequestConfig(requestConfig)
+                .evictExpiredConnections()
+                .evictIdleConnections(60L, TimeUnit.SECONDS)
                 .build();
     }
 
@@ -103,7 +109,7 @@ public class HttpClient implements AutoCloseable {
 
         addCommonHeaders(httpPost, ApiConstants.HTTP_METHOD_POST);
 
-        return executeRequest(httpPost, responseType, false);
+        return doExecute(httpPost, requestJson, responseType);
     }
 
     /**
@@ -117,37 +123,77 @@ public class HttpClient implements AutoCloseable {
      */
     public <T extends BaseResponse> T get(String path, Object request, Class<T> responseType) {
         try {
-            URIBuilder uriBuilder = new URIBuilder(baseUrl + path);
-            
-            // Build query parameters from request object using reflection
-            if (request != null) {
-                Class<?> clazz = request.getClass();
-                Method[] methods = clazz.getMethods();
-                for (Method method : methods) {
-                    String methodName = method.getName();
-                    if (methodName.startsWith("get") && methodName.length() > ApiConstants.GETTER_METHOD_PREFIX_LENGTH 
-                            && method.getParameterCount() == 0
-                            && !methodName.equals("getClass")) {
-                        try {
-                            Object value = method.invoke(request);
-                            if (value != null) {
-                                String paramName = convertMethodNameToParamName(methodName);
-                                uriBuilder.addParameter(paramName, String.valueOf(value));
-                            }
-                        } catch (Exception e) {
-                            // Ignore reflection errors
-                        }
-                    }
-                }
-            }
-            
-            HttpGet httpGet = new HttpGet(uriBuilder.build());
-            addCommonHeaders(httpGet, ApiConstants.HTTP_METHOD_GET);
-
-            return executeRequest(httpGet, responseType, true);
+            URI uri = buildGetUri(path, request);
+            return executeGetWithRetry(uri, responseType);
         } catch (URISyntaxException e) {
             throw new SunbayNetworkException("Invalid URL: " + e.getMessage(), e, false);
         }
+    }
+
+    /**
+     * Build URI with query parameters from request object
+     */
+    private URI buildGetUri(String path, Object request) throws URISyntaxException {
+        URIBuilder uriBuilder = new URIBuilder(baseUrl + path);
+
+        if (request != null) {
+            Class<?> clazz = request.getClass();
+            Method[] methods = clazz.getMethods();
+            for (Method method : methods) {
+                String methodName = method.getName();
+                if (methodName.startsWith("get") && methodName.length() > ApiConstants.GETTER_METHOD_PREFIX_LENGTH
+                        && method.getParameterCount() == 0
+                        && !methodName.equals("getClass")) {
+                    try {
+                        Object value = method.invoke(request);
+                        if (value != null) {
+                            String paramName = convertMethodNameToParamName(methodName);
+                            uriBuilder.addParameter(paramName, String.valueOf(value));
+                        }
+                    } catch (Exception e) {
+                        // Ignore reflection errors
+                    }
+                }
+            }
+        }
+
+        return uriBuilder.build();
+    }
+
+    /**
+     * Execute GET request with retry, creating a fresh HttpGet on each attempt
+     * to avoid reusing an already-executed request object
+     */
+    private <T extends BaseResponse> T executeGetWithRetry(URI uri, Class<T> responseType) {
+        int attempts = 0;
+        int maxAttempts = maxRetries;
+
+        while (attempts < maxAttempts) {
+            attempts++;
+            try {
+                HttpGet httpGet = new HttpGet(uri);
+                addCommonHeaders(httpGet, ApiConstants.HTTP_METHOD_GET);
+                return doExecute(httpGet, null, responseType);
+            } catch (SunbayNetworkException e) {
+                if (attempts >= maxAttempts) {
+                    if (log.isWarnEnabled()) {
+                        log.warn("Request failed after {} attempts: {}", attempts, e.getMessage());
+                    }
+                    throw e;
+                }
+                if (log.isDebugEnabled()) {
+                    log.debug("Request failed, retrying ({}/{}) after delay: {}", attempts, maxAttempts, e.getMessage());
+                }
+                try {
+                    Thread.sleep(RETRY_DELAY_BASE_MS * attempts);
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                    throw new SunbayNetworkException("Request interrupted", ie, false);
+                }
+            }
+        }
+
+        throw new SunbayNetworkException("Request failed after " + maxAttempts + " attempts", true);
     }
     
     /**
@@ -182,45 +228,6 @@ public class HttpClient implements AutoCloseable {
         }
     }
 
-    /**
-     * Execute HTTP request with retry logic
-     *
-     * @param request      HTTP request
-     * @param responseType response type class
-     * @param retryable    whether the request is retryable
-     * @param <T>          response type
-     * @return response object
-     */
-    private <T extends BaseResponse> T executeRequest(HttpRequestBase request, Class<T> responseType, boolean retryable) {
-        int attempts = 0;
-        int maxAttempts = retryable ? maxRetries : 1;
-
-        while (attempts < maxAttempts) {
-            attempts++;
-            try {
-                return doExecute(request, responseType);
-            } catch (SunbayNetworkException e) {
-                if (!retryable || attempts >= maxAttempts) {
-                    if (log.isWarnEnabled()) {
-                        log.warn("Request failed after {} attempts: {}", attempts, e.getMessage());
-                    }
-                    throw e;
-                }
-                if (log.isDebugEnabled()) {
-                    log.debug("Request failed, retrying ({}/{}) after delay: {}", attempts, maxAttempts, e.getMessage());
-                }
-                // Retry after delay
-                try {
-                    Thread.sleep(RETRY_DELAY_BASE_MS * attempts);
-                } catch (InterruptedException ie) {
-                    Thread.currentThread().interrupt();
-                    throw new SunbayNetworkException("Request interrupted", ie, false);
-                }
-            }
-        }
-
-        throw new SunbayNetworkException("Request failed after " + maxAttempts + " attempts", true);
-    }
 
     /**
      * Execute HTTP request
@@ -230,10 +237,9 @@ public class HttpClient implements AutoCloseable {
      * @param <T>          response type
      * @return response object
      */
-    private <T extends BaseResponse> T doExecute(HttpRequestBase request, Class<T> responseType) {
+    private <T extends BaseResponse> T doExecute(HttpRequestBase request, String requestBody, Class<T> responseType) {
         String requestUrl = request.getURI().toString();
         String requestMethod = request.getMethod();
-        String requestBody = extractRequestBodyBeforeExecute(request);
         
         // Log request
         if (log.isInfoEnabled()) {
@@ -342,31 +348,6 @@ public class HttpClient implements AutoCloseable {
         
         // For other formats, mask completely
         return "****";
-    }
-
-    /**
-     * Extract request body from HTTP request before execution
-     * Note: This method reads the entity, so we need to recreate it after reading
-     *
-     * @param request HTTP request
-     * @return request body string, or null if not available
-     */
-    private String extractRequestBodyBeforeExecute(HttpRequestBase request) {
-        if (request instanceof HttpPost) {
-            HttpPost httpPost = (HttpPost) request;
-            HttpEntity entity = httpPost.getEntity();
-            if (entity instanceof StringEntity) {
-                try {
-                    String body = EntityUtils.toString(entity, StandardCharsets.UTF_8);
-                    // Recreate entity since it was consumed
-                    httpPost.setEntity(new StringEntity(body, StandardCharsets.UTF_8));
-                    return body;
-                } catch (IOException e) {
-                    // Ignore
-                }
-            }
-        }
-        return null;
     }
 
     /**
