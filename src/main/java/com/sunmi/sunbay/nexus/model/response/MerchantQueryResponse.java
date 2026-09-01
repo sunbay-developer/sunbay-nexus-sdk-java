@@ -33,16 +33,6 @@ public class MerchantQueryResponse extends BaseResponse {
     private String mcc;
 
     /**
-     * URL of the merchant logo
-     */
-    private String logo;
-
-    /**
-     * URL of the merchant's small icon / favicon
-     */
-    private String smallLogo;
-
-    /**
      * ISO 3166-1 alpha-3 country code
      */
     private String country;

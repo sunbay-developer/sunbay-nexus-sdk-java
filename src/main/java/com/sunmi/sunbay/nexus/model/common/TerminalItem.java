@@ -19,6 +19,11 @@ import java.util.List;
 public class TerminalItem {
 
     /**
+     * Terminal ID
+     */
+    private String terminalId;
+
+    /**
      * Terminal serial number
      */
     private String sn;
