@@ -2,9 +2,12 @@ package com.sunmi.sunbay.nexus.util;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.TreeNode;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.sunmi.sunbay.nexus.constant.ApiConstants;
 import com.sunmi.sunbay.nexus.exception.SunbayBusinessException;
 
 /**
@@ -41,7 +44,11 @@ public class JsonUtil {
         try {
             return OBJECT_MAPPER.writeValueAsString(obj);
         } catch (JsonProcessingException e) {
-            throw new SunbayBusinessException("Failed to serialize object to JSON", e);
+            throw new SunbayBusinessException(
+                    ApiConstants.ERROR_CODE_PARAMETER_ERROR,
+                    "Failed to serialize object to JSON",
+                    null,
+                    e);
         }
     }
 
@@ -60,16 +67,62 @@ public class JsonUtil {
         try {
             return OBJECT_MAPPER.readValue(json, clazz);
         } catch (JsonProcessingException e) {
-            throw new SunbayBusinessException("Failed to parse JSON to object", e);
+            throw new SunbayBusinessException(
+                    ApiConstants.ERROR_CODE_PARAMETER_ERROR,
+                    "Failed to parse JSON to object",
+                    null,
+                    e);
         }
     }
 
     /**
-     * Get ObjectMapper instance
+     * Parse a JSON string into a tree model. Internal SDK use for envelope
+     * inspection where a value POJO is not the right target.
      *
-     * @return ObjectMapper instance
+     * @param json JSON string
+     * @return root {@link JsonNode}
+     * @throws JsonProcessingException if the input is not valid JSON
+     * @since 2026-09-09
      */
-    public static ObjectMapper getObjectMapper() {
+    public static JsonNode readTree(String json) throws JsonProcessingException {
+        return OBJECT_MAPPER.readTree(json);
+    }
+
+    /**
+     * Bind a Jackson tree node into a value object.
+     *
+     * @param node  source tree node
+     * @param clazz target class
+     * @param <T>   type
+     * @return deserialized object
+     * @throws JsonProcessingException if the node does not match the target type
+     * @since 2026-09-09
+     */
+    public static <T> T treeToValue(TreeNode node, Class<T> clazz) throws JsonProcessingException {
+        return OBJECT_MAPPER.treeToValue(node, clazz);
+    }
+
+    /**
+     * Build a fresh instance of the given type with all fields left at their
+     * defaults. Equivalent to deserializing an empty JSON object.
+     *
+     * @param clazz target class (must have a no-arg constructor / be Jackson-instantiable)
+     * @param <T>   type
+     * @return a new instance
+     * @throws JsonProcessingException if {@code clazz} cannot be instantiated by Jackson
+     * @since 2026-09-09
+     */
+    public static <T> T emptyValue(Class<T> clazz) throws JsonProcessingException {
+        return OBJECT_MAPPER.treeToValue(OBJECT_MAPPER.createObjectNode(), clazz);
+    }
+
+    /**
+     * Internal accessor for the shared {@link ObjectMapper} instance. Kept
+     * package-private on purpose: callers must not reconfigure the shared
+     * mapper at runtime, since Jackson's configuration is only thread-safe
+     * once the mapper is done being configured.
+     */
+    private static ObjectMapper getObjectMapper() {
         return OBJECT_MAPPER;
     }
 }

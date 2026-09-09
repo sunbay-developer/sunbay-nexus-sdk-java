@@ -21,8 +21,10 @@ import com.sunmi.sunbay.nexus.model.response.*;
  * <li>{@link SunbayBusinessException} - invalid request parameters, or the API
  * returned a business error code ({@link SunbayBusinessException#getCode()},
  * {@link SunbayBusinessException#getTraceId()})</li>
- * <li>{@link SunbayNetworkException} - network, timeout or HTTP errors;
- * use {@link SunbayNetworkException#isRetryable()} to decide whether a retry is safe</li>
+ * <li>{@link SunbayNetworkException} - network, timeout or HTTP errors. The SDK
+ * retries idempotent GET requests internally. Callers that need to retry a POST
+ * must own the retry policy and use the API's idempotency key
+ * ({@code transactionRequestId}) to make the retry safe.</li>
  * </ul>
  *
  * @since 2025-12-10
@@ -56,8 +58,7 @@ public class NexusClient implements AutoCloseable {
      * @return sale response
      * @throws SunbayBusinessException if the request is invalid or the API returns a business
      *         error code
-     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs (see
-     *         {@link SunbayNetworkException#isRetryable()})
+     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs
      */
     public SaleResponse sale(SaleRequest request) {
         if (request == null) {
@@ -74,8 +75,7 @@ public class NexusClient implements AutoCloseable {
      * @return auth response
      * @throws SunbayBusinessException if the request is invalid or the API returns a business
      *         error code
-     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs (see
-     *         {@link SunbayNetworkException#isRetryable()})
+     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs
      */
     public AuthResponse auth(AuthRequest request) {
         if (request == null) {
@@ -92,8 +92,7 @@ public class NexusClient implements AutoCloseable {
      * @return forced auth response
      * @throws SunbayBusinessException if the request is invalid or the API returns a business
      *         error code
-     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs (see
-     *         {@link SunbayNetworkException#isRetryable()})
+     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs
      */
     public ForcedAuthResponse forcedAuth(ForcedAuthRequest request) {
         if (request == null) {
@@ -110,8 +109,7 @@ public class NexusClient implements AutoCloseable {
      * @return incremental auth response
      * @throws SunbayBusinessException if the request is invalid or the API returns a business
      *         error code
-     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs (see
-     *         {@link SunbayNetworkException#isRetryable()})
+     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs
      */
     public IncrementalAuthResponse incrementalAuth(IncrementalAuthRequest request) {
         if (request == null) {
@@ -128,8 +126,7 @@ public class NexusClient implements AutoCloseable {
      * @return post auth response
      * @throws SunbayBusinessException if the request is invalid or the API returns a business
      *         error code
-     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs (see
-     *         {@link SunbayNetworkException#isRetryable()})
+     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs
      */
     public PostAuthResponse postAuth(PostAuthRequest request) {
         if (request == null) {
@@ -146,8 +143,7 @@ public class NexusClient implements AutoCloseable {
      * @return refund response
      * @throws SunbayBusinessException if the request is invalid or the API returns a business
      *         error code
-     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs (see
-     *         {@link SunbayNetworkException#isRetryable()})
+     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs
      */
     public RefundResponse refund(RefundRequest request) {
         if (request == null) {
@@ -164,8 +160,7 @@ public class NexusClient implements AutoCloseable {
      * @return void response
      * @throws SunbayBusinessException if the request is invalid or the API returns a business
      *         error code
-     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs (see
-     *         {@link SunbayNetworkException#isRetryable()})
+     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs
      */
     public VoidResponse voidTransaction(VoidRequest request) {
         if (request == null) {
@@ -182,8 +177,7 @@ public class NexusClient implements AutoCloseable {
      * @return abort response
      * @throws SunbayBusinessException if the request is invalid or the API returns a business
      *         error code
-     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs (see
-     *         {@link SunbayNetworkException#isRetryable()})
+     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs
      */
     public AbortResponse abort(AbortRequest request) {
         if (request == null) {
@@ -200,8 +194,7 @@ public class NexusClient implements AutoCloseable {
      * @return tip adjust response
      * @throws SunbayBusinessException if the request is invalid or the API returns a business
      *         error code
-     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs (see
-     *         {@link SunbayNetworkException#isRetryable()})
+     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs
      */
     public TipAdjustResponse tipAdjust(TipAdjustRequest request) {
         if (request == null) {
@@ -218,8 +211,7 @@ public class NexusClient implements AutoCloseable {
      * @return query response
      * @throws SunbayBusinessException if the request is invalid or the API returns a business
      *         error code
-     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs (see
-     *         {@link SunbayNetworkException#isRetryable()})
+     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs
      */
     public QueryResponse query(QueryRequest request) {
         if (request == null) {
@@ -240,8 +232,7 @@ public class NexusClient implements AutoCloseable {
      * @return batch query response
      * @throws SunbayBusinessException if the request is invalid or the API returns a business
      *         error code
-     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs (see
-     *         {@link SunbayNetworkException#isRetryable()})
+     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs
      */
     public BatchQueryResponse batchQuery(BatchQueryRequest request) {
         if (request == null) {
@@ -263,8 +254,7 @@ public class NexusClient implements AutoCloseable {
      * @return batch close response
      * @throws SunbayBusinessException if the request is invalid or the API returns a business
      *         error code
-     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs (see
-     *         {@link SunbayNetworkException#isRetryable()})
+     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs
      */
     public BatchCloseResponse batchClose(BatchCloseRequest request) {
         if (request == null) {
@@ -284,8 +274,7 @@ public class NexusClient implements AutoCloseable {
      * @return merchant query response
      * @throws SunbayBusinessException if the request is invalid or the API returns a business
      *         error code
-     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs (see
-     *         {@link SunbayNetworkException#isRetryable()})
+     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs
      */
     public MerchantQueryResponse merchantQuery(MerchantQueryRequest request) {
         if (request == null) {
@@ -306,8 +295,7 @@ public class NexusClient implements AutoCloseable {
      * @return merchant terminals query response
      * @throws SunbayBusinessException if the request is invalid or the API returns a business
      *         error code
-     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs (see
-     *         {@link SunbayNetworkException#isRetryable()})
+     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs
      */
     public MerchantTerminalsQueryResponse merchantTerminalsQuery(MerchantTerminalsQueryRequest request) {
         if (request == null) {
@@ -330,8 +318,7 @@ public class NexusClient implements AutoCloseable {
      * @return batch close list response
      * @throws SunbayBusinessException if the request is invalid or the API returns a business
      *         error code
-     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs (see
-     *         {@link SunbayNetworkException#isRetryable()})
+     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs
      */
     public BatchCloseListResponse batchCloseList(BatchCloseListRequest request) {
         if (request == null) {
@@ -348,8 +335,7 @@ public class NexusClient implements AutoCloseable {
      * @return response including checkout URL and expiry
      * @throws SunbayBusinessException if the request is invalid or the API returns a business
      *         error code
-     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs (see
-     *         {@link SunbayNetworkException#isRetryable()})
+     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs
      */
     public CreateCheckoutSessionResponse createCheckoutSession(CreateCheckoutSessionRequest request) {
         if (request == null) {
@@ -368,8 +354,7 @@ public class NexusClient implements AutoCloseable {
      * @return expire session response
      * @throws SunbayBusinessException if the request is invalid or the API returns a business
      *         error code
-     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs (see
-     *         {@link SunbayNetworkException#isRetryable()})
+     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs
      */
     public ExpireCheckoutSessionResponse expireCheckoutSession(ExpireCheckoutSessionRequest request) {
         if (request == null) {
@@ -387,8 +372,7 @@ public class NexusClient implements AutoCloseable {
      * @return payment response
      * @throws SunbayBusinessException if the request is invalid or the API returns a business
      *         error code
-     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs (see
-     *         {@link SunbayNetworkException#isRetryable()})
+     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs
      */
     public CheckoutDirectPaymentResponse checkoutDirectPayment(CheckoutDirectPaymentRequest request) {
         if (request == null) {
@@ -409,8 +393,7 @@ public class NexusClient implements AutoCloseable {
      * @return online refund response
      * @throws SunbayBusinessException if the request is invalid or the API returns a business
      *         error code
-     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs (see
-     *         {@link SunbayNetworkException#isRetryable()})
+     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs
      */
     public OnlineRefundResponse onlineRefund(OnlineRefundRequest request) {
         if (request == null) {

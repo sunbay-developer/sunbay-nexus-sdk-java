@@ -50,9 +50,6 @@ public class ApiConstants {
      */
     public static final int GETTER_METHOD_PREFIX_LENGTH = 3;
 
-    private ApiConstants() {
-    }
-
     /**
      * Semi-integration API path prefix
      */
@@ -97,4 +94,7 @@ public class ApiConstants {
     public static final String PATH_CHECKOUT_EXPIRE_SESSION = COMMON_PREFIX + "/checkout/expire-session";
     public static final String PATH_CHECKOUT_SALE = COMMON_PREFIX + "/checkout/sale";
     public static final String PATH_CHECKOUT_REFUND = COMMON_PREFIX + "/checkout/refund";
+
+    private ApiConstants() {
+    }
 }

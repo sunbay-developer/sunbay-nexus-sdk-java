@@ -47,6 +47,24 @@ public class SunbayBusinessException extends RuntimeException {
         this.traceId = traceId;
     }
 
+    /**
+     * Create API exception with code, traceId and an underlying cause. Use this
+     * when the exception is raised in a fallback path where the original failure
+     * (JSON parse error, unexpected response shape, ...) should be preserved for
+     * troubleshooting.
+     *
+     * @param code    API error code
+     * @param message error message
+     * @param traceId trace ID
+     * @param cause   underlying exception that triggered this business exception
+     * @since 2026-09-09
+     */
+    public SunbayBusinessException(String code, String message, String traceId, Throwable cause) {
+        super(message, cause);
+        this.code = code;
+        this.traceId = traceId;
+    }
+
     public String getCode() {
         return code;
     }

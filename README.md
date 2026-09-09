@@ -20,14 +20,14 @@ Official Java SDK for Sunbay Payment Platform
 <dependency>
     <groupId>com.sunmi</groupId>
     <artifactId>sunbay-nexus-sdk-java</artifactId>
-    <version>1.0.17</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
 ### Gradle
 
 ```gradle
-implementation 'com.sunmi:sunbay-nexus-sdk-java:1.0.17'
+implementation 'com.sunmi:sunbay-nexus-sdk-java:1.1.0'
 ```
 
 ## Quick Start
@@ -267,11 +267,13 @@ try {
     // If no exception is thrown, the transaction is successful
     // Use response object here
 } catch (SunbayNetworkException e) {
-    // Network exception (e.g., connection timeout, network error)
+    // Network / timeout / HTTP error. The SDK already retries idempotent GET
+    // requests internally. For POST operations (sale, refund, void, ...), the SDK
+    // does not retry: retrying a non-idempotent POST is only safe when you
+    // guarantee idempotency at the business layer using the API's
+    // transactionRequestId. Decide at your layer whether to surface, retry,
+    // or query the transaction state.
     System.err.println("Network Error: " + e.getMessage());
-    if (e.isRetryable()) {
-        // Can retry
-    }
 } catch (SunbayBusinessException e) {
     // Business exception (e.g., insufficient funds, parameter error)
     System.err.println("API Error: " + e.getCode() + " - " + e.getMessage());
@@ -320,8 +322,8 @@ The SDK also automatically manages connection health:
 ## Requirements
 
 - Java 8 or higher
-- Apache HttpClient 4.5.14
-- Jackson 2.18.2
+- Apache HttpClient 5.6.1
+- Jackson 2.18.8
 
 ## License
 

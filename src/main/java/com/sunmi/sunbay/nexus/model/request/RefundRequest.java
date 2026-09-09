@@ -99,8 +99,10 @@ public class RefundRequest {
     private String printReceipt;
 
     /**
-     * 签名位置。可选值：ON_SCREEN（终端屏幕签名）、ON_RECEIPT（小票签名）、NONE（不签名）。
-     * 未传时使用后台默认配置。仅无参考退款时有效。
+     * Signature entry location. Possible values: ON_SCREEN (sign on terminal screen),
+     * ON_RECEIPT (sign on receipt), NONE (no signature). When not provided, the
+     * SUNBAY platform default configuration is used. Only effective for refund
+     * without reference.
      *
      * @deprecated Use {@link #signatureConfig} instead
      */
