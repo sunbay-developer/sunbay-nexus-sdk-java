@@ -176,8 +176,8 @@ public class HttpClient implements AutoCloseable {
                 return doExecute(httpGet, null, responseType);
             } catch (SunbayNetworkException e) {
                 if (attempts >= maxAttempts) {
-                    if (log.isWarnEnabled()) {
-                        log.warn("Request failed after {} attempts: {}", attempts, e.getMessage());
+                    if (log.isDebugEnabled()) {
+                        log.debug("Request failed after {} attempts: {}", attempts, e.getMessage());
                     }
                     throw e;
                 }
@@ -271,20 +271,20 @@ public class HttpClient implements AutoCloseable {
                 return parseResponse(responseBody, responseType);
             } else {
                 String errorMessage = buildErrorMessage(statusCode, responseBody);
-                if (log.isErrorEnabled()) {
-                    log.error("HTTP error {} {} - Status: {}, Message: {}", 
+                if (log.isDebugEnabled()) {
+                    log.debug("HTTP error {} {} - Status: {}, Message: {}",
                             requestMethod, requestUrl, statusCode, errorMessage);
                 }
                 throw new SunbayNetworkException(errorMessage, false);
             }
         } catch (SocketTimeoutException e) {
-            if (log.isWarnEnabled()) {
-                log.warn("Request timeout {} {}: {}", requestMethod, requestUrl, e.getMessage());
+            if (log.isDebugEnabled()) {
+                log.debug("Request timeout {} {}: {}", requestMethod, requestUrl, e.getMessage());
             }
             throw new SunbayNetworkException("Request timeout", e, true);
         } catch (IOException e) {
-            if (log.isWarnEnabled()) {
-                log.warn("Network error {} {}: {}", requestMethod, requestUrl, e.getMessage());
+            if (log.isDebugEnabled()) {
+                log.debug("Network error {} {}: {}", requestMethod, requestUrl, e.getMessage());
             }
             throw new SunbayNetworkException("Network error: " + e.getMessage(), e, true);
         }
@@ -391,8 +391,8 @@ public class HttpClient implements AutoCloseable {
                 
                 // Check business success code, throw exception if failed
                 if (!result.isSuccess()) {
-                    if (log.isErrorEnabled()) {
-                        log.error("API business error - code: {}, msg: {}, traceId: {}", 
+                    if (log.isDebugEnabled()) {
+                        log.debug("API business error - code: {}, msg: {}, traceId: {}",
                                 code, msg, traceId);
                     }
                     throw new SunbayBusinessException(code, msg, traceId);

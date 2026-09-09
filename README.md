@@ -63,6 +63,53 @@ try (NexusClient client = new NexusClient.Builder()
 }
 ```
 
+### Spring Boot Integration
+
+For Spring Boot applications, register `NexusClient` as a singleton bean and let Spring manage
+its lifecycle. Since the client is thread-safe, a single instance shared by the whole application
+is sufficient:
+
+```java
+@Configuration
+public class SunbayConfig {
+
+    @Bean(destroyMethod = "close")
+    public NexusClient nexusClient(@Value("${sunbay.api-key}") String apiKey) {
+        return new NexusClient.Builder()
+                .apiKey(apiKey)
+                .build();
+    }
+}
+```
+
+`destroyMethod = "close"` ensures the connection pool is released gracefully when the Spring
+context shuts down.
+
+Then inject and use it anywhere:
+
+```java
+@Service
+public class PaymentService {
+
+    private final NexusClient nexusClient;
+
+    public PaymentService(NexusClient nexusClient) {
+        this.nexusClient = nexusClient;
+    }
+
+    public SaleResponse pay(SaleRequest request) {
+        return nexusClient.sale(request);
+    }
+}
+```
+
+Configuration in `application.yml`:
+
+```yaml
+sunbay:
+  api-key: ${SUNBAY_API_KEY}
+```
+
 ### 2. Sale Transaction
 
 ```java
