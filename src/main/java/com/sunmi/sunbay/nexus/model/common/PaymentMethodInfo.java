@@ -17,17 +17,17 @@ import lombok.NoArgsConstructor;
 public class PaymentMethodInfo {
 
     /**
-     * Payment category: CARD (bank card)/CARD-CREDIT (credit card network)/CARD-DEBIT (debit card network)/QR-MPM (QR code merchant present mode)/QR-CPM (QR code customer present mode)
+     * Payment category: CARD (bank card)/CARD-CREDIT (credit card network)/CARD-DEBIT (debit card network)/QR-MPM (QR code merchant present mode)/QR-CPM (QR code customer present mode) (optional)
      */
     private String category;
 
     /**
-     * Specific payment method: WECHAT (WeChat)/ALIPAY (Alipay) etc. For card payments, usually only category needs to be specified
+     * Specific payment method: WECHAT (WeChat)/ALIPAY (Alipay) etc. For card payments, usually only category needs to be specified (optional)
      */
     private String id;
 
     /**
-     * Sub payment method. Cannot be specified when category is CARD. Currently only when category is EBT and id is EBT can this be specified; allowed values: SNAP, VOUCHER, BENEFIT
+     * Sub payment method. Cannot be specified when category is CARD. Currently only when category is EBT and id is EBT can this be specified; allowed values: SNAP, VOUCHER, BENEFIT (optional)
      */
     private String subId;
 }

@@ -13,21 +13,21 @@ import lombok.Data;
 public class MerchantTerminalsQueryRequest {
 
     /**
-     * Application ID
+     * Application ID (required)
      */
     private String appId;
 
     /**
      * SUNBAY platform merchant unique identifier.
      * Format: 11-character alphanumeric string starting with M.
-     * Note: This is not the MID assigned by a payment processor
+     * Note: This is not the MID assigned by a payment processor (required)
      */
     private String merchantId;
 
     /**
      * Pagination token returned by the previous response.
      * Pass it back to fetch the next page. Omit on the first request.
-     * The token is an opaque string — do not parse or modify its contents.
+     * The token is an opaque string — do not parse or modify its contents. (optional)
      */
     private String nextToken;
 }

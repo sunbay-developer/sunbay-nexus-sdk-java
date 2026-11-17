@@ -16,27 +16,27 @@ import com.sunmi.sunbay.nexus.model.common.PaymentMethodInfo;
 public class ForcedAuthRequest {
 
     /**
-     * Application ID
+     * Application ID (required)
      */
     private String appId;
 
     /**
-     * Merchant ID
+     * Merchant ID (required)
      */
     private String merchantId;
 
     /**
-     * Reference order ID for the forced authorization transaction. Unique ID assigned by merchant system to identify this forced authorization transaction, 6-32 characters, can only contain numbers, uppercase/lowercase letters, _-\|*
+     * Reference order ID for the forced authorization transaction. Unique ID assigned by merchant system to identify this forced authorization transaction, 6-32 characters, can only contain numbers, uppercase/lowercase letters, _-\|* (required)
      */
     private String referenceOrderId;
 
     /**
-     * Transaction request ID for this forced authorization transaction. Unique ID to identify this forced authorization transaction request, used as API idempotency control field
+     * Transaction request ID for this forced authorization transaction. Unique ID to identify this forced authorization transaction request, used as API idempotency control field (required)
      */
     private String transactionRequestId;
 
     /**
-     * Amount information
+     * Amount information (required)
      */
     private AuthAmount amount;
 
@@ -46,43 +46,43 @@ public class ForcedAuthRequest {
     private PaymentMethodInfo paymentMethod;
 
     /**
-     * Card network type. Only effective when paymentMethod.category is CARD; when not specified, system will auto-detect. See {@link com.sunmi.sunbay.nexus.enums.CardNetworkType}
+     * Card network type. Only effective when paymentMethod.category is CARD; when not specified, system will auto-detect. (optional)
      */
     private String cardNetworkType;
 
     /**
-     * Product description. Should be a real description representing the product information, may be displayed on some payment App billing pages
+     * Product description. Should be a real description representing the product information, may be displayed on some payment App billing pages (required)
      */
     private String description;
 
     /**
-     * Terminal serial number. SUNBAY provided financial POS device serial number for reading bank cards and processing PIN security operations
+     * Terminal serial number. SUNBAY provided financial POS device serial number for reading bank cards and processing PIN security operations (required)
      */
     private String terminalSn;
 
     /**
-     * Additional data, returned as-is, recommended to use JSON format
+     * Additional data, returned as-is, recommended to use JSON format (optional)
      */
     private String attach;
 
     /**
-     * Asynchronous notification URL
+     * Asynchronous notification URL (optional)
      */
     private String notifyUrl;
 
     /**
      * Terminal event asynchronous notification URL. When provided, real-time terminal status events
-     * (card swipe, signature, printing, etc.) will be pushed to this URL during the transaction process.
+     * (card swipe, signature, printing, etc.) will be pushed to this URL during the transaction process. (optional)
      */
     private String terminalEventNotifyUrl;
 
     /**
-     * Transaction expiration time, format: yyyy-MM-DDTHH:mm:ss+TIMEZONE (ISO 8601). Transaction will be closed if payment is not completed after this time. Minimum 3 minutes, maximum 1 day, default 1 day if not provided
+     * Transaction expiration time, format: yyyy-MM-DDTHH:mm:ss+TIMEZONE (ISO 8601). Transaction will be closed if payment is not completed after this time. Minimum 3 minutes, maximum 1 day, default 1 day if not provided (optional)
      */
     private String timeExpire;
 
     /**
-     * Receipt print option. Possible values: NONE, MERCHANT, CUSTOMER, BOTH. Default: "NONE"
+     * Receipt print option. Possible values: NONE, MERCHANT, CUSTOMER, BOTH, AUTO. Default: "NONE" (optional)
      */
     private String printReceipt;
 }

@@ -19,54 +19,54 @@ import com.sunmi.sunbay.nexus.model.common.OnlineRefundAmount;
 public class OnlineRefundRequest {
 
     /**
-     * Application ID
+     * Application ID (required)
      */
     private String appId;
 
     /**
-     * Merchant ID
+     * Merchant ID (required)
      */
     private String merchantId;
 
     /**
      * Transaction request ID for this refund transaction.
      * Unique ID to identify this refund request, used as API idempotency control field.
-     * Only letters, numbers, underscores and hyphens are supported, max length 64.
+     * Only letters, numbers, underscores and hyphens are supported, max length 64. (required)
      */
     private String transactionRequestId;
 
     /**
      * Original transaction ID to refund (SUNBAY transaction ID from the payment response).
-     * Either originalTransactionId or originalTransactionRequestId is required.
-     * If both are provided, originalTransactionId takes priority.
+     * Either originalTransactionId or originalTransactionRequestId should be provided.
+     * If both are provided, originalTransactionId takes priority. (optional)
      */
     private String originalTransactionId;
 
     /**
      * Original transaction request ID to refund.
-     * Either originalTransactionId or originalTransactionRequestId is required.
-     * If both are provided, originalTransactionId takes priority.
+     * Either originalTransactionId or originalTransactionRequestId should be provided.
+     * If both are provided, originalTransactionId takes priority. (optional)
      */
     private String originalTransactionRequestId;
 
     /**
      * Refund amount information.
-     * If totalAmount is provided, system will validate it equals orderAmount + taxAmount + surchargeAmount + tipAmount.
+     * If totalAmount is provided, system will validate it equals orderAmount + taxAmount + surchargeAmount + tipAmount. (required)
      */
     private OnlineRefundAmount amount;
 
     /**
-     * Refund description
+     * Refund description (required)
      */
     private String description;
 
     /**
-     * Additional data, returned as-is, can be used to record refund reason or other custom information
+     * Additional data, returned as-is, can be used to record refund reason or other custom information (optional)
      */
     private String attach;
 
     /**
-     * Asynchronous notification URL (Webhook). Must be a publicly accessible HTTPS address if provided.
+     * Asynchronous notification URL (Webhook). Must be a publicly accessible HTTPS address if provided. (optional)
      */
     private String notifyUrl;
 }

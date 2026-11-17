@@ -16,10 +16,24 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CheckoutAddress {
 
-    private String line1;
-    private String line2;
+    /**
+     * Optional
+     */
+    private String address;
+    /**
+     * Optional
+     */
     private String city;
-    private String state;
+    /**
+     * Optional
+     */
+    private String country;
+    /**
+     * Optional
+     */
     private String postalCode;
-    private String countryCode;
+    /**
+     * Optional
+     */
+    private String state;
 }

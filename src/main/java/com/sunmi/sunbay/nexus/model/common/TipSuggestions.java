@@ -13,11 +13,20 @@ import java.util.List;
 @Data
 public class TipSuggestions {
 
+    /**
+     * Optional
+     */
     private List<String> names;
 
+    /**
+     * Optional
+     */
     private String feeMode;
 
-    private List<Double> values;
+    /**
+     * Optional
+     */
+    private List<Integer> values;
 
     /**
      * Display names for tip options.
@@ -40,7 +49,7 @@ public class TipSuggestions {
      * Suggestion values (percentage or fixed amount depending on feeMode). Max 3.
      * Must match names in length and order if names is not empty.
      */
-    public void setValues(List<Double> values) {
+    public void setValues(List<Integer> values) {
         validateSize(values, "values");
         validateMatch(names, values, "values");
         this.values = copy(values);
@@ -52,7 +61,7 @@ public class TipSuggestions {
         }
     }
 
-    private static void validateMatch(List<String> names, List<Double> values, String fieldName) {
+    private static void validateMatch(List<String> names, List<Integer> values, String fieldName) {
         if (names != null && !names.isEmpty() && values != null && names.size() != values.size()) {
             throw new IllegalArgumentException("Tip suggestion names must match values in length for " + fieldName + ".");
         }

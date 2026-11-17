@@ -16,21 +16,21 @@ public class SignatureConfig {
      * Whether to use SUNBAY platform signature configuration.
      * When true, platform configuration is used and entryLocation/threshold are ignored.
      * When false, the configuration provided in this request is used.
-     * Default: true
+     * Default: true (optional)
      */
     private Boolean useHostConfig;
 
     /**
-     * Signature entry location. Required when useHostConfig is false.
-     * Possible values: ON_SCREEN (terminal screen signature), ON_RECEIPT (receipt signature), NONE (no signature)
+     * Signature entry location. Used when useHostConfig is false.
+     * Possible values: ON_SCREEN (terminal screen signature), ON_RECEIPT (receipt signature), NONE (no signature) (optional)
      */
     private String entryLocation;
 
     /**
      * Signature threshold amount in smallest currency unit.
-     * When transaction amount >= this value, signature is required; below this value, signature is skipped.
+     * When transaction amount >= this value, signature is collected; below this value, signature is skipped.
      * Only effective when useHostConfig is false and entryLocation is not NONE.
-     * When not provided, signature is required for all amounts.
+     * When not provided, signature is collected for all amounts. (optional)
      */
     private Integer threshold;
 }

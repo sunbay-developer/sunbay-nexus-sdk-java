@@ -14,17 +14,35 @@ public class TipConfig {
      * Whether to use SUNBAY platform tip configuration.
      * When true, Tapro will fully follow the platform's tip configuration for UI display and business logic,
      * and all other tipConfig parameters (onScreenTip, tipMode, tipWithTax, suggestions) will be ignored.
-     * Default: false
+     * Default: false (optional)
      */
     private Boolean useHostConfig;
 
+    /**
+     * Optional
+     */
     private Boolean onScreenTip;
 
+    /**
+     * Optional
+     */
     private String tipMode;
 
+    /**
+     * Optional
+     */
     private Boolean tipWithTax;
 
+    /**
+     * Optional
+     */
     private TipSuggestions suggestions;
+
+    /**
+     * Whether to allow tip adjustment after the transaction is completed.
+     * When true, the tip amount can be adjusted via the Tip Adjust API after the transaction succeeds. (optional)
+     */
+    private Boolean allowTipAdjustment;
 
     /**
      * Whether to use SUNBAY platform tip configuration.
@@ -61,5 +79,12 @@ public class TipConfig {
      */
     public void setSuggestions(TipSuggestions suggestions) {
         this.suggestions = suggestions;
+    }
+
+    /**
+     * Whether to allow tip adjustment after the transaction is completed.
+     */
+    public void setAllowTipAdjustment(Boolean allowTipAdjustment) {
+        this.allowTipAdjustment = allowTipAdjustment;
     }
 }

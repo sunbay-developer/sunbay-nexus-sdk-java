@@ -18,15 +18,48 @@ import com.sunmi.sunbay.nexus.model.common.CheckoutLineItem;
 @Builder
 public class CreateCheckoutSessionRequest {
 
+    /**
+     * Required
+     */
     private String appId;
+    /**
+     * Required
+     */
     private String transactionRequestId;
+    /**
+     * Required
+     */
     private String referenceOrderId;
+    /**
+     * Required
+     */
     private String merchantId;
+    /**
+     * Required
+     */
     private CheckoutAmount amount;
+    /**
+     * Required
+     */
     private String description;
+    /**
+     * Optional
+     */
     private List<CheckoutLineItem> productList;
+    /**
+     * Optional
+     */
     private Boolean collectBillingAddress;
+    /**
+     * Optional
+     */
     private Boolean collectShippingAddress;
+    /**
+     * Optional
+     */
     private String merchantReturnUrl;
+    /**
+     * Optional
+     */
     private String notifyUrl;
 }

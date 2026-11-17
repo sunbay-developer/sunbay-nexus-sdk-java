@@ -13,14 +13,14 @@ import lombok.Data;
 public class MerchantQueryRequest {
 
     /**
-     * Application ID
+     * Application ID (required)
      */
     private String appId;
 
     /**
      * SUNBAY platform merchant unique identifier.
      * Format: 11-character alphanumeric string starting with M.
-     * Note: This is not the MID assigned by a payment processor
+     * Note: This is not the MID assigned by a payment processor (required)
      */
     private String merchantId;
 }

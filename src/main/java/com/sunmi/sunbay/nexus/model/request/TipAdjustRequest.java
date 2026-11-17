@@ -13,37 +13,40 @@ import lombok.Data;
 public class TipAdjustRequest {
 
     /**
-     * Application ID
+     * Application ID (required)
      */
     private String appId;
 
     /**
-     * Merchant ID
+     * Merchant ID (required)
      */
     private String merchantId;
 
     /**
-     * Terminal serial number
+     * Terminal serial number. (optional)
+     *
+     * @deprecated terminalSn is no longer required for tip adjustment and will be ignored by the server.
      */
+    @Deprecated
     private String terminalSn;
 
     /**
-     * Original transaction ID to adjust tip. Either originalTransactionId or originalTransactionRequestId is required. If both are provided, originalTransactionId takes priority
+     * Original transaction ID to adjust tip. Either originalTransactionId or originalTransactionRequestId should be provided. If both are provided, originalTransactionId takes priority (optional)
      */
     private String originalTransactionId;
 
     /**
-     * Original transaction request ID to adjust tip. Either originalTransactionId or originalTransactionRequestId is required. If both are provided, originalTransactionId takes priority
+     * Original transaction request ID to adjust tip. Either originalTransactionId or originalTransactionRequestId should be provided. If both are provided, originalTransactionId takes priority (optional)
      */
     private String originalTransactionRequestId;
 
     /**
-     * New tip amount after adjustment, in basic currency unit
+     * New tip amount after adjustment, in basic currency unit (required)
      */
     private Integer tipAmount;
 
     /**
-     * Additional data, returned as-is, recommended to use JSON format
+     * Additional data, returned as-is, recommended to use JSON format (optional)
      */
     private String attach;
 }

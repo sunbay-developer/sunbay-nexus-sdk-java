@@ -25,5 +25,10 @@ public enum PrintReceiptOption {
     /**
      * Print both merchant and customer copies
      */
-    BOTH
+    BOTH,
+
+    /**
+     * Let the terminal decide the print behavior automatically
+     */
+    AUTO
 }

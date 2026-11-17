@@ -542,7 +542,7 @@ public class HttpClient implements AutoCloseable {
     }
 
     /**
-     * Mask authorization header value to hide sensitive information
+     * Mask authorization header value so that no part of the API key appears in logs
      *
      * @param authValue original authorization header value
      * @return masked authorization header value
@@ -551,20 +551,12 @@ public class HttpClient implements AutoCloseable {
         if (authValue == null || authValue.isEmpty()) {
             return "";
         }
-        
-        // If it starts with "Bearer ", mask the token part
+
+        // Keep only the scheme; never log any character of the token
         if (authValue.startsWith(ApiConstants.AUTHORIZATION_BEARER_PREFIX)) {
-            String token = authValue.substring(ApiConstants.AUTHORIZATION_BEARER_PREFIX.length());
-            if (token.length() > 8) {
-                // Show first 4 and last 4 characters, mask the middle
-                return ApiConstants.AUTHORIZATION_BEARER_PREFIX + 
-                       token.substring(0, 4) + "****" + token.substring(token.length() - 4);
-            } else {
-                // If token is too short, just show "****"
-                return ApiConstants.AUTHORIZATION_BEARER_PREFIX + "****";
-            }
+            return ApiConstants.AUTHORIZATION_BEARER_PREFIX + "****";
         }
-        
+
         // For other formats, mask completely
         return "****";
     }

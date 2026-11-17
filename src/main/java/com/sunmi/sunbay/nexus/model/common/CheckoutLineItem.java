@@ -17,17 +17,17 @@ import lombok.NoArgsConstructor;
 public class CheckoutLineItem {
 
     /**
-     * Line amount (smallest currency unit)
+     * Line amount (smallest currency unit) (required in request)
      */
     private Integer amount;
 
     /**
-     * Item name
+     * Item name (required in request)
      */
     private String name;
 
     /**
-     * Quantity
+     * Quantity (required in request)
      */
     private Integer num;
 }

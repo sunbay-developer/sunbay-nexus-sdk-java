@@ -18,22 +18,22 @@ import lombok.Data;
 public class BatchCloseListRequest {
 
     /**
-     * Application ID
+     * Application ID (required)
      */
     private String appId;
 
     /**
-     * Merchant ID
+     * Merchant ID (required)
      */
     private String merchantId;
 
     /**
-     * Payment terminal serial number. The payment terminal device serial number provided by SUNBAY
+     * Payment terminal serial number. The payment terminal device serial number provided by SUNBAY (required)
      */
     private String terminalSn;
 
     /**
-     * Payment channel code. If specified, only returns batches for this channel
+     * Payment channel code. If specified, only returns batches for this channel (optional)
      */
     private String channelCode;
 
@@ -41,7 +41,7 @@ public class BatchCloseListRequest {
      * Query start time, ISO 8601 format.
      * startTime and endTime must both be present.
      * The time span cannot exceed 30 days.
-     * If not specified, defaults to the last 7 days
+     * If not specified, defaults to the last 7 days (optional)
      */
     private String startTime;
 
@@ -49,7 +49,7 @@ public class BatchCloseListRequest {
      * Query end time, ISO 8601 format.
      * startTime and endTime must both be present.
      * The time span cannot exceed 30 days.
-     * If not specified, defaults to the last 7 days
+     * If not specified, defaults to the last 7 days (optional)
      */
     private String endTime;
 }

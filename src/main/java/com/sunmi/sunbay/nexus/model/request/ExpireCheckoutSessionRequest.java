@@ -14,22 +14,22 @@ import lombok.Data;
 public class ExpireCheckoutSessionRequest {
 
     /**
-     * Application ID assigned by SUNBAY
+     * Application ID assigned by SUNBAY (required)
      */
     private String appId;
 
     /**
-     * Merchant ID assigned by SUNBAY
+     * Merchant ID assigned by SUNBAY (required)
      */
     private String merchantId;
 
     /**
-     * The session ID to expire, as returned in the create-session response
+     * The session ID to expire, as returned in the create-session response (required)
      */
     private String sessionId;
 
     /**
-     * Optional reason for closing the session
+     * Optional reason for closing the session (optional)
      */
     private String reason;
 }

@@ -13,40 +13,45 @@ import lombok.Data;
 public class BatchCloseRequest {
 
     /**
-     * Application ID
+     * Application ID (required)
      */
     private String appId;
 
     /**
-     * Merchant ID
+     * Merchant ID (required)
      */
     private String merchantId;
 
     /**
-     * Batch close request unique identifier. Unique ID to identify this batch close request, used as API idempotency control field, can be used later to query batch close results
+     * Batch close request unique identifier. Unique ID to identify this batch close request, used as API idempotency control field, can be used later to query batch close results (required)
      */
     private String transactionRequestId;
 
     /**
-     * Terminal serial number. SUNBAY provided financial POS device serial number for reading bank cards and processing PIN security operations
+     * Terminal serial number. SUNBAY provided financial POS device serial number for reading bank cards and processing PIN security operations (required)
      */
     private String terminalSn;
 
     /**
-     * Payment channel code
+     * Payment channel code (required)
      */
     private String channelCode;
 
     /**
-     * Batch close description
+     * Batch close description (optional)
      */
     private String description;
+
+    /**
+     * Additional data returned as-is in notifications and queries (optional)
+     */
+    private String attach;
 
     /**
      * Batch report print option. Controls the report content printed by the terminal after batch close.
      * When not provided, the SUNBAY platform configuration is used by default.
      * Possible values: TOTAL, DETAIL, BOTH, NONE, AUTO
-     * See {@link com.sunmi.sunbay.nexus.enums.BatchPrintReceiptOption}
+     * See {@link com.sunmi.sunbay.nexus.enums.BatchPrintReceiptOption} (optional)
      */
     private String printReceipt;
 }

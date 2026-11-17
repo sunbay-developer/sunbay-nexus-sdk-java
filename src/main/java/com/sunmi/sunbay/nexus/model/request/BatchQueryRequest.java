@@ -13,17 +13,17 @@ import lombok.Data;
 public class BatchQueryRequest {
 
     /**
-     * Application ID
+     * Application ID (required)
      */
     private String appId;
 
     /**
-     * Merchant ID
+     * Merchant ID (required)
      */
     private String merchantId;
 
     /**
-     * Terminal serial number. SUNBAY provided financial POS device serial number
+     * Terminal serial number. SUNBAY provided financial POS device serial number (required)
      */
     private String terminalSn;
 }

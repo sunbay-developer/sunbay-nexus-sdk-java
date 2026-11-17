@@ -9,7 +9,7 @@ import com.sunmi.sunbay.nexus.model.common.TerminalItem;
 import java.util.List;
 
 /**
- * Merchant terminals query response
+ * Merchant terminals query response (v1)
  *
  * @since 2026-08-31
  */

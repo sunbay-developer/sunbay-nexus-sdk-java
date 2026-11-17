@@ -73,6 +73,7 @@ public class ApiConstants {
     public static final String PATH_ABORT = SEMI_INTEGRATION_PREFIX + "/transaction/abort";
     public static final String PATH_TIP_ADJUST = SEMI_INTEGRATION_PREFIX + "/transaction/tip-adjust";
     public static final String PATH_QUERY = COMMON_PREFIX + "/transaction/query";
+    public static final String PATH_LIST_TRANSACTIONS = COMMON_PREFIX + "/transaction/list";
 
     /**
      * Settlement API paths
@@ -85,7 +86,12 @@ public class ApiConstants {
      * Merchant API paths
      */
     public static final String PATH_MERCHANT_QUERY = COMMON_PREFIX + "/merchant/query";
+    /**
+     * @deprecated Use {@link #PATH_MERCHANT_TERMINALS_QUERY_V2} instead
+     */
+    @Deprecated
     public static final String PATH_MERCHANT_TERMINALS_QUERY = COMMON_PREFIX + "/merchant/terminals/query";
+    public static final String PATH_MERCHANT_TERMINALS_QUERY_V2 = "/v2/merchant/terminal/query";
 
     /**
      * Online checkout API paths (Hosted Payment Page and direct payment)

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * Post authorization amount information
- * Supports: orderAmount, tipAmount, taxAmount, surchargeAmount
+ * Supports: orderAmount, tipAmount, taxAmount
  * Does NOT support: cashbackAmount
  *
  * @since 2025-12-15
@@ -32,11 +32,6 @@ public class PostAuthAmount {
      * Tax amount (optional)
      */
     private Integer taxAmount;
-
-    /**
-     * Surcharge amount (optional)
-     */
-    private Integer surchargeAmount;
 
     /**
      * Price currency (ISO 4217, required)

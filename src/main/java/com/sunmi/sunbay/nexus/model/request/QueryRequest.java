@@ -13,22 +13,22 @@ import lombok.Data;
 public class QueryRequest {
 
     /**
-     * Application ID
+     * Application ID (required)
      */
     private String appId;
 
     /**
-     * Merchant ID
+     * Merchant ID (required)
      */
     private String merchantId;
 
     /**
-     * SUNBAY Nexus transaction ID. Either transactionId or transactionRequestId is required. If both are provided, transactionId takes priority
+     * SUNBAY Nexus transaction ID. Either transactionId or transactionRequestId should be provided. If both are provided, transactionId takes priority (optional)
      */
     private String transactionId;
 
     /**
-     * Transaction request ID. Either transactionId or transactionRequestId is required. If both are provided, transactionId takes priority
+     * Transaction request ID. Either transactionId or transactionRequestId should be provided. If both are provided, transactionId takes priority (optional)
      */
     private String transactionRequestId;
 }

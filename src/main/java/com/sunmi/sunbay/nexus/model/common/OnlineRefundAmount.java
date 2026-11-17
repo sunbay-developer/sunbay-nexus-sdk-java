@@ -17,32 +17,32 @@ import lombok.NoArgsConstructor;
 public class OnlineRefundAmount {
 
     /**
-     * Price currency (ISO 4217)
+     * Price currency (ISO 4217) (required)
      */
     private String priceCurrency;
 
     /**
-     * Total transaction amount (smallest currency unit)
+     * Total transaction amount (smallest currency unit) (optional)
      */
     private Integer totalAmount;
 
     /**
-     * Order amount (smallest currency unit)
+     * Order amount (smallest currency unit) (required)
      */
     private Integer orderAmount;
 
     /**
-     * Tax amount (smallest currency unit)
+     * Tax amount (smallest currency unit) (optional)
      */
     private Integer taxAmount;
 
     /**
-     * Surcharge amount (smallest currency unit)
+     * Surcharge amount (smallest currency unit) (optional)
      */
     private Integer surchargeAmount;
 
     /**
-     * Tip amount (smallest currency unit)
+     * Tip amount (smallest currency unit) (optional)
      */
     private Integer tipAmount;
 }

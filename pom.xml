@@ -7,7 +7,7 @@
 
     <groupId>com.sunmi</groupId>
     <artifactId>sunbay-nexus-sdk-java</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <packaging>jar</packaging>
 
     <name>Sunbay Java SDK</name>
@@ -72,14 +72,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Test dependencies -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.2</version>
-            <scope>test</scope>
-        </dependency>
-        
         <!-- SLF4J Simple implementation for testing -->
         <dependency>
             <groupId>org.slf4j</groupId>

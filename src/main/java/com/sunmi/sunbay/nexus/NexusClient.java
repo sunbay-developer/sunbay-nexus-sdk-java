@@ -222,6 +222,28 @@ public class NexusClient implements AutoCloseable {
     }
 
     /**
+     * List transactions
+     * <p>
+     * Returns a paginated list of transactions for the specified merchant.
+     * Uses token-based pagination: if the response contains a nextToken, pass it back
+     * in the next request to fetch the following page.
+     * </p>
+     *
+     * @param request list transactions request
+     * @return list transactions response containing a page of transaction records
+     * @throws SunbayBusinessException if the request is invalid or the API returns a business
+     *         error code
+     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs
+     */
+    public ListTransactionsResponse listTransactions(ListTransactionsRequest request) {
+        if (request == null) {
+            throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR,
+                    "ListTransactionsRequest cannot be null", null);
+        }
+        return httpClient.get(ApiConstants.PATH_LIST_TRANSACTIONS, request, ListTransactionsResponse.class);
+    }
+
+    /**
      * Batch query
      * <p>
      * Query batch summary data, returns statistics grouped by channel code and
@@ -285,7 +307,7 @@ public class NexusClient implements AutoCloseable {
     }
 
     /**
-     * List terminals bound to the specified merchant
+     * List terminals bound to the specified merchant (v1)
      * <p>
      * Up to 100 items per response. Uses token-based pagination: if the response
      * contains a nextToken, pass it back in the next request to fetch the following page.
@@ -296,7 +318,9 @@ public class NexusClient implements AutoCloseable {
      * @throws SunbayBusinessException if the request is invalid or the API returns a business
      *         error code
      * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs
+     * @deprecated Use {@link #merchantTerminalsQueryV2(MerchantTerminalsQueryRequest)} instead
      */
+    @Deprecated
     public MerchantTerminalsQueryResponse merchantTerminalsQuery(MerchantTerminalsQueryRequest request) {
         if (request == null) {
             throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR,
@@ -304,6 +328,29 @@ public class NexusClient implements AutoCloseable {
         }
         return httpClient.get(ApiConstants.PATH_MERCHANT_TERMINALS_QUERY, request,
                 MerchantTerminalsQueryResponse.class);
+    }
+
+    /**
+     * List terminals bound to the specified merchant (v2)
+     * <p>
+     * Page size is controlled via the size parameter (default 100, max 200).
+     * Uses token-based pagination: if the response contains a nextToken, pass it back
+     * in the next request to fetch the following page.
+     * </p>
+     *
+     * @param request merchant terminals v2 query request
+     * @return merchant terminals v2 query response
+     * @throws SunbayBusinessException if the request is invalid or the API returns a business
+     *         error code
+     * @throws SunbayNetworkException  if a network, timeout or HTTP error occurs
+     */
+    public MerchantTerminalsV2QueryResponse merchantTerminalsQueryV2(MerchantTerminalsV2QueryRequest request) {
+        if (request == null) {
+            throw new SunbayBusinessException(ApiConstants.ERROR_CODE_PARAMETER_ERROR,
+                    "MerchantTerminalsV2QueryRequest cannot be null", null);
+        }
+        return httpClient.get(ApiConstants.PATH_MERCHANT_TERMINALS_QUERY_V2, request,
+                MerchantTerminalsV2QueryResponse.class);
     }
 
     /**

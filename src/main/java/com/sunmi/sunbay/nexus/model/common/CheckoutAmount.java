@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Checkout amount breakdown. Payable total = orderAmount + taxAmount + surchargeAmount.
+ * Checkout amount breakdown used in request bodies (create session, direct payment). Payable total = orderAmount + taxAmount + surchargeAmount + tipAmount.
  *
  * @since 2026-02-02
  */
@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class CheckoutAmount {
 
     /**
-     * Order amount (smallest currency unit)
+     * Order amount (smallest currency unit) (required)
      */
     private Integer orderAmount;
 
@@ -32,7 +32,17 @@ public class CheckoutAmount {
     private Integer surchargeAmount;
 
     /**
-     * Price currency (ISO 4217)
+     * Tip amount (optional)
+     */
+    private Integer tipAmount;
+
+    /**
+     * Total amount (optional)
+     */
+    private Integer totalAmount;
+
+    /**
+     * Price currency (ISO 4217) (required)
      */
     private String priceCurrency;
 }
